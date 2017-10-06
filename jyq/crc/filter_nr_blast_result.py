@@ -9,7 +9,7 @@
 
 """
 This script will filter nr result by 80% iden. However, this param can be changed by edit the 51th line of the script
-Note that the script should be excute where there is result.xml. 
+Note that the script should be excute where there is result.xml.
 """
 
 
