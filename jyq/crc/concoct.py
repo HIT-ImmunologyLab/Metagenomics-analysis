@@ -72,7 +72,7 @@ if __name__=="__main__":
     cmd="rm -rf input && mkdir input && python /home/qiusuo/CONCOCT-master/scripts/gen_input_table.py contigs/final.contigs.cut.500bp.95%.identity.fa "
     for i in range(len(source_1)):
         sample_name='.'.join(source_1[i].split('.')[:3])
-        cmd=cmd+"samples/"+sample_name+"/"+sample_name+"_pair.bam "
+        cmd=cmd+"samples/"+sample_name+"/"+sample_name+"pair-smds.bam "
     cmd=cmd+"> input/cov_inputtableR.tsv"
     print(cmd)
     gen_input_table=subprocess.call(cmd,shell=True,env=new_env)
