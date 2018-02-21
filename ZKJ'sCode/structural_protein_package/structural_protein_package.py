@@ -6,6 +6,8 @@ from sklearn.neural_network import MLPClassifier #MLPClassifier即为sklearn库�
 import matplotlib.pyplot as plt
 import subprocess
 import xlrd
+import math
+from sklearn import metrics
 
 RATE = 1.0 #0.9代表十折交叉验证，即训练集占总数据集的90%
 
@@ -115,7 +117,7 @@ def getVec(s):
 下面就是数据读入和处理的部分
 '''
 #------------data processing--------------
-def data_processing(posSetFilename="posSet.txt",negSetFilename="negSet.txt"):  #'posSet.txt'    'negSet.txt'
+def data_processing(posSetFilename="posSet.txt",negSetFilename="negSet.txt",RATE = 0.8):  #'posSet.txt'    'negSet.txt'
     Vec = [] #存放训练集
     Y = []  #存放训练集的标签
     posTestset = [] #存放阳性测试集
@@ -175,8 +177,8 @@ def predict(clf,predictsetFilename='predictset.txt'):   #'predictset.txt'
 def testing(posPre,negPre):
     xx = []  #存储FPR值
     yy = []  #存储TPR值
-    for d in range(0,101):
-        T = float(d)*0.01
+    for d in range(0,1001):
+        T = float(d)*0.001
         TP = 0
         FN = 0
         TN = 0
@@ -184,14 +186,15 @@ def testing(posPre,negPre):
         R = 0
         W = 0
         for v in posPre:
-            if v>T:
+            #print(v)
+            if v[1]>T:
                 TP+=1
                 R+=1
             else:
                 FN+=1
                 W+=1
         for v in negPre:
-            if v<=T:
+            if v[1]<=T:
                 TN+=1
                 R+=1
             else:
@@ -205,10 +208,15 @@ def testing(posPre,negPre):
             ACC = float(R)/float(R+W)
         FPR = float(FP)/float(FP+TN)
         TPR = float(TP)/float(TP+FN)
-        xx.append(FPR)
-        yy.append(TPR)
-        return xx,yy,ACC,MCC
-        
+        xx.append(float(FP)/float(FP+TN))
+        yy.append(float(TP)/float(TP+FN))
+    #print(xx,yy)
+    return xx,yy,ACC,MCC
+
+def aucfun(act,pred):
+    fpr, tpr, thresholds = metrics.roc_curve(act, pred, pos_label=1)
+    return metrics.auc(fpr, tpr)
+    
 def get_k_fold_Cross_Validation_classifier(X,Y,k):
     len_X = len(X)
     clfs = []
@@ -277,7 +285,7 @@ def calcFPR_TPR(clf,testx,testy):
         TPR = float(TP)/float(TP+FN)
         xx.append(FPR)
         yy.append(TPR)
-        return xx,yy,ACC,MCC,TP,FP,TN,PN
+    return xx,yy,ACC,MCC,TP,FP,TN,PN
 
 def k_fold_Cross_Validation_classifier(X,Y,k):
     ACC = 0.0
@@ -287,3 +295,39 @@ def k_fold_Cross_Validation_classifier(X,Y,k):
         ACC += calcACC(clfs[i],testx,testy)
     ACC /= 10
     return ACC
+ 
+def run_classifier():
+    Vec,Y,posTestset,negTestset=data_processing(posSetFilename="posSet.txt",negSetFilename="negSet.txt")
+    clf = classify(Vec,Y)
+    negPre = clf.predict_proba(negTestset)
+    posPre = clf.predict_proba(posTestset)
+    xx,yy,ACC,MCC=testing(posPre,negPre)
+    y_true = []
+    y_pred = []
+    for v in posPre: 
+        y_true.append(1.0)
+        if v[1]>0.5:  #真阳性 
+            y_pred.append(1.0)
+        else:
+            y_pred.append(0.0)
+    for v in negPre: 
+        y_true.append(0.0)
+        if v[1]>0.5:  
+            y_pred.append(1.0)
+        else:
+            y_pred.append(0.0)
+    plt.figure()
+    lw = 2
+    plt.plot(xx, yy, color='darkorange',
+             lw=lw, label='ROC curve (area = %0.2f)' % aucfun(y_true,y_pred))
+    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic curve')
+    plt.legend(loc="lower right")
+    plt.show()
+
+if __name__ == '__main__':
+    run_classifier()
