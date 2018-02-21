@@ -14,7 +14,8 @@ from sklearn import preprocessing
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 import math
-
+from sklearn.metrics import matthews_corrcoef
+from sklearn import metrics
 def csv_converter(csvfilename='orf_on_samples_filter_p_0.01（大于60%）.csv',outputfilename='dataset.txt'):
     #csv_reader = csv.reader(open('orf_on_samples_filter_p_0.01（大于60%）.csv', encoding='utf-8'))
     csv_reader = csv.reader(open(csvfilename))
@@ -228,6 +229,8 @@ def LDATesting(posData,negData,POSLABEL = 1.0,NEGLABEL = 0.0):   #线性判别�
     FP = 0
     R = 0
     W = 0
+    y_true = []
+    y_pred = []
     for i in range(len_X):
         x = []
         y = []
@@ -239,6 +242,8 @@ def LDATesting(posData,negData,POSLABEL = 1.0,NEGLABEL = 0.0):   #线性判别�
         clf = LinearDiscriminantAnalysis() #LDA分类器
         clf.fit(x,y)
         v = clf.predict([X[i]])[0] 
+        y_true.append(Y[i])
+        y_pred.append(v)
         if Y[i] == POSLABEL:
             if v == POSLABEL:  #真阳性 
                 TP+=1
@@ -263,7 +268,9 @@ def LDATesting(posData,negData,POSLABEL = 1.0,NEGLABEL = 0.0):   #线性判别�
         MCC = float(zi)/float(mu)
     else:
         MCC = 0 #ERROR 
-    return ACC,MCC
+    #print(y_true,y_pred)
+    MCC = matthews_corrcoef(y_true, y_pred)  #利用现成的库来计算MCC的值，也可以不用，前面代码也有实现
+    return MCC,ACC  #这里是以MCC值作为判断依据，如果把MCC和ACC位置互换则将ACC作为判断依据
     
 def ChooseFea(fList,features,fea_ACC,fea_Set,datasetFilename='dataset.txt'):   #根据准确率上升最大原则，挑选一个新的特征加入原有的特征集fList中，并且返回加入新特征后的准确率
     Best_ACC = 0
@@ -329,7 +336,7 @@ def loadDataSet(filename): #从文件中加载数据集，其中参数filename�
     #print(dataset)
     return dataset
 
-def mkDataset_forSVM(datapool,x,y,testset,label,RATE = 0.8): #根据读取到的数据集生成训练集和测试集
+def mkDataset_forSVM(datapool,x,y,testset,label,RATE = 0.7): #根据读取到的数据集生成训练集和测试集
     l = len(datapool)
     tot = 0
     for vec in datapool:
@@ -375,6 +382,10 @@ def Draw_subplot(set1,label1,set2,label2):
     ax[1].scatter(x2_2,y2_2,color = 'r',s = si)
     plt.show()
 
+def aucfun(act,pred):
+    fpr, tpr, thresholds = metrics.roc_curve(act, pred, pos_label=1)
+    return metrics.auc(fpr, tpr)
+
 def svm_classifier(svmpos_inFilename="svmpos_in.txt",svmneg_inFilename="svmneg_in.txt"):    #"svmpos_in.txt","svmneg_in.txt"
     X = []
     Y = []
@@ -409,6 +420,20 @@ def svm_classifier(svmpos_inFilename="svmpos_in.txt",svmneg_inFilename="svmneg_i
     SVM_Classifiers.fit(X,Y)
     posPre=SVM_Classifiers.predict_proba(posTestset)
     negPre=SVM_Classifiers.predict_proba(negTestset)
+    y_true = []
+    y_pred = []
+    for v in posPre: 
+        y_true.append(1.0)
+        if v[1]>0.5:  #真阳性 
+            y_pred.append(1.0)
+        else:
+            y_pred.append(0.0)
+    for v in negPre: 
+        y_true.append(0.0)
+        if v[1]>0.5:  
+            y_pred.append(1.0)
+        else:
+            y_pred.append(0.0)
     for d in range(0,1001): #TP、FN、TN、FP、FPR、TPR每个变量的意义和它的名字是一致的，用来绘制ROC图像
         T = float(d)*0.001 #T代表当前的分类阈值，我们把每个预测值大于T的都认为是阳性，反之是阴性
         TP = 0
@@ -476,9 +501,18 @@ def svm_classifier(svmpos_inFilename="svmpos_in.txt",svmneg_inFilename="svmneg_i
         label2.append(posPre[tot][1]<=0.5)
         tot += 1
     Draw_subplot(set1,label1,set1,label2)
-    plt.plot(xx,yy) #利用上面的计算结果绘制ROC曲线
-    plt.legend()
-    plt.show()  
+    plt.figure()
+    lw = 2
+    plt.plot(xx, yy, color='darkorange',
+             lw=lw, label='ROC curve (area = %0.2f)' % aucfun(y_true,y_pred))
+    plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic curve')
+    plt.legend(loc="lower right")
+    plt.show()
 
 def InputFromFiles_Chi_square(datasetFilename = "dataset.txt"):  #从文件中读取特征集
     f = open(datasetFilename,'r')
@@ -506,7 +540,7 @@ def InputFromFiles_Chi_square(datasetFilename = "dataset.txt"):  #从文件中�
         else:
             new_negdata.append(new_v)
             labels.append(NEGLABEL)
-        return Alldata, labels
+    return Alldata, labels
             
 def ChooseFea_Chi_square(number,Alldata, labels):   #根据准确率上升最大原则，挑选一个新的特征加入原有的特征集fList中，并且返回加入新特征后的准确率
     Best_ACC = 0
