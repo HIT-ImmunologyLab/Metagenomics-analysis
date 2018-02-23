@@ -3,29 +3,33 @@
 # @Time    : 2017/10/5 21:26
 # @Author  : qiusuo
 # @Email    : qiusuo2456@gmail.com
-# @File    : Cut_500bp_for_Rayout.py
+# @File    : filterContigsOrReadsByLength.py
 # @Software: PyCharm
 
 
 """
-This litte script will cut off the contigs shorter than 500bp in Ray-meta result
-Note that the file should named with "Contigs.fasta"
+参数1：待处理的文件名称
+参数2：过滤长度下界
+
 """
 import os
 import time
+import sys
+
 if __name__=="__main__":
 
     time_start=time.time()
 
     source=[]
 
-    rootdir=os.getcwd()
-
-    for parent,dirnames,filenames in os.walk(rootdir):
-        for filename in filenames:
-            if(filename[-13:]=="Contigs.fasta"):
-                source.append(filename)
-
+    # rootdir=os.getcwd()
+    #
+    # for parent,dirnames,filenames in os.walk(rootdir):
+    #     for filename in filenames:
+    #         if(filename[-13:]=="Contigs.fasta"):
+    #             source.append(filename)
+    source.append(sys.argv[1])
+    length=int(sys.argv[2])
 
     ref_lines=[]
     contig=[]
@@ -39,7 +43,7 @@ if __name__=="__main__":
                     if(len(contig)):
                         ref_lines.append(contig)
                     contig=[]
-                    if(int(lines[i].split(' ')[1])>=500):
+                    if(int(lines[i].split(' ')[1])>=length):
                         contig.append(lines[i])
                         heads.add(lines[i])
                         valid=True
@@ -47,13 +51,15 @@ if __name__=="__main__":
                         valid=False
                 elif(valid==True):
                     contig.append(lines[i])
+        if(len(contig)>=2):
+            ref_lines.append(contig)
 
 
 
 
 
-    out_file=open("Contigs.cut.500bp.fasta",'w')
+    out_file=open(sys.argv[1]+"filter.by.length."+sys.argv[2]+".fasta",'w')
     for co in ref_lines:
         out_file.writelines(co)
 
-    print(time.time()-time_start)
+    print("Time use:",time.time()-time_start)
