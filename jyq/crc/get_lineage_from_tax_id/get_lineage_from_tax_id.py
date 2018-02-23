@@ -50,7 +50,7 @@ def search(taxids):
             elif(key=='species_id'):
                 if rank != '<not present>':
                     re[5]=list(ncbi.get_taxid_translator([rank]).values())[0]
-        return re
+        # return re
         result[str(taxid)]=re
     return result
 
@@ -62,7 +62,7 @@ with open("nt_gi_tax") as gt:
         gi_tax[line.split(' ')[0]]=line.split(' ')[1][:-1]
 tax_lin=dict()
 print(type(list(gi_tax.values())[0]))
-exit(0)
+# exit(0)
 result=search([int(x) for x in list(gi_tax.values())])
 with open("result.tsv") as f:
     lines=f.readlines()
