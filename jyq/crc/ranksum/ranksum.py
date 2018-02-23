@@ -11,8 +11,16 @@ This script caculate the rank-sum between case and control groups
 """
 
 from scipy import stats
+import os
 #file to refer
-file=["spf_order.txt","spf_phylum.txt","spf_species.txt","spf_genus.txt","spf_familly.txt","spf_class.txt"]
+
+file=[]
+for parent, dirnames, filenames in os.walk("./case"):
+	for filename in filenames:
+		file.append(filename)
+
+
+# file=["spf_order.txt","spf_phylum.txt","spf_species.txt","spf_genus.txt","spf_familly.txt","spf_class.txt"]
 
 """
     This for loop caculate ranksum on per level
@@ -57,7 +65,7 @@ for cur_file in file:
 			result[key]=(w,p)
 
 
-	with open(cur_file.split('_')[1].split('.')[0]+"_ranksums.txt",'w') as outfile:
+	with open(cur_file.split('_')[1].split('.')[0]+"ranksums.txt",'w') as outfile:
 		outfile.write(cur_file.split('_')[1].split('.')[0]+'\t'+'w\tp-value\n')
 		for key in result.keys():
 			outfile.write(key+'\t'+str(result[key][0])+'\t'+str(result[key][1])+'\n')
