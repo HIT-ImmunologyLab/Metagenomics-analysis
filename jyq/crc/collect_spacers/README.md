@@ -1,6 +1,6 @@
 # Introduction
 
-### This script generate a table from concoct, virsorter and taxassign.
+### Collect spacers of short sequence.
 
 # Requirement
 - python3
