@@ -1,0 +1,297 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="titleBlock">
+    <h3 id="Title">Graph</h3>
+</block>
+
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+</block>
+
+<block name="body">
+
+<input type="hidden" value="{$fileId}" id="fileId"/>
+<input type="hidden" value="{$pid}" id="pid"/>
+
+<div class="con con_1">
+    <div class="con_bt">
+        <h3>result</h3>
+    </div>
+  
+    <div id="crisprArea">
+        <div class="con con_2" style="border-bottom: 1px solid #dce6f1">
+            <div class="con_bt">
+                <h3>Crispr-cas</h3>
+            </div>
+            <div class="page_cas">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="welcome-img" id="ringGraph" style="min-width: 400px; height: 480px; background-color: #fff;">
+                        <!--<img src="__PUBLIC__/images/CRISPR-Cas-adaptive-immune-system.png" class="img-responsive zoom-img" alt=""/>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--services-->
+    <div class="a-hide con con_2" id="LineGraph">
+        <div class="container">
+            <h3 class="title">Visualization of predicted CRISPR-Cas system</h3>
+            <div class="servc-grids">
+                <div class="page_cas" id="LineItem">
+            </div>
+        </div>
+    </div>
+    <!--//services-->
+
+    <!--services-->
+    <div class="services a-hide" id="phageInteraction">
+        <div class="container">
+            <h3 class="title">Interacting Phages based on spacer-protospacer matching</h3>
+
+            <div class="servc-grids">
+               <div class="page_cas" id="phageItem"></div>
+            </div>
+        </div>
+    </div>
+    <!--//services-->
+</div>
+
+<div id="interactionArea" class="a-hide" style="border-top: 1px solid #dce6f1">
+    <div class="services">
+        <div class="container">
+            <h3 class="title" id="inTitle"></h3>
+            <div class="servc-grids">
+                <table class="table table-bordered" id="table">
+                    <thead>
+                    <tr>
+                        <th>Phage ID</th>
+                        <th>Spacer ID</th>
+                        <th>Identuty</th>
+                        <th>Coverage</th>
+                        <th>Hit Length</th>
+                        <th>Hit Postition</th>
+                        <th>Spacer Sequence</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/lsLine.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ls.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/lsTest.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script>
+
+        var pid = $("#pid").val();
+        console.log(pid);
+        var fileId = $("#fileId").val();
+        console.log(fileId);
+
+        var logo = 0, laga = 0;
+
+
+        $(document).ready(function() {
+
+
+            $("#crisprPanel").click(function(){
+                if ( $("#crisprArea").hasClass("a-hide") ) {
+                    if ( logo == 0 ) {
+                        $.ajax({
+                            url: "__URL__/handlePredictonGraph",
+                            type: "POST",
+                            data: {
+                                "pid": fileId,
+                            },
+                            success: function(data) {
+                                data = eval(data);
+                                if ( data ) {
+                                    logo = 1;
+                                    $("#ringTitle").html(pid);
+                                    $("#inTitle").html(pid);
+                                    $("#ringCon").html(data['title']);
+                                    console.log(data);
+                                    var objArr = ls.init("ringGraph", data);
+                                    AddClickEvent(objArr);
+
+                                } else {
+                                    console.log("error");
+                                }
+
+                            },
+                            error: function() {
+                                alert("error!");
+                            }
+                        });
+                    }
+                    $("#crisprArea").removeClass("a-hide")
+                    $("#interactionArea").addClass("a-hide")
+                }
+            });
+
+            $("#interactionPanel").click(function(){
+                if ( $("#interactionArea").hasClass("a-hide") ) {
+                    if ( laga == 0 ) {
+//                        $.ajax({
+//                            url: "__URL__/getPredictionInteraction",
+//                            type: "POST",
+//                            data: {
+//                                "fileId": fileId,
+//                            },
+//                            success: function(data) {
+//                                data = eval(data);
+//                                console.log(data);
+//
+//                            },
+//                            error: function() {
+//                                $("#ind").removeClass("a-hide");
+//                                $("#ind").html("sorry, there is no interaction relationship!");
+//                            }
+//                        });
+                        $("#table").DataTable({
+                            "ajax": {
+                                url: "__URL__/getPredictionInteraction",
+                                type: "POST",
+                                data: {
+                                    "fileId": fileId
+                                }
+                            },
+                            "columns": [
+                                { "data": "id"},
+                                { "data": "spacerid"},
+                                { "data": "identuty"},
+                                { "data": "coverage"},
+                                { "data": "hit_len"},
+                                { "data": "hit_pos"},
+                                { "data": "spacer_sequence"},
+                            ]
+                        });
+                        laga = 1;
+                    }
+                    $("#crisprArea").addClass("a-hide")
+                    $("#interactionArea").removeClass("a-hide")
+                }
+            });
+
+        });
+
+        function AddClickEvent(arr) {
+            arr.forEach(function(curObj, index, objArr) {
+                var _this = curObj;
+                $("#LineGraph").removeClass("a-hide");
+                if ( !$("#ChangeTypeBtn").hasClass("a-hide") ) {
+                    $("#ChangeTypeBtn").addClass("a-hide")
+                }
+                $("#LineItem").append('<div class="servc-grids">\
+                                        <h3 style="text-align: center; color: #7D0043;"><font color="#f00">'+(index+1)+'</font> : '+_this.data.startPos+' - '+(parseInt(_this.data.startPos)+parseInt(_this.data.length))+'</h3>\
+                                        <div id="ringLineGraph'+index+'" style="height: 200px;"></div>\
+                                        <div id="detailMsg'+index+'" style="text-align: center;"></div>\
+                                    </div>');
+                getLineGraph(_this.data.id, index, _this.data.startPos, (parseInt(_this.data.startPos)+parseInt(_this.data.length)));
+            });
+        }
+
+        function changeView(_this) {
+            if ( $(_this).attr("value")==1 ) {
+                $(_this).attr("value", 2);
+                $("#LineGraph").addClass("a-hide");
+                $("#phageInteraction").removeClass("a-hide");
+            } else if ( $(_this).attr("value")==2 ) {
+                $(_this).attr("value", 1);
+                $("#LineGraph").removeClass("a-hide");
+                $("#phageInteraction").addClass("a-hide");
+            }
+        }
+
+
+    function getLineGraph(id, index, start, end) {
+        id = parseInt(id);
+        $.ajax({
+            url: "__URL__/getLineData",
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                "id": id,
+                "pid": pid,
+            },
+            success: function(data) {
+                data = eval(data);
+                var ringLineGraphName = "#ringLineGraph" + index;
+                if ( data ) {
+                    $("#selfTarget").html("");
+                    checkFlag = 0;
+                    if ( data['exists']['exist'] ) {
+                        $("#phageInteraction").removeClass("a-hide");
+                        $("#phageItem").append('<div class="servc-grids">\
+                                                            <h3 style="text-align: center; color: #7D0043;"><font color="#f00">'+(index+1)+'</font> : '+start+' - '+end+'</h3>\
+                                                            <div id="selfTarget'+index+'" style="height: 400px;"></div>\
+                                                            <div id="selfMsg'+index+'"></div>\
+                                                        </div>');
+                        lsArrow.init("selfTarget"+index, data['one']['spacers'], data['exists']['data']);
+                    }
+                    var lineArr = lsLine.init("ringLineGraph"+index, data['one']);
+                    if ( lineArr ) {
+                        var protein = [], spacer = [], msg1="", msg2="", msg3="", msg4="";
+                        for ( var i=0; i<lineArr.length; i++ ) {
+                            if ( lineArr[i].type ) {
+                                spacer.push(lineArr[i].data);
+                            } else {
+                                protein.push(lineArr[i].data);
+                            }
+                        }
+
+                        if ( protein.length ) {
+                            msg1 = "<a class='checkLink' href='__URL__/getProteinInfo/pid/"+pid+"/id/"+data['one']['id']+"' target='_blank'>check cas protein info</a>";                            msg4 = "<a class='checkLink' href='__URL__/getProtein/pid/"+pid+"/id/"+data['one']['id']+"' target='_blank'>check cas protein sequences</a>";
+                        }
+                        if ( spacer.length ) {
+                            msg2 = "<a class='checkLink' href='__URL__/getSpacer/pid/"+pid+"/id/"+data['one']['id']+"' target='_blank'>check spacer sequences</a>";
+                        }
+                        if ( data['one']['repeat_spacer'] ) {
+                            msg3 = "<a class='checkLink' href='__URL__/getRepeatSpacerInfo/pid/"+pid+"/id/"+data['one']['id']+"' target='_blank'>check crispr locus info</a>";
+                        }
+                        var detailName = "#detailMsg" + index;
+                        $(detailName).html(msg1+msg3+msg4+msg2);
+                    }
+                } else {
+                    $(ringLineGraphName).html("获取不到任何数据");
+                }
+            },
+            error: function() {
+                alert("数据获取失败！");
+            }
+        });
+    }
+
+    </script>
+</block>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>handleUpload</title>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+    var filename = document.getElementById("filename");
+    console.log(filename.value);
+    var savename = document.getElementById("savename");
+    console.log(savename.value);
+</script>
+</body>
+</html>

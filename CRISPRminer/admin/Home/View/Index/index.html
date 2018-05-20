@@ -1,0 +1,163 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="home">
+    <li><a href="__MODULE__/Index/index" class="active">Home</a></li>
+</block>
+
+<block name="body">
+    <div class="col-md-12 col-sm-12" style="background-color: #fff;">
+        <div class="banner-bottom">
+            <!-- container -->
+            <div class="banner-next">
+                <div class="container">
+                    <h3 class="title"></h3>
+                    <!--<hr style="height:10px;border:none;border-top:10px groove skyblue;" />-->
+                    <div class="miaoshu" style="width: 55%; margin-top: 50px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    the flow-chart of our work
+                                </div>
+                            </div>
+                            <div class="panel-body" style="margin: 0; padding: 0;">
+                                <div class="contact-info" style="margin: 0; padding: 0;">
+                                    <div class="col-md-10 col-md-offset-1" style="margin: 0; padding: 0;">
+                                        <div class="welcome-img">
+                                            <img src="__PUBLIC__/images/flow-chart-for-prediction.png"
+                                                 class="img-responsive zoom-img" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="width: 40%; float:right; margin-top: 50px;">
+                        <!--introduction for graph-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Introduction
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <p></p>
+                                <ul style="list-style-type: none;">
+                                    <li>
+                                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CRISPRminer: A comprehensive and user-friendly knowledge base to explore CRISPR-systems in bacteria-phage interactions.
+                                            This database seeks to gather and investigate the growing pool of important CRISPR information in this fast-growing field and transform it into meaningful annotations.
+                                            Here are some annotations we include:
+                                        </p>
+                                        <p></p>
+                                        <h5>
+                                            <i>1.Prediction (Discovery of CRISPR knowledge in the bacterial genomes)</i>
+                                        </h5>
+                                        <hr />
+                                        <p></p>
+                                        <h5>
+                                            <i>2.CRISPR-Cas (Look up pre-calculated CRISPR-Cas systems)</i>
+                                        </h5>
+                                        <hr />
+                                        <p></p>
+                                        <h5>
+                                            <i>3.Classification (Types and subtypes of the predicted CRISPR-Cas system)</i>
+                                        </h5>
+                                        <hr />
+                                        <p></p>
+                                        <h5>
+                                            <i>4.Self-targeting (Annotation of self-targeting spacers)</i>
+                                        </h5>
+                                        <hr />
+                                        <p></p>
+                                        <h5>
+                                            <i>5.Interaction (Bacteria and phage infection network)</i>
+                                        </h5>
+                                        <hr />
+                                        <p></p>
+                                        <h5>
+                                            <i>6.Anti-crisprs (Annotation of anti-crispr proteins and their homologs)</i>
+                                        </h5>
+                                        <hr />
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <!--update&news-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Update&News
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <h5 style="text-align: center;"><b>CRISPRminer version 1 is out!</b></h5>
+                                <p></p>
+                                <p style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Currently, we have integrated five categories of information that are experimentally or computationally identified which are important in CRISPR biology, including:</p>
+                                <p></p>
+                                <ul class="intro" style="margin-top: 10px;">
+                                    <li>
+                                        <h5>
+                                            <strong style="font-family: Arial, Helvetica, sans-serif;">(i) CRISPR loci: 91,685</strong>
+                                        </h5>
+                                        <p style="padding-left: 20px; padding-top: 5px;">
+                                            Bacteria organisms: 62,343 <br/>
+                                            Species: 3588 <br/>
+                                            Genus: 1279 <br/>
+                                        </p>
+                                    <li>
+                                        <h5>
+                                            <strong style="font-family: Arial, Helvetica, sans-serif;">(ii) Classification:</strong>
+                                        </h5>
+                                        <p style="padding-left: 20px; padding-top: 5px;">
+                                            Class: 2   Type: 6  Subtype: 21 <br/>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            <strong style="font-family: Arial, Helvetica, sans-serif;">(iii) Self-targeting events:</strong>
+                                        </h5>
+                                        <p style="padding-left: 20px; padding-top: 5px;">
+                                            Our study: 6,260 events in 4136 bacteria organisms <br/>
+                                            Stem et al: 116 events in 330 organisms <br/>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            <strong style="font-family: Arial, Helvetica, sans-serif;">(iv) Phage-bacteria interactions:</strong>
+                                        </h5>
+                                        <p style="padding-left: 20px; padding-top: 5px;">
+                                            Detected based on CRISPRs: 55,279 <br/>
+                                            Extracted from NCBI:1972 <br/>
+                                            Inferred from prophage analysis: 41,351 <br/>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            <strong style="font-family: Arial, Helvetica, sans-serif;">(v) Anti-CRISPRs:21</strong>
+                                        </h5>
+                                        <p style="padding-left: 20px; padding-top: 5px;">
+                                            Homologues: (915) <br/>
+                                            Organisms: （540） <br/>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="contact-info content-style" id="pre-first-content" style="width: 40%;">-->
+                        <!---->
+                    <!--</div>-->
+                </div>
+            </div>
+            <!-- //container -->
+    </div>
+    </div>
+
+</block>
+
+<block name="script">
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+</block>

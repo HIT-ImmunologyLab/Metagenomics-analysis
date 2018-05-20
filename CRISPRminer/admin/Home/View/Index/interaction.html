@@ -1,0 +1,525 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+
+<block name="titleBlock">
+    <h3>INTERACTION</h3>
+    <h4>Bacteria and phage infection network</h4>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/jQuery.niceTitle.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <style type="text/css">
+        .menu-icon{
+            display: block;
+            width: 42px;
+            height: 32px;
+            font-size: 30px;
+            color: #000;
+        }
+    </style>
+</block>
+
+<block name="body">
+   <div class="content">
+      <div class="con_l">
+        <div class="con_l_nav">
+          <ul>
+            <li class="on a-tab" id="tab_1"><a href="javascript:void(0);"><i class="fa fa-bell menu-icon"></i><span><em>Introduction</em></span></a></li>
+            <li class="a-tab" id="tab_2"><a href="javascript:void(0);"><i class="fa fa-table menu-icon"></i><span><em>Based on CRISPRs</em></span></a></li>
+            <li class="a-tab" id="tab_3"><a href="javascript:void(0);"><i class="fa fa-table menu-icon"></i><span><em>Phage-host in NCBI</em></span></a></li>
+            <li class="a-tab" id="tab_4"><a href="javascript:void(0);"><i class="fa fa-download menu-icon"></i><span><em>Download</em></span></a></li>
+          </ul>
+        </div>
+        <div class="con_l_help"> <a href="__MODULE__/Index/help#interaction" target="_blank"><b>NEED HELP?</b><em style="box-sizing: none;">check help >></em></a> </div>
+      </div>
+      <div class="con_r">
+        <div id="ctx_1" class="a-ctx">
+            <div class="con_bt">
+              <h3>Bacteria-phage infection network</h3>
+            </div>
+            <div class="page_cas">
+                <div class="page_cas_2 page-content">
+                    <div class="content-group">
+                      <p>In this module, all the spacer sequences from the CRISPR loci of the bacterial genomes were blasted against the genomic sequences of phages in our database. The interaction networks could be browsed at the species or genus level of the bacterial organisms. The information for the interacting spacers and their targeting proto-spacers, as well as the phage genomic content near proto-spacers are provided. If the proto-spacer is located in a protein-encoding region, the corresponding protein information is also provided. Each phage genomic sequence is also searched for its bacterial host which is annotated in NCBI.</p>
+                      <ol>
+                          <li><p>55,279 bacteria and phage interactions inferred based on spacer/proto-spacer matching.</p></li>
+                          <li><p>1972 bacteria and phage interactions extracted from NCBI.</p></li>
+                      </ol>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div id="ctx_2" class="a-hide a-ctx">
+            <div class="con_bt">
+              <h3>based on CRISPRs</h3>
+            </div>
+            <div class="page_cas">
+
+                <div class="clas_min">
+                    <div class="optionBox" style="width: 400px; margin: 0 auto;">
+                        <h3 style="text-align: center;">Select the taxonomy level</h3>
+                        <p>Select the texonomy level</p>
+                        <select id="class" class="form-control">
+                            <option value="specie">species</option>
+                            <option value="genus">genus</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <div id="tab1">
+                            <a href="javascript:void(0);" class="download" id="downFile1" style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+                            <table class="table table-bordered" id="table" style="width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th>Species</th>
+                                    <th>Bacteria Num</th>
+                                    <th>Phage Num</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="tab2" class="a-hide">
+                            <a href="javascript:void(0);" class="download" id="downFile2" style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+                            <table class="table table-bordered" id="table2">
+                                <thead>
+                                <tr>
+                                    <th>Genus</th>
+                                    <th>Bacteria Num</th>
+                                    <th>Phage Num</th>
+                                    <th>Operation</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 id="detail_title" class="a-hide" style="margin-top: 20px; color: #eb6100">Detail information for bacteria and phage interactions</h3>
+                <div id="detail_page" class="clas_min a-hide" style="margin-top: 20px; padding-top: 20px;">
+                    <a href="javascript:void(0);" class="download" id="downFile3" style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+                    <div id="acInfo">
+                        <table class="table table-bordered" id="detailTable" style="width: 100%;">
+                            <thead id="thead-detail">
+                            <tr>
+                                <th>Bacteria ID</th>
+                                <th>Bacteria Name</th>
+                                <th>Phage ID</th>
+                                <th>Phage Name</th>
+                                <th>Spacer ID</th>
+                                <th>Missmatch</th>
+                                <th>Bacteria host in NCBI</th>
+                                <th>Operation</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ctx_3" class="a-hide a-ctx">
+            <div class="con_bt">
+              <h3>Phage-host in NCBI</h3>
+            </div>
+            <div class="page_cas">
+                <a href="javascript:void(0);" class="download" id="downFile4" style="width:110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+                <div class="clas_min" style="padding-top: 20px;">
+                    <table class="table table-bordered" id="table3" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Phage Name</th>
+                                <th>Phage Refseq ID</th>
+                                <th>Bacteria Organism</th>
+                                <th>Bacteria Taxonomy Level</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>    
+            </div>
+        </div>
+        <div id="ctx_4" class="a-hide a-ctx">
+        	<div class="con_bt">
+              <h3>Download interaction network based on CRISPRs</h3>
+            </div>
+            <div class="page_cas">
+                <div class="clas_min" style="padding-top: 20px;padding-bottom: 20px;">
+                    <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/interaction.csv" class="download" style="width: 120px; margin-left: 20px;" download="bacteria-phage interaction based on CRISPRs.csv"><i class="fa fa-download" style="margin-right: 10px;"></i>Download</a>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--modal box-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--modal box-->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2">sequence</h4>
+            </div>
+            <div class="modal-body" id="tableContainer2" style="overflow: scroll;">
+                <div id="sequenceBox"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--modal box-->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel3">protein message</h4>
+            </div>
+            <div class="modal-body" id="Container3">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+</block>
+
+</div>
+<block name="script">
+    <script src="__PUBLIC__/js/jquery-2.2.2.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+<script>
+
+    $("#downFile1").hide();
+    $("#downFile2").hide();
+    $("#downFile3").hide();
+    $("#downFile4").hide();
+
+    var jsonData1, jsonData2, jsonData3, jsonData4;
+
+    $(document).ready(function() {
+
+        $("#tab_1").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_1").removeClass("a-hide");
+        });
+        $("#tab_2").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_2").removeClass("a-hide");
+        });
+        $("#tab_3").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_3").removeClass("a-hide");
+        });
+        $("#tab_4").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_4").removeClass("a-hide");
+        });
+
+        $("#class").change(function() {
+            $("#detail_page").addClass("a-hide");
+            $("#detail_title").addClass("a-hide");
+            console.log(1);
+            if ( $(this).val()=='specie' ) {
+                $("#tab2").addClass("a-hide");
+                $("#tab1").removeClass("a-hide");
+            } else if ( $(this).val()=='genus' ) {
+                $("#tab1").addClass("a-hide");
+                $("#tab2").removeClass("a-hide");
+                $("#table2").css("width", "100%");
+            }
+        });
+
+        $("#table3").DataTable({
+            "ajax": {
+                url: "__URL__/getNcbiInfo",
+                type: "GET"
+            },
+            "columns": [
+                { "data": "phage_name"},
+                { "data": "refseq_id"},
+                { "data": "bacteria_organism"},
+                { "data": "bacteria_taxonomy_level"},
+            ],
+            "fnInitComplete": function (oSettings, json) {  
+                jsonData4 = json;
+                $("#downFile4").show();
+            },
+        });
+
+
+        $("#table").DataTable({
+            "ajax": {
+                url: "__URL__/getInteractionInfo1",
+                type: "GET"
+            },
+            "columns": [
+                { "data": "specie"},
+                { "data": "bacteria_num"},
+                { "data": "phage_num"},
+                { "data": "specie"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [3], // 目标列位置，下标从0开始
+                    "data": "specie",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return '<button href="javascript: void(0)" class="btn btn-default" onclick="getDetailInteraction(\'specie\', \''+data+'\')">details</button>';
+                    }
+                }
+            ],
+             "fnInitComplete": function (oSettings, json) {  
+                jsonData1 = json;
+                $("#downFile1").show();
+            },
+            "order": [[ 0, "desc" ]]
+        });
+
+        $("#table2").DataTable({
+            "ajax": {
+                url: "__URL__/getInteractionInfo2",
+                type: "GET"
+            },
+            "columns": [
+                { "data": "genus"},
+                { "data": "bacteria_num"},
+                { "data": "phage_num"},
+                { "data": "genus"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [3], // 目标列位置，下标从0开始
+                    "data": "genus",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return '<button class="btn btn-default" onclick="getDetailInteraction(\'genus\', \''+data+'\')">details</button>';
+                    }
+                }
+            ],
+             "fnInitComplete": function (oSettings, json) {  
+                jsonData2 = json;
+                $("#downFile2").show();
+            },
+        });
+    });
+
+    function getDetailInteraction(kind, value) {
+
+        $("#detail_page").removeClass("a-hide");
+        $("#detail_title").removeClass("a-hide");
+        console.log(kind);
+        console.log(value);
+        $("#acInfo").empty();
+        $("#acInfo").html('<table class="table table-bordered" id="detailTable">\
+                <thead><tr><th>Bacteria ID</th><th>Bacteria Name</th><th>Phage ID</th><th>Phage Name</th><th>Spacer ID</th>\
+                    <th>Missmatch</th><th>Bacteria host in NCBI</th><th>Operation</th></tr></thead><tbody></tbody></table>');
+        $("#detailTable").DataTable({
+            'bProcessing': true,
+            "paging":true,
+            "ajax": {
+                url: "__URL__/getDetailInteraction",
+                type: "POST",
+                data: {
+                    "kind": kind,
+                    "value": value,
+                },
+            },
+            "columns": [
+                { "data": "bacteria_id"},
+                { "data": "bacteria_name"},
+                { "data": "phage_id"},
+                { "data": "phage_name"},
+                { "data": "spacer_id"},
+                { "data": "missmatch"},
+                { "data": "bacteria_organism"},
+                { "data": "prohage"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [7], // 目标列位置，下标从0开始
+                    "data": "id",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var str = '<button class="btn btn-default" data-toggle="modal" data-target="#myModal2" onclick="getSequenceCompare(\''+full.bacteria_id+'\', \''+full.phage_id+'\', \''+full.spacer_id+'\')">sequence</button><br/>';
+                        if ( full['flag']=='1' ) {
+                            str += '<button class="btn btn-default" data-toggle="modal" data-target="#myModal3" onclick="getCreateProtein(\''+full.bacteria_id+'\', \''+full.phage_id+'\', \''+full.spacer_id+'\')">protein</button>';
+                        } else {
+                            str += "<span>intergenic</span>";
+                        }
+                        return str;
+                    }
+                }
+            ],
+             "fnInitComplete": function (oSettings, json) {  
+                console.log(json);
+                jsonData3 = json;
+                $("#downFile3").show();
+            },
+        });
+        $("#title-detail").css("display","block");
+        $("#bottom").css("display","block");
+        $("#detailTable").addClass("table-text");
+        //if($("#class").get(0).selectedIndex == 0)
+        window.location.href = "#detail_page";
+    }
+
+    function getSequenceCompare(b_id, p_id, s_id) {
+        $.ajax({
+            url: "__URL__/getSequenceCompare",
+            type: "POST",
+            data: {
+                "b_id": b_id,
+                "p_id": p_id,
+                "s_id": s_id,
+            },
+            success: function(data) {
+                data = eval(data);
+                console.log(data);
+                if ( data ) {
+                    var msg = "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'>spacer:</label>&nbsp;<pre " + "class='pre-style'" + " style='display: inline-block;'>" + data[0]['spacer_sequence'] + "</pre></div><br/>";
+                    msg += "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'> hit: </label>&nbsp;<pre " + "class='pre-style'" + "  style='display: inline-block;'>"+data[0]['hit_sequence']+"</pre></div><br/>";
+                    msg += "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'>long-hit: </label>&nbsp;<pre " + "class='pre-style'" + "  style='display: inline-block;'>"+ data[0]['long_hit_sequence']+"</pre></div>";
+                    $("#sequenceBox").html(msg);
+                } else {
+                    $("#sequenceBox").html("there is no data!");
+                }
+            },
+            error: function() {
+                console.log("error getSequenceCompare!");
+            }
+        });
+    }
+
+    function getCreateProtein(b_id, p_id, s_id) {
+        $.ajax({
+            url: "__URL__/getCreateProtein",
+            type: "POST",
+            data: {
+                "b_id": b_id,
+                "p_id": p_id,
+                "s_id": s_id,
+            },
+            success: function(data) {
+                console.log(data);
+                $("#Container3").html("");
+                var str = "";
+                if ( data ) {
+                    for ( var i=0; i<data.length; i++ ) {
+                        str += data[i]['protein_id'] + ": " + data[i]['protein_product'] + "<br/>";
+                    }
+                } else {
+                    str = "Sorry, get data error!";
+                }
+                $("#Container3").html(str);
+            },
+            error: function() {
+                console.log("error getCreateProtein!");
+            }
+        });
+    }
+
+        $("#downFile1").click(function() {
+            // console.log(jsonData);
+            var data = "Species,Bacteria Num,Phage Num\n";
+            var objArr = jsonData1['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['specie'] + "," 
+                        + obj['bacteria_num'] + "," 
+                        + obj['phage_num'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "specie_crispr.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+         $("#downFile2").click(function() {
+            // console.log(jsonData);
+            var data = "Genus,Bacteria Num,Phage Num\n";
+            var objArr = jsonData2['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['genus'] + "," 
+                        + obj['bacteria_num'] + "," 
+                        + obj['phage_num'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "genus_crispr.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+         $("#downFile3").click(function() {
+            // console.log(jsonData);
+            var data = "bacteria_id,bacteria_name,phage_id,phage_name,spacer_id,missmatch,bacteria_organism\n";
+            var objArr = jsonData3['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['bacteria_id'] + "," 
+                        + obj['bacteria_name'] + "," 
+                        + obj['phage_id'] + "," 
+                        + obj['phage_name'] + "," 
+                        + obj['spacer_id'] + "," 
+                        + obj['missmatch'] + "," 
+                        + obj['bacteria_organism'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "interatcion.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+         
+         $("#downFile4").click(function() {
+            // console.log(jsonData);
+            var data = "phage_name,refseq_id,bacteria_organism,bacteria_taxonomy_level\n";
+            var objArr = jsonData4['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['phage_name'] + "," 
+                        + obj['refseq_id'] + "," 
+                        + obj['bacteria_organism'] + "," 
+                        + obj['bacteria_taxonomy_level'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "ncbi.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+</script>
+
+</block>

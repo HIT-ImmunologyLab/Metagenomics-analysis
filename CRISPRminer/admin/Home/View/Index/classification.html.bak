@@ -1,0 +1,273 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+
+
+<block name="classification">
+    <li><a href="__MODULE__/Index/classification" class="active">Classification</a></li>
+</block>
+
+<block name="body">
+
+    <!--<div class="banner-next">
+        <div class="container">
+            <div class="welcome">
+                <h3 class="title">CRISPR type/subtype decision rules</h3>
+                <p></p>
+                <div class="welcome-info">
+                    <div class="welcome-grids para-style content-style" id="second-content">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signature cas genes and distinctive gene architectures allow the assignment of the CRISPR systems to types and subtypes. We summarized a table of cas gene content for each subtype (or type). </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </div>-->
+
+<div class="banner-bottom">
+    <div class="container">
+        <!--welcome-->
+        <div class="welcome">
+             <h3 class="title">CRISPR type/subtype decision rules</h3>
+                <p></p>
+                <div class="welcome-info">
+                    <div class="welcome-grids para-style content-style" id="second-content">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signature cas genes and distinctive gene architectures allow the assignment of the CRISPR systems to types and subtypes. We summarized a table of cas gene content for each subtype (or type). </p>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            <div class="welcome-info">
+                <div class="col-md-12">
+                    <div class="welcome-img" style="overflow: scroll; max-height: 400px; background-color: #fff;">
+                        <!--<img src="__PUBLIC__/images/CRISPR system classification.png" class="img-responsive zoom-img" alt=""/>-->
+                        <table class="table table-bordered a-small" id="table2">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th colspan="14">Class 1</th>
+                                <th colspan="13">Class 2</th>
+                            </tr>
+                            <tr>
+                                <th>Cas genes</th>
+                                <th>other names</th>
+                                <th>CRISPR types</th>
+                                <th></th>
+                                <th colspan="7">Type I</th>
+                                <th></th>
+                                <th colspan="4"> Type III</th>
+                                <th>Type IV</th>
+                                <th></th>
+                                <th colspan="2">Type II</th>
+                                <th></th>
+                                <th colspan="5">Type V</th>
+                                <th colspan="4">Type VI</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>I</th>
+                                <th>I-A</th>
+                                <th>I-B</th>
+                                <th>I-C</th>
+                                <th>I-U</th>
+                                <th>I-D</th>
+                                <th>I-E</th>
+                                <th>I-F</th>
+                                <th>III</th>
+                                <th>III-A</th>
+                                <th>III-B</th>
+                                <th>III-C</th>
+                                <th>III-D</th>
+                                <th>IV-A</th>
+                                <th>II</th>
+                                <th>II-A</th>
+                                <th>II-B</th>
+                                <th>II-C</th>
+                                <th>V</th>
+                                <th>V-A</th>
+                                <th>V-B</th>
+                                <th>V-C</th>
+                                <th>V-U</th>
+                                <th>VI</th>
+                                <th>VI-A</th>
+                                <th>VI-B</th>
+                                <th>VI-C</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <for start="0" end="85" name="i">
+                                <tr>
+                                    <for start="0" end="29" name="j">
+                                        <td>{$ct[$i][$j]}</td>
+                                    </for>
+                                </tr>
+                            </for>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>
+                        This classification is established based on cas genes content in each
+                        CRISPR-cas locus. Signature genes and distinctive gene architectures allow the assignment of these loci to types and subtypes.
+                        We summarized a table of cas gene content for each subtype (or type).
+                    </p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <p></p>
+        </div>
+        <!--//welcome-->
+    </div>
+</div>
+<!--menu-->
+<div class="menu" style="background-color: #fff;">
+    <div class="container">
+        <div class="menu-tag">
+            <h3 class="title"> The Menu</h3>
+            <p>CRISPR SYSTEM CLASSIFICATION</p>
+        </div>
+        <div class="load_more">
+            <ul class="a-ul" style="list-style-type: none;">
+                <div class="col-md-4 menu-grids" style="text-align: left; border: 5px solid #CADDE1; margin-top: 38px;">
+                    <li class="item">
+                        <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                        <span>class 1</span><span style="margin-left: 20px; color: #FE7C67;">(11 types)</span>
+                        <ul>
+                            <li class="item">
+                                <a href="javascript:void(0)"class="glyphicon glyphicon-minus"></a>
+                                <a href="javascript:void(0);"  onclick="getType('I')">Type I</a><span style="margin-left: 20px; color: #FE7C67;">(7 types)</span>
+                                <ul>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-A')">Subtype I-A</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-B')">Subtype I-B</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-C')">Subtype I-C</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-D')">Subtype I-D</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-E')">Subtype I-E</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-F')">Subtype I-F</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('I-U')">Subtype I-U</a></li>
+                                </ul>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                                <a href="javascript:void(0);" onclick="getType('III')">Type III</a><span style="margin-left: 20px; color: #FE7C67;">(3 types)</span>
+                                <ul>
+                                    <li><a href="javascript:void(0);" onclick="getType('III-A')">Subtype III-A</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('III-B')">Subtype III-B</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('III-C')">Subtype III-C</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('III-D')">Subtype III-D</a></li>
+                                </ul>
+                            </li>
+                            <li class="item"><a href="javascript:void(0);" onclick="getType('IV')">Type IV</a><span style="margin-left: 20px; color: #FE7C67;">(0 types)</span></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                        <span>Class 2</span><span style="margin-left: 20px; color: #FE7C67;">(14 types)</span>
+                        <ul>
+                            <li class="item">
+                                <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                                <a href="javascript:void(0);" onclick="getType('II')">Type II</a><span style="margin-left: 20px; color: #FE7C67;">(3 types)</span>
+                                <ul>
+                                    <li><a href="javascript:void(0);" onclick="getType('II-A')">Subtype II-A</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('II-B')">Subtype II-B</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('II-C')">Subtype II-C</a></li>
+                                </ul>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                                <a href="javascript:void(0);" onclick="getType('V')">Type V</a><span style="margin-left: 20px; color: #FE7C67;">(8 types)</span>
+                                <ul>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-A')">Subtype V-A</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-B')">Subtype V-B</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-C')">Subtype V-C</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-U')">Subtype V-U1</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-U2')">Subtype V-U2</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-U3')">Subtype V-U3</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-U4')">Subtype V-U4</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('V-U5')">Subtype V-U5</a></li>
+                                </ul>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" class="glyphicon glyphicon-minus"></a>
+                                <a href="javascript:void(0);" onclick="getType('VI')">Type VI</a><span style="margin-left: 20px; color: #FE7C67;">(3 types)</span>
+                                <ul>
+                                    <li><a href="javascript:void(0);" onclick="getType('VI-A')">Subtype VI-A</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('VI-B')">Subtype VI-B</a></li>
+                                    <li><a href="javascript:void(0);" onclick="getType('VI-C')">Subtype VI-C</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+                <div class="col-md-8 menu-grids">
+                    <div class="welcome-info" style="margin-top: 0;">
+                        <p style="text-align: center; font-size: 16px; font-weight: bold; color: #f00; height: 38px;" id="tableTitle"></p>
+                        <div id="tableBox" class="table-outerseeing">
+                            <table class="table table-bordered a-hide" id="table"></table>
+                        </div>
+
+                        <div id="fillBlank" style="margin-top: 38px;">
+                            <div class="welcome-img">
+                                <img src="__PUBLIC__/images/blank1.jpg" class="img-responsive zoom-img" alt="" style="margin: 0 auto;"/>
+                            </div>
+                            <p class="a-p">Please Select Type or Subtype to Check Details</p>
+                        </div>
+
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--//menu-->
+</block>
+
+<block name="script">
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script>
+        $(document).ready(function(){
+//            var table = $("#table");
+//            var width = table.parent().innerWidth();
+//            if ( width>400 ) {
+//                table.css("width", width+"px");
+//            } else {
+//                table.css("width", "400px");
+//            }
+//
+//            if ( $("#table").hasClass("a-hide") ) {
+//                $("#fillBlank").removeClass("a-hide");
+//            }
+        });
+
+        function getType(type) {
+            $("#tableTitle").html(type);
+            $("#tableBox").html('<table class="table table-bordered" id="table"></table>');
+            $("#fillBlank").hide();
+
+//            $("#table").show();
+
+            $("#table").DataTable({
+                "ajax": {
+                    url: "__URL__/getType",
+                    type: "POST",
+                    data: {
+                        "type": type,
+                    }
+                },
+                "columns": [
+                    { "data": "refseq_id", "title":"Refseq ID","defaultContent":""},
+                    { "data": "genebank_id", "title":"Genebank ID","defaultContent":""},
+                    { "data": "name", "title":"Name","defaultContent": ""},
+                    { "data": "cas_locus", "title":"Cas locus","defaultContent":""},
+                ],
+            });
+
+            $("#table").addClass("table-text");
+        }
+
+    </script>
+</block>

@@ -1,0 +1,71 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+</block>
+
+<block name="titleBlock">
+    <h3>ARCHIECTURES</h3>
+    <h4>Look up pre-calculated CRISPR-cas systems</h4>
+</block>
+
+
+<block name="body">    
+<!-- <div class="content"> -->
+    <div class="con con_1">
+    	<div class="con_bt">
+	      <h3>CRISPR-Cas SYSTEM CLASSIFICATION</h3>
+	    </div>
+	</div>
+	<div class="page_cas" style="margin-bottom: 20px;">
+		    <div class="col-md-12">
+		    	<p>Signature cas genes and distinctive gene architectures allow the assignment of the CRISPR systems to types and subtypes. We summarized a table of cas gene content for each subtype (or type). </p>
+		        <div class="welcome-img" style="overflow: scroll; max-height: 400px; background-color: #fff; margin-top: 20px; margin-bottom: 20px;">
+		            <table class="table table-bordered a-small" id="table2">
+		                <tbody>
+		                <for start="0" end="29" name="i">
+		                    <tr>
+		                        <for start="0" end="86" name="j">
+
+		                                <if condition="$ct[$i][$j] eq '0'">
+		                                    <td style="background-color: #ff0;"></td>
+		                                    <elseif condition="$ct[$i][$j] eq '1'"/>
+		                                    <td style="background-color: #f00;"></td>
+		                                    <else/>
+		                                    <if condition="$i lt 3 OR $j lt 3">
+		                                        <switch name="ct[$i][$j]">
+		                                            <case value="Class 1 "><th style="width: 30px; padding: 2px!important;" rowspan="13">{$ct[$i][$j]}</th></case>
+		                                            <case value="Class 2 "><th style="width: 30px; padding: 2px!important;" rowspan="4">{$ct[$i][$j]}</th></case>
+		                                            <case value="Type I"><th style="width: 30px; padding: 2px!important;" rowspan="7">{$ct[$i][$j]}</th></case>
+		                                            <case value=" Type III"><th style="width: 30px; padding: 2px!important;" rowspan="4">{$ct[$i][$j]}</th></case>
+		                                            <case value="Type II"><th style="width: 30px; padding: 2px!important;" rowspan="2">{$ct[$i][$j]}</th></case>
+		                                            <case value="Type V"><th style="width: 30px; padding: 2px!important;" rowspan="5">{$ct[$i][$j]}</th></case>
+		                                            <case value="Type VI"><th style="width: 30px; padding: 2px!important;" rowspan="4">{$ct[$i][$j]}</th></case>
+		                                            <default/><eq name="ct[$i][$j]" value=""><td style="width: 30px; padding: 2px!important;">{$ct[$i][$j]}</td><else/><th style="width: 30px; padding: 2px!important;">{$ct[$i][$j]}</th></eq>
+		                                        </switch>
+		                                     <else/>
+		                                        <td width="30px" style="padding: 2px!important;"></td>
+		                                    </if>
+
+		                                </if>
+		                        </for>
+		                    </tr>
+		                </for>
+		                </tbody>
+		            </table>
+		        </div>
+		        <p>
+		            This classification is established based on cas genes content in each
+		            CRISPR-cas locus. Signature genes and distinctive gene architectures allow the assignment of these loci to types and subtypes.<br/>
+		            We summarized a table of cas gene content for each subtype (or type).
+		        </p>
+		    </div>
+	<!-- </div> -->
+</div>
+</block>
+
+<block name="script">
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+</block>

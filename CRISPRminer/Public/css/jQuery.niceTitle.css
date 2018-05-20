@@ -1,0 +1,44 @@
+#niceTitle p {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font: 12px "微软雅黑",verdana,arial,sans-serif; 
+}
+#niceTitle p em { 
+    display: block;
+	margin-top: 3px;
+	color: #f60;
+	font-style: normal;
+	font-weight: bold; 
+}
+#niceTitle .r1,#niceTitle .r2,#niceTitle .r3,#niceTitle .r4{
+	background-color: #000;
+	display: block;
+	height: 1px;
+	overflow: hidden;
+	font-size: 1px;
+}
+#niceTitle .r2,#niceTitle .r3,#niceTitle .r4{
+	border-width: 0 1px;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+}
+#niceTitle .r1{
+	margin: 0 6px;
+}
+#niceTitle .r2{
+	margin: 0 3px;
+}
+#niceTitle .r3{
+	margin: 0 2px;
+}
+#niceTitle .r4{
+	margin: 0 1px;
+	height: 2px;
+}
+#niceTitle #niceTitle-ie{
+	background: #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	padding: 0 5px;
+}

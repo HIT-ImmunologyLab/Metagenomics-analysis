@@ -1,0 +1,366 @@
+<extend name="./admin/Home/View/Common/base.html" />
+
+<block name="prediction">
+<li><a href="__MODULE__/Crispr/prediction" class="active">Prediction</a>
+</li>
+</block>
+
+<block name="body">
+
+<div class="contact-top">
+	<!-- container -->
+	<div class="banner-next">
+		<div class="container">
+			<h3 class="title">Discovery of CRISPR knowledge in the bacteria
+				genome</h3>
+			<hr style="height:10px;border:none;border-top:10px groove skyblue;" />
+			<div class="miaoshu">
+				<div class="contact-info">
+					<p></p>
+					<div class="col-md-10 col-md-offset-1">
+						<div class="welcome-img">
+							<img src="__PUBLIC__/images/workflow_2017.png"
+								class="img-responsive zoom-img" alt="" />
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="contact-info content-style" id="pre-first-content">
+
+				<p></p>
+				<ul>
+					<li>
+						<h4>
+							<b>1.Input</b>
+						</h4>
+						<hr />
+						<p></p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can
+							upload a FASTA DNA sequence file or paste the sequence in the
+							submission page. As an option, users can also provide a RefSeq ID
+							for an annotated sequence in NCBI example: NC_008532.</p> <br /></li>
+
+					<li>
+						<h4>
+							<b>2.Output</b>
+						</h4>
+						<hr />
+						<p></p>
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The server
+							will return the predicted CRISPR-cas system(s) in the query
+							bacteria genome, putative phages infecting this bacteria , and
+							self-targeting spacers within this genome.</p> <br /></li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<!--services-->
+				<div class="services">
+					<div class="container">
+						<h3 class="title">Prediction Action</h3>
+						<p>Upload a file with the necessary data to predict</p>
+						<hr style="height:10px;border:none;border-top:10px groove skyblue;" />
+						<div class="servc-grids">
+							<div class="col-md-4 servc-grid">
+								<div class="servc-icon hi-icon-effect-8">
+									<a href="javascript:void(0)"
+										class="hi-icon hi-icon-archive a-active" control="0"><span
+										class="glyphicon glyphicon glyphicon-upload"
+										aria-hidden="true"></span>
+									</a>
+								</div>
+								<h4>Upload</h4>
+							</div>
+							<div class="col-md-4 servc-grid">
+								<div class="servc-icon hi-icon-effect-8">
+									<a href="javascript:void(0)" class="hi-icon hi-icon-archive"
+										control="1"><span
+										class="glyphicon glyphicon glyphicon-pencil"
+										aria-hidden="true"></span>
+									</a>
+								</div>
+								<h4>Entry Accession</h4>
+							</div>
+							<div class="col-md-4 servc-grid">
+								<div class="servc-icon hi-icon-effect-8">
+									<a href="javascript:void(0)" class="hi-icon hi-icon-archive"
+										control="2"><span
+										class="glyphicon glyphicon glyphicon-sort-by-attributes"
+										aria-hidden="true"></span>
+									</a>
+								</div>
+								<h4>Paste Sequence</h4>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<!--action-->
+						<div class="action col-md-10 col-md-offset-1"
+							style="background-color: #68686A; padding: 20px; margin-top: 30px;">
+							<form id="form" class="action1 a-show"
+								action="__URL__/handleUpload" method="POST"
+								enctype="multipart/form-data">
+								<p style="text-align: left; color: #fff;">Upload a GenBank
+									formatted file or nucleotide sequence file (FASTA format)</p>
+								<div class="input-group" style="width: 100%; margin-top: 10px;">
+									<input type="text" class="form-control a-input" placeholder=""
+										disabled />
+									<div class="input-group-addon a-relative" style="width: 150px;">
+										<input type="button" class="btn btn-primary a-filename"
+											value="Choose File" /> <input type="file"
+											class="a-op0 a-file" id="ls" name="ls" />
+									</div>
+								</div>
+								<p class="a-tip" style="text-align: left;"></p>
+								<button type="submit" class="btn btn-default" id="submit"
+									data-toggle="modal" data-target="#myModal">SUBMIT</button>
+							</form>
+							<div class="action1">
+								<div class="search-style">
+									<input type="text" style="padding: 0 10px;" id="eaText"
+										placeholder="" /><input type="button" class="btn btn-primary"
+										id="eaBtn" value="Search" />
+									<p class="tips a-hide"
+										style="color: #fff; font-size: 12px; text-align: left;"></p>
+								</div>
+							</div>
+							<div class="action1">
+								<form class="textarea-style"
+									action="__URL__/handlePredictionCrispr" method="POST">
+									<textarea draggable="false" required name="ls"></textarea>
+									<input type="submit" class="btn btn-primary" value="SUBMIT"
+										data-toggle="modal" data-target="#myModal1" />
+								</form>
+							</div>
+						</div>
+						<!--//action-->
+					</div>
+				</div>
+		</div>
+		<div>
+			<!-- //container -->
+		</div>
+
+		<!-- contact -->
+		<div class="contact-top">
+			<!-- container -->
+			<div class="banner-bottom">
+				<!-- //container -->
+				<div></div>
+				<!-- //contact -->
+
+
+
+				<!--banner-bottom-->
+				<div class="banner-bottom a-hide" id="ringPanel">
+					<div class="container">
+						<!--welcome-->
+						<div class="welcome">
+							<h3 class="title" id="ringTitle">Introduction</h3>
+							<p id="ringCon"></p>
+							<div class="welcome-info">
+								<div class="col-md-8 col-md-offset-2">
+									<div class="welcome-img" id="ringGraph"
+										style="min-width: 400px; height: 400px; background-color: #fff;">
+										<!--<img src="__PUBLIC__/images/CRISPR-Cas-adaptive-immune-system.png" class="img-responsive zoom-img" alt=""/>-->
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<p></p>
+						</div>
+						<!--//welcome-->
+					</div>
+				</div>
+				<!--//banner-bottom-->
+
+				<!--services-->
+				<div class="services a-hide" id="LineGraph">
+					<div class="container">
+						<h3 class="title">Visualization of predicted CRISPR-Cas
+							system</h3>
+						<div class="servc-grids">
+							<div id="ringLineGraph" style="height: 400px;"></div>
+							<div id="detailMsg"></div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+				<!--//services-->
+
+
+				<!--modal box-->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 80px;
+	border-radius: 5px;margin:0 auto;">
+					<div class="modal-dialog">
+						<div class="modal-content" width="70">
+							<img src="__PUBLIC__/images/wait.gif" width="80" height="80" />
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+				<!--// modal box-->
+
+				<!--modal box-->
+				<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 80px;
+	border-radius: 5px;margin:0 auto;">
+					<div class="modal-dialog">
+						<div class="modal-content" width="70">
+							<img src="__PUBLIC__/images/wait.gif" width="80" height="80" />
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+				<!--// modal box-->
+</block>
+
+<block name="script"> <script src="__PUBLIC__/js/bootstrap.js"></script>
+<script src="__PUBLIC__/js/prediction.js"></script> <script
+	type="text/javascript" src="__PUBLIC__/js/lsLine.js"></script> <script
+	type="text/javascript" src="__PUBLIC__/js/ls.js"></script> <script
+	type="text/javascript" src="__PUBLIC__/js/lsTest.js"></script> <script>
+        $('.textarea-style textarea').each(function () {
+            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+        }).on('input', function () {
+             this.style.height = 'auto';
+             this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        var htm;
+
+        $("#submit").click(function(e) {
+            var text = $.trim($(".a-input").eq(0).val());
+            if ( text==null || text=="" ) {
+                $(".a-tip").eq(0).html("You have to choose a file");
+                e.preventDefault();
+            } else {
+//                e.preventDefault();
+//                var formData = new FormData();
+//                formData.append("ls", document.getElementById("ls").files[0]);
+//                $.ajax({
+//                    url: "__URL__/handleUpload2",
+//                    type: "POST",
+//                    data: formData,
+//                    success: function(data) {
+//                        data = eval(data);
+//                        console.log(data);
+//                    },
+//                    error: function() {
+//                        alert("error!");
+//                    }
+//                });
+            }
+        });
+
+        $("#eaBtn").click(function() {
+
+            var _this = $(this);
+
+            htm = $.trim($("#eaText").val());
+            if ( htm=="" ) {
+                $(this).next(".tips").removeClass("a-hide");
+                $("#ringPanel").addClass("a-hide");
+                $("#LineGraph").addClass("a-hide");
+                $(this).next(".tips").html("Please input the bacteria id you want to search");
+                return false;
+            } else {
+                $(this).next(".tips").addClass("a-hide");
+                $.ajax({
+                    url: "__URL__/handleEntryAccession",
+                    type: "POST",
+                    data: {
+                        "pid": htm,
+                    },
+                    success: function(data) {
+                        data = eval(data);
+                        console.log(data);
+                        if ( data.allLen!=0 ) {
+                            $("#ringPanel").removeClass("a-hide");
+                            $("#ringTitle").html(htm);
+                            $("#ringCon").html(data['title']);
+                            console.log(data);
+                            var objArr = ls.init("ringGraph", data);
+                            AddClickEvent(objArr);
+                        } else {
+                            _this.next(".tips").removeClass("a-hide");
+                            _this.next(".tips").html("there is no such bacteria id");
+                        }
+
+                    },
+                    error: function() {
+                        alert("error!");
+                    }
+                });
+            }
+
+        });
+
+        function AddClickEvent(arr) {
+            arr.forEach(function(curObj, index, objArr) {
+                var _this = curObj;
+                _this.obj.click(function() {
+                    _this.obj.attr("stroke-width", 2);
+                    $("#ringLineGraph").html("");
+                    $("#selfLine").html("");
+                    $("#LineGraph").removeClass("a-hide");
+                    getLineGraph(_this.data.id);
+                });
+            });
+        }
+
+        // 线性图形
+        function getLineGraph(id) {
+            id = parseInt(id);
+            $.ajax({
+                url: "__URL__/getLineData",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    "id": id,
+                    "pid": htm,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    console.log(data);
+                    if ( data ) {
+                        if ( data['exists']['exist'] ) {
+                            $("#ChangeTypeBtn").removeClass("a-hide");
+                            lsArrow.init("selfTarget", data['one']['spacers'], data['exists']['data']);
+                        }
+                        var lineArr = lsLine.init("ringLineGraph", data['one']);
+                        if ( lineArr ) {
+                            $("#detailMsg").removeClass("hide");
+                            var protein = [], spacer = [], msg1="", msg2="", msg3="", msg4="";
+                            for ( var i=0; i<lineArr.length; i++ ) {
+                                if ( lineArr[i].type ) {
+                                    spacer.push(lineArr[i].data);
+                                } else {
+                                    protein.push(lineArr[i].data);
+                                }
+                            }
+                            if ( protein.length ) {
+                                msg1 = "check cas protein info:<a style='padding-left: 10px;' href='__URL__/getProteinInfo/pid/"+htm+"/id/"+data['one']['id']+"' target='_blank'>see</a><br/>";
+                                msg3 = "check crispr locus info:<a style='padding-left: 10px;' href='__URL__/getRepeatSpacerInfo/pid/"+htm+"/id/"+data['one']['id']+"' target='_blank'>see</a><br/>";
+                                msg4 = "check cas protein sequences:<a style='padding-left: 10px;' href='__URL__/getProtein/pid/"+htm+"/id/"+data['one']['id']+"' target='_blank'>see</a><br/>";
+                            }
+                            if ( spacer.length ) {
+                                msg2 = "check spacer sequences:<a style='padding-left: 10px;' href='__URL__/getSpacer/pid/"+htm+"/id/"+data['one']['id']+"' target='_blank'>see</a><br/>";
+                            }
+                            $("#detailMsg").html("<div style='text-align: left; margin: 0 auto; width: 300px;'>"+msg1+msg3+msg4+msg2+"</div>");
+                        }
+                    } else {
+                        $("#ringLineGraph").html("获取不到任何数据");
+                    }
+                },
+                error: function() {
+                    alert("数据获取失败！");
+                }
+            });
+        }
+
+    </script> </block>

@@ -1,0 +1,8 @@
+$(document).ready(function () {   
+	$('tbody tr').hover(function() {
+		alert("aaa");
+	  $(this).addClass('odd');
+	}, function() {
+	  $(this).removeClass('odd');
+	});
+});

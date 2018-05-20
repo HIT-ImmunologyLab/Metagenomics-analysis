@@ -1,0 +1,381 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/jQuery.niceTitle.css">
+</block>
+
+<block name="interaction">
+    <li><a href="__MODULE__/Index/interaction" class="active">Interaction</a></li>
+</block>
+
+<block name="body">
+<!--banner-bottom-->
+<div class="banner-bottom">
+    <div class="container">
+        <!--welcome-->
+        <div class="welcome">
+            <h3 class="title">Inferring bacteria and phage infecting network</h3>
+            <p></p>
+            <div class="welcome-info">
+                <div class="col-md-8 col-md-offset-2">
+                    <ul style="list-style:none;">
+                            <li>
+                                <h4><b>1.Bacteria and phage infection network inferred based on spacer/proto-spacer matching</b></h4><hr />
+                                <p></p>
+                                <br />
+                            </li>
+                            <li>
+                                <h4><b>2.Bacteria and phage infection network extracted from NCBI</b></h4><hr />
+                            </li>
+                        </ul>
+                    <!--<div class="welcome-img">
+                        <img src="__PUBLIC__/images/Bacteria_phage_interaction.jpg" class="img-responsive zoom-img" alt=""/>
+                    </div>-->
+                    <!--<p><strong>The interaction between Bacteria and Phage</strong></p>-->
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <p></p>
+        </div>
+        <!--//welcome-->
+    </div>
+</div>
+<!--//banner-bottom-->
+<!--services-->
+<div class="interaction-services">
+    <div class="container a-relative">
+        <!--<h3 class="title">Services</h3>-->
+        <div class="banner-text a-absolute">
+            <h3>Message</h3>
+            <p>Select the texonomy level</p>
+            <select id="class" class="form-control">
+                <option value="specie">specie</option>
+                <option value="genus">genus</option>
+            </select>
+            <!--<a href="#" class="btn btn-1 btn-1b">More</a>-->
+        </div>
+        <div class="servc-grids" style="margin-top: 200px;">
+            <div id="tab1">
+                <table class="table table-bordered" id="table">
+                    <thead>
+                        <tr>
+                            <th>Specie</th>
+                            <th>Bacteria Num</th>
+                            <th>Phage Num</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <!--<tbody>-->
+                        <!--<foreach name="data.specie" item="sp">-->
+                            <!--<tr>-->
+                                <!--<td>{$sp.specie}</td>-->
+                                <!--<td>{$sp.bacteria_num}</td>-->
+                                <!--<td>{$sp.phage_num}</td>-->
+                                <!--<td><a href="javascript: void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="getDetailInteraction('specie', '{$sp.specie}')">details</a></td>-->
+                            <!--</tr>-->
+                        <!--</foreach>-->
+                    <!--</tbody>-->
+                </table>
+            </div>
+            <div id="tab2" class="a-hide">
+                <table class="table table-bordered" id="table2">
+                    <thead>
+                        <tr>
+                            <th>Genus</th>
+                            <th>Bacteria Num</th>
+                            <th>Phage Num</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!--<foreach name="data.genus" item="sp">-->
+                        <!--<tr>-->
+                            <!--<td>{$sp.genus}</td>-->
+                            <!--<td>{$sp.bacteria_num}</td>-->
+                            <!--<td>{$sp.phage_num}</td>-->
+                            <!--<td><a href="javascript: void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="getDetailInteraction('genus', '{$sp.genus}')">details</a></td>-->
+                        <!--</tr>-->
+                    <!--</foreach>-->
+                    </tbody>
+                </table>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!--//services-->
+<!--modal box-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <!--<div class="modal-body" id="tableContainer">
+                <table class="table table-bordered" id="detailTable">
+                    <thead>
+                        <tr>
+                            <th>Bacteria ID</th>
+                            <th>Bacteria Name</th>
+                            <th>Phage ID</th>
+                            <th>Phage Name</th>
+                            <th>Spacer ID</th>
+                            <th>Missmatch</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--modal box-->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2">sequence</h4>
+            </div>
+            <div class="modal-body" id="tableContainer2" style="overflow: scroll;">
+                <div id="sequenceBox"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--modal box-->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel3">protein message</h4>
+            </div>
+            <div class="modal-body" id="Container3">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<div class="banner-bottom" style="background-color: #f9f9f9;" id="bottom">
+    <div class="container">
+        <!--welcome-->
+        <div class="welcome">
+            <h3 class="title" id="title-detail">Know anti-crisprs information</h3>
+            <div class="welcome-info" id="acInfo">
+                <table class="table table-bordered" id="detailTable">
+                <thead id="thead-detail">
+                    <tr>
+                        <th>Bacteria ID</th>
+                        <th>Bacteria Name</th>
+                        <th>Phage ID</th>
+                        <th>Phage Name</th>
+                        <th>Spacer ID</th>
+                        <th>Missmatch</th>
+                        <th>Bacteria host in NCBI</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+    </div>
+            </div>
+        </div>
+        <!--//welcome-->
+    </div>
+</div>
+</block>
+<block name="script">
+    <script src="__PUBLIC__/js/jquery-2.2.2.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#class").change(function() {
+            console.log(1);
+            if ( $(this).val()=='specie' ) {
+                $("#tab2").addClass("a-hide");
+                $("#tab1").removeClass("a-hide");
+            } else if ( $(this).val()=='genus' ) {
+                $("#tab1").addClass("a-hide");
+                $("#tab2").removeClass("a-hide");
+                $("#table2").css("width", "100%");
+            }
+        });
+
+        $("#table").DataTable({
+            "ajax": {
+                url: "__URL__/getInteractionInfo1",
+                type: "GET"
+            },
+            "columns": [
+                { "data": "specie"},
+                { "data": "bacteria_num"},
+                { "data": "phage_num"},
+                { "data": "specie"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [3], // 目标列位置，下标从0开始
+                    "data": "specie",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        // return '<a href="javascript: void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal" onclick="getDetailInteraction(\'specie\', \''+data+'\')">details</a>';
+                        return '<a href="javascript: void(0)" class="btn btn-default" onclick="getDetailInteraction(\'specie\', \''+data+'\')">details</a>';
+                    }
+                }
+            ]
+        });
+
+        $("#table2").DataTable({
+            "ajax": {
+                url: "__URL__/getInteractionInfo2",
+                type: "GET"
+            },
+            "columns": [
+                { "data": "genus"},
+                { "data": "bacteria_num"},
+                { "data": "phage_num"},
+                { "data": "genus"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [3], // 目标列位置，下标从0开始
+                    "data": "genus",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return '<a href="javascript: void(0)" class="btn btn-default" onclick="getDetailInteraction(\'genus\', \''+data+'\')">details</a>';
+                    }
+                }
+            ]
+        });
+
+    });
+
+    function getDetailInteraction(kind, value) {
+        console.log(kind);
+        console.log(value);
+        $("#acInfo").empty();
+        $("#acInfo").html('<table class="table table-bordered" id="detailTable">\
+                <thead><tr><th>Bacteria ID</th><th>Bacteria Name</th><th>Phage ID</th><th>Phage Name</th><th>Spacer ID</th>\
+                    <th>Missmatch</th><th>Bacteria host in NCBI</th><th>Operation</th></tr></thead><tbody></tbody></table>');
+        $("#detailTable").DataTable({
+            'bProcessing': true,
+            "paging":true,
+            "ajax": {
+                url: "__URL__/getDetailInteraction",
+                type: "POST",
+                data: {
+                    "kind": kind,
+                    "value": value,
+                },
+            },
+            "columns": [
+                { "data": "bacteria_id"},
+                { "data": "bacteria_name"},
+                { "data": "phage_id"},
+                { "data": "phage_name"},
+                { "data": "spacer_id"},
+                { "data": "missmatch"},
+                { "data": "bacteria_organism"},
+//                { "data": "flag"},
+//                { "data": "id"},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [7], // 目标列位置，下标从0开始
+                    "data": "id",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var str = '<a href="javascript: void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal2" onclick="getSequenceCompare(\''+full.bacteria_id+'\', \''+full.phage_id+'\', \''+full.spacer_id+'\')">sequence</a><br/>';
+                        if ( full['flag']=='1' ) {
+                            str += '<a href="javascript: void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal3" onclick="getCreateProtein(\''+full.bacteria_id+'\', \''+full.phage_id+'\', \''+full.spacer_id+'\')">protein</a>';
+                        } else {
+                            str += "<span>intergenic</span>";
+                        }
+                        return str;
+                    }
+                }
+            ]
+        });
+        $("#title-detail").css("display","block");
+        $("#bottom").css("display","block");
+        $("#detailTable").addClass("table-text");
+        //if($("#class").get(0).selectedIndex == 0)
+        window.location.href = "#bottom";
+    }
+
+    function getSequenceCompare(b_id, p_id, s_id) {
+        $.ajax({
+            url: "__URL__/getSequenceCompare",
+            type: "POST",
+            data: {
+                "b_id": b_id,
+                "p_id": p_id,
+                "s_id": s_id,
+            },
+            success: function(data) {
+                data = eval(data);
+                console.log(data);
+                if ( data ) {
+                    var msg = "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'>spacer:</label>&nbsp;<pre " + "class='pre-style'" + " style='display: inline-block;'>" + data[0]['spacer_sequence'] + "</pre></div><br/>";
+                    msg += "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'> hit: </label>&nbsp;<pre " + "class='pre-style'" + "  style='display: inline-block;'>"+data[0]['hit_sequence']+"</pre></div><br/>";
+                    msg += "<div class='show-item'><label style='display: inline-block; width: 50px; text-align: right;'>long-hit: </label>&nbsp;<pre " + "class='pre-style'" + "  style='display: inline-block;'>"+ data[0]['long_hit_sequence']+"</pre></div>";
+                    $("#sequenceBox").html(msg);
+                } else {
+                    $("#sequenceBox").html("there is no data!");
+                }
+            },
+            error: function() {
+                console.log("error getSequenceCompare!");
+            }
+        });
+    }
+
+    function getCreateProtein(b_id, p_id, s_id) {
+        $.ajax({
+            url: "__URL__/getCreateProtein",
+            type: "POST",
+            data: {
+                "b_id": b_id,
+                "p_id": p_id,
+                "s_id": s_id,
+            },
+            success: function(data) {
+                console.log(data);
+                $("#Container3").html("");
+                var str = "";
+                if ( data ) {
+                    for ( var i=0; i<data.length; i++ ) {
+                        str += data[i]['protein_id'] + ": " + data[i]['protein_product'] + "<br/>";
+                    }
+                } else {
+                    str = "Sorry, get data error!";
+                }
+                $("#Container3").html(str);
+            },
+            error: function() {
+                console.log("error getCreateProtein!");
+            }
+        });
+    }
+</script>
+
+</block>

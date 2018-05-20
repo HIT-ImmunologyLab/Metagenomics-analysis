@@ -1,0 +1,302 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link href='http://cdn.webfont.youziku.com/webfonts/nomal/102397/46972/5a0d6ef5f629d80d6c63ae9c.css' rel='stylesheet' type='text/css' />
+    <style type="text/css">
+        .menu-icon{
+            display: block;
+            width: 42px;
+            height: 32px;
+            font-size: 30px;
+            color: #000;
+        }
+    </style>
+</block>
+
+<block name="titleBlock">
+    <h3>ANTI-CRISPR</h3>
+    <h4>Annotation of anti-crispr proteins and their homologs</h4>
+</block>
+
+<block name="body">
+
+<div class="content">
+  <div class="con_l">
+    <div class="con_l_nav">
+      <ul>
+        <li class="on a-tab" id="tab_1"><a href="javascript:void(0);"><i class="fa fa-bell menu-icon"></i><span><em>Introduction</em></span></a></li>
+        <li class="a-tab" id="tab_2"><a href="javascript:void(0);"><i class="fa fa-anchor menu-icon"></i><span><em>Anti-crisprs</em></span></a></li>
+        <li class="a-tab" id="tab_3"><a href="javascript:void(0);"><i class="fa fa-download menu-icon"></i><span><em>Download</em></span></a></li>
+      </ul>
+    </div>
+    <div class="con_l_help"> <a href="__MODULE__/Index/help#anti-cirsprs" target="_blank"><b>NEED HELP?</b><em style="box-sizing: none;">check help >></em></a> </div>
+  </div>
+  <div class="con_r">
+    <div id="ctx_1" class="a-ctx">
+        <div class="con_bt">
+          <h3>Introduction</h3>
+        </div>
+        <div class="page_cas">
+            <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Annotation of anti-crispr proteins and their homologs</h2>
+                  <p>“Anti-CRISPRs” module provides the information of 21 families of anti-CRISPRs currently identified in the CRISPR-bearing organisms, including the GeneBank ID, taxonomy, source organisms, protein size, and inhibited CRISPR-Cas systems. To assist discovering more anti-CRISPRS, we searched for the homologs of all known anti-CRISPR proteins and their surrounding gene content (five proteins upstream and downstream, respectively) for users to investigate the features of operons encoding anti-CRISPR proteins</p>
+              </div>
+          </div>
+        </div>
+    </div>
+    <div id="ctx_2" class="a-ctx a-hide ">
+        <div class="con_bt">
+            <h3>Known anti-crispr proteins</h3>
+        </div>
+        <div class="page_cas">
+            <a href="javascript:void(0);" class="download" id="downFile" style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+            <div class="clas_min">
+                <table class="table table-bordered" id="table">
+                    <thead>
+                        <tr>
+                            <th>Antiprotein ID</th>
+                            <th>Acr Family</th>
+                            <th>Original gene name</th>
+                            <th>Specific example, and source</th>
+                            <th>Size</th>
+                            <th>CRISPR-Cas system(s) inhibited</th>
+                            <th>Pubmed ids</th>
+                            <th>Operation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="graphContainer" class="page_cas a-hide">
+              <div class="con_bt">
+                <h3>Homologous proteins within putative MGEs</h3>
+              </div>
+              <div class="clas_min" style="background-color: #fff;">
+            	<a href="javascript:void(0);" class="download" id="downFile2" style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+                <div id="nameBox" class="col-md-2"></div>
+                <div id="graphBox" class="col-md-9"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div id="ctx_3" class="a-hide a-ctx">
+        <div class="con_bt">
+          <h3>Data Download</h3>
+        </div>
+        <h2></h2>
+        <div class="page_cas">
+            <div class="clas_min" style="padding-top: 20px;padding-bottom: 20px;">
+            	<span style="display: block; margin-left: 20px; margin-bottom: 10px;">Download Anti-CRISPR protein information</span>
+                <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/anticrispr.csv" class="download" style="width: 120px; margin-left: 20px;" download="Anti-CRISPR protein information.csv"><i class="fa fa-download" style="margin-right: 10px;"></i>Download</a>
+            </div>    
+        </div>
+        <h2></h2>
+        <div class="page_cas">
+            <div class="clas_min" style="padding-top: 20px;padding-bottom: 20px;">
+        		<span style="display: block; margin-left: 20px; margin-bottom: 10px;">Download Homologous protein information</span>
+                <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/homolog proteins of anti-CRISPRs.csv" class="download" style="display: inline-block; width: 170px; margin-left: 20px;" download="homolog proteins of anti-CRISPRs.csv"><i class="fa fa-download" style="margin-right: 10px;"></i>Homology Protein</a>
+                <!-- <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/proteindomain.csv" class="download" style="display: inline-block; width: 170px; margin-left: 20px;" download="proteindomain.csv"><i class="fa fa-download" style="margin-right: 10px;"></i>Protein Domain</a> -->
+            </div>    
+        </div>
+    </div>
+  </div>
+</div>
+
+</block>
+<block name="script">
+    <script src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/lsMul.js"></script>
+    <script>
+
+        $("#tab_1").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_1").removeClass("a-hide");
+        });
+        $("#tab_2").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_2").removeClass("a-hide");
+        });
+        $("#tab_3").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_3").removeClass("a-hide");
+        });
+
+        $("#download").hide();
+
+        var jsonData;
+
+        var homologsData, homologsTitle;
+
+        function getSameProtein(id, arc) {
+
+            $.ajax({
+                url: "__URL__/handleAntiCrispr",
+                type: "POST",
+                data: {
+                    "id": id,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    console.log(data);
+                    $("#graphContainer").removeClass("a-hide");
+                    window.location.href = "#graphContainer";
+                    $("#graphBox").html("");
+                    if ( data ) {
+
+                    	homologsData = 'Protein ID,Gene Name,-5 Protein,-4 Protein,-3 Protein,-2 Protein,-1 Protein,Center Protein,1 Protein,2 Protein,3 Protein,4 Protein,5 Protein\n';
+                    	homologsTitle = data[0].mid.proteinid;
+                    	for ( var i=0; i<data.length; i++ ) {
+                    		homologsData += data[i].mid.proteinid + ',' + data[i].mid.genename + ',';
+                    		if ( data[i].before ) {
+                    			var count = 5 - data[i].before.length;
+                    			// var arr = data[i].before;
+                    			// var temp = 0;
+                    			// for ( var k=0; k<arr.length-1; k++ ) {
+                    			// 	var prevPos = parseInt(arr[k][2].split(':')[0].replace('[', ''));
+                    			// 	for ( var m=k+1; m<arr.length; m++ ) {
+                    			// 		var nextPos = parseInt(arr[m][2].split(':')[0].replace('[', ''));
+                    			// 		if ( prevPos > nextPos ) {
+                    			// 			temp = arr[k];
+                    			// 			arr[k] = arr[m];
+                    			// 			arr[m] = temp;
+                    			// 		}
+                    			// 	}
+                    			// }
+                    			// console.log(arr);exit;
+                    			while( count > 0 ) {
+                    				homologsData += ',';
+                    				count --;
+                    			}
+                    			for ( var j=0; j<data[i].before.length; j++ ) {
+                    				homologsData += data[i].before[j][0] + ',';
+                    			}
+                    		} else {
+                    			homologsData += ',,,,,';
+                    		}
+                    		homologsData += data[i].mid.geneid;
+                    		if ( data[i].after) {
+                    			for ( var j=0; j<data[i].after.length; j++ ) {
+                    				homologsData += ','+data[i].after[j][0];
+                    			}
+								var count = 5 - data[i].after.length;
+                    			while( count > 0 ) {
+                    				homologsData += ',';
+                    				count --;
+                    			}
+                    		} else {
+                    			homologsData += ',,,,';
+                    		}
+                    		homologsData += '\n';
+                    	}
+
+                    	console.log(homologsData);
+
+                        lsMul.init("graphBox", data, arc);
+                        console.log("draw finished!");
+                        $("#nameBox").html("");
+                        for ( var i=0; i<data.length; i++ ) {
+                            var div = $("<div class='a-name-div' title='"+data[i]['mid']['proteinid']+":"+data[i]['mid']['genename']+"'>"+data[i]['mid']['proteinid']+":"+data[i]['mid']['genename']+":</div>");
+                            div.niceTitle();
+                            $("#nameBox").append(div);
+                        }
+                    } else {
+                        $("#graphBox").html("there is no data!");
+                    }
+                },
+                error: function() {
+                    console.log("error!");
+                }
+            });
+           window.location.href = "#graphContainer";
+        }
+
+        $("#table").DataTable({
+             "ajax": {
+                 url: "__URL__/getAntiCrisprInfo",
+                 type: "GET"
+             },
+            "columns": [
+                { "data": "antiproteinid", "title":"Antiprotein ID","defaultContent":""},
+                { "data": "acr_family", "title":"Acr Family","defaultContent":""},
+                { "data": "original_gene_name", "title":"Original gene name","defaultContent": ""},
+                { "data": "source", "title":"Specific example, and source","defaultContent":""},
+                { "data": "size", "title":"Size","defaultContent":""},
+                { "data": "inhibted", "title":"inhibted","defaultContent":""},
+                { "data": "pubmed_ids", "title":"Pubmed ids","defaultContent":""},
+                { "data": "antiproteinid", "title":"Operation","defaultContent":""},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<a href='"+full.anticrisprdb+"' style='color: #5bc0de;' target='_black'>" + full.antiproteinid + "</a>";
+                    }
+                },{
+                    "targets": [6], // 目标列位置，下标从0开始
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<a href='"+full.url+"' style='color: #5bc0de;' target='_black'>" + full.pubmed_ids + "</a>";
+                    }
+                },{
+                    "targets": [7], // 目标列位置，下标从0开始
+                    "data": "antiproteinid",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<button href='javascript:void(0);' class='btn btn-default' onclick='getSameProtein(\""+data+"\", \""+full.acr_family+"\")'>Homologs</button>";
+                    }
+                },
+            ],
+             "fnInitComplete": function (oSettings, json) {  
+                jsonData = json;
+                $("#downFile").show();
+            },
+        });
+
+
+        $("#table").addClass("table-text");
+
+        $("#downFile").click(function() {
+            // console.log(jsonData);
+            var data = "antiproteinid,acr_family,original_gene_name,source,size,inhibted,pubmed_ids,antiproteinid,url,query\n";
+            var objArr = jsonData['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['antiproteinid'] + "," 
+                        + obj['acr_family'] + "," 
+                        + obj['original_gene_name'] + "," 
+                        + obj['source'] + "," 
+                        + obj['size'] + "," 
+                        + obj['inhibted'] + "," 
+                        + obj['pubmed_ids'] + "," 
+                        + obj['antiproteinid'] + "," 
+                        + obj['url'] + "," 
+                        + obj['query'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "anti-crispr.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+
+        $("#downFile2").click(function() {
+            const blob = new Blob([homologsData], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = homologsTitle + "-homologs.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+    </script>
+</block>

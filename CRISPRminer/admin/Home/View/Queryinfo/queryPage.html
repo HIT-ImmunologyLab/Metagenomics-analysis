@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Query</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style>
+		.page{
+			margin:0 auto;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<div class="page-header">
+			<h2>查询结果</h2>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<th>#</th>
+				<th>Domain</th>
+				<th>Phylum</th>
+				<th>Class</th>
+				<th>Subclass</th>
+				<th>Order</th>
+				<th>Suborder</th>
+				<th>Family</th>
+				<th>Genus</th>
+				<th>Species</th>
+				<th>Note</th>
+				<th>search&nbsp;result/effect/human&nbsp;disease</th>
+				<th>phenotype/result</th>
+				<th>disease&nbsp;host/affect</th>
+				<th>Pathway/Mechanism</th>
+				<th>Protein</th>
+				<th>compound/metabolites</th>
+				<th>Paper&nbsp;title</th>
+				<th>Pubmed&nbsp;iD</th>
+				<th>doi</th>
+				<th>Method</th>
+				<th>other&nbsp;notes</th>
+			</thead>
+			<foreach name="info" item="vo">
+				<tr>
+				<!--这里一定要全部小写，即使数据库的某些列名含有大写字母-->
+					<td>{$vo.id}</td>
+					<td>{$vo.domain}</td>
+					<td>{$vo.phylum}</td>
+					<td>{$vo.class}</td>
+					<td>{$vo.subclass}</td>
+					<td>{$vo.order}</td>
+					<td>{$vo.suborder}</td>
+					<td>{$vo.family}</td>
+					<td>{$vo.genus}</td>
+					<td>{$vo.species}</td>
+					<td>{$vo.note}</td>
+					<td>{$vo.searchresult}</td>
+					<td>{$vo.phenotype}</td>
+					<td>{$vo.diseasehost}</td>
+					<td>{$vo.pathway}</td>
+					<td>{$vo.protein}</td>
+					<td>{$vo.compound}</td>
+					<td>{$vo.papertitle}</td>
+					<td>{$vo.pubmedid}</td>
+					<td>{$vo.doi}</td>
+					<td>{$vo.method}</td>
+					<td>{$vo.othernotes}</td>
+				</tr>
+			</foreach>
+		</table>
+		<div class="page">
+		{$page}
+		</div>
+	</div>
+</body>
+</html>

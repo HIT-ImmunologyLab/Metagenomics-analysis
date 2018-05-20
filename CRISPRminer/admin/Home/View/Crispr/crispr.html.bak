@@ -1,0 +1,915 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="crispr">
+    <li><a href="__MODULE__/Crispr/crispr" class="active">RISPR-Cas</a></li>
+</block>
+
+<block name="body">
+
+
+    <div class="contact-top">
+        <!-- container -->
+        <div class="banner-next">
+            <div class="crispr-container">
+                <div class="contact-info content-style" id="crispr-pre-first-content">
+                    <h3 class="title">Look up pre-calculated CRISPR-Cas systems</h3>
+					<hr style="height:10px;border:none;border-top:10px groove skyblue;" />
+                    <p></p><br/>
+                    <img src="__PUBLIC__/images/Crispr system(1).png" class="crispr-zoom-img" alt=""/><br/><br/>
+                    <ul>
+                        <li>
+                            <h4><b>1.Browser</b></h4><hr />
+                            <p></p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can browse all the bacteria organisms with CRISPR systems (containing both CRISPRs and Cas proteins) according to the bacteria evolutionary lineage. </p>
+                            <br />
+                        </li>
+
+                        <li>
+                            <h4><b>2.Search</b></h4><hr />
+                            <p></p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can search for an interested bacteria organism by the bacteria name, RefSeq ID.[example: Streptococcus thermophilus LMD-9 or NC_008532]</p>
+                            <br />
+                        </li>
+
+                        <li>
+                            <h4><b>3.compare</b></h4><hr />
+                            <p></p>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Users can compare the CRISPR systems among the organisms belonging to the same species or genus.</p>
+                            <br />
+                        </li>
+                    </ul>
+                    <div class="clearfix"> </div>
+                </div>
+
+
+            </div>
+
+            <div class="crispr-banner-bottom">
+                <div class="container">
+                    <!--welcome-->
+                    <div class="welcome">
+                        <h3 class="title">Statistics</h3>
+                        <p></p>
+                        <div class="welcome-info">
+                            <!--<div class="col-md-10 col-md-offset-1">-->
+                            <!--<div class="welcome-img">-->
+                            <!--<img src="__PUBLIC__/images/abc.jpg" class="img-responsive zoom-img" alt=""/>-->
+                            <!--</div>-->
+                            <!--<p><strong>Flowchart of CRISPR System Detection in Bacteria Genomes</strong></p>-->
+                            <!--</div>-->
+                            <div class="col-md-4 welcome-grids">
+                                <div class="crispr-welcome-img" style=" background-color: #fff;">
+                                    <div id="barGraph" style="height:300px; width: 100%; min-width: 150px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 welcome-grids">
+                                <div class="crispr-welcome-img" style=" background-color: #fff;">
+                                    <div id="barGraph1" style="height: 300px; width: 100%; min-width: 150px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 welcome-grids">
+                                <div class="crispr-welcome-img" style=" background-color: #fff;">
+                                    <div id="barGraph2" style="height: 300px; width: 100%; min-width: 150px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 welcome-grids">
+                                <div class="crispr-welcome-img" style=" background-color: #fff; margin-top: 20px;">
+                                    <div id="pieGraph1" style="height: 300px; width: 100%; min-width: 200px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 welcome-grids">
+                                <div class="crispr-welcome-img" style=" background-color: #fff;; margin-top: 20px;">
+                                    <div id="pieGraph2" style="height: 300px; width: 100%; min-width: 200px;"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <p></p>
+                    </div>
+                    <!--//welcome-->
+                </div>
+            </div>
+            <div class="crispr-services">
+                <div class="container">
+                    <h3 class="title">Bacteria complete genomes with CRISPRs</h3>
+                    <!--<p>Upload a file with the necessary data to predict</p>-->
+                    <div class="servc-grids">
+                        <div class="col-md-4 servc-grid">
+                            <div class="servc-icon hi-icon-effect-8">
+                                <a href="javascript:void(0)" class="hi-icon hi-icon-archive a-active" control="0"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                            </div>
+                            <h4>Browser</h4>
+                        </div>
+                        <div class="col-md-4 servc-grid">
+                            <div class="servc-icon hi-icon-effect-8">
+                                <a href="javascript:void(0)" class="hi-icon hi-icon-archive" control="1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                            </div>
+                            <h4>Search</h4>
+                        </div>
+                        <div class="col-md-4 servc-grid">
+                            <div class="servc-icon hi-icon-effect-8">
+                                <a href="javascript:void(0)" class="hi-icon hi-icon-archive" control="2"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                            </div>
+                            <h4>Compare</h4>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <!--action-->
+                    <div class="action col-md-10 col-md-offset-1" style="overflow: auto; border: 5px solid #68686A; padding: 20px; margin-top: 30px; text-align: left;">
+                        <form id="form" class="action1 a-show" action="__URL__/handleUpload" enctype="multipart/form-data">
+                            <ul id="menu" class="a-ul"></ul>
+                        </form>
+                        <div class="action1">
+                            <div class="a-banner-text">
+                                <div style="margin: 10px 0;">
+                                    <button class="checkBtn" style="width: 20px; height: 20px; background-color: #fff; border: 1px solid #000; text-align: center;" value="1"><span class="glyphicon" style="transform: none; font-size: 16px; color: #0f0; position: relative; margin-left: -5px;"></span></button>
+                                    By Bacteria Name
+                                    <button class="checkBtn" style="width: 20px; height: 20px; background-color: #fff; border: 1px solid #000; text-align: center;" value="2"><span class="glyphicon" style="transform: none; font-size: 16px; color: #0f0; position: relative; margin-left: -5px;"></span></button>
+                                    by Refseq ID Or by Genebank
+                                </div>
+                                <span style="color: #f00; font-size: 10px;" id="tip1"></span>
+                                <input type="text" class="form-control" id="searchText" placeholder="Please select the query method first" disabled>
+                                <div class="search_suggest" id="gov_search_suggest">
+                                    <ul>
+                                    </ul>
+                                </div>
+
+                                <div><span style="color: #f00; font-size: 10px;" id="tip2"></span></div>
+                                <div id="tip3" style="width: 100%; height: auto; margin-top: 20px;">
+                                    <p><bold>example</bold></p>
+                                    <p>By Bacteria Name: NC_000853 - Thermotoga maritima MSB8 chromosome, complete genome.Assembly: GCF_000008545.1</p>
+                                    <p>by Refseq ID Or by Genebank: NC_000853</p>
+                                </div>
+                                <a href="javascript:void(0)" class="btn btn-1 btn-1b" style="margin-top: 20px; margin-left: 140px;" id="searchBtn">Search</a>
+                            </div>
+                            <div id="result" style="margin-top: 20px;"></div>
+                        </div>
+                        <div class="action1">
+                            <div class="a-banner-text">
+                                <p>Select the taxonomy level</p>
+                                <select id="class" class="form-control">
+                                    <option value="specie">species</option>
+                                    <option value="genus">genus</option>
+                                </select>
+                            </div>
+                            <div class="servc-grids" style="margin-top: 20px;">
+                                <div id="tab1">
+                                    <ul class="a-ul" id="specieUl">
+                                        <!--<foreach name="data.specie" item="sp">-->
+                                        <!--<li class="item">-->
+                                        <!--<a class="glyphicon glyphicon-minus"></a>-->
+                                        <!--<a href="__URL__/graph/pid/{$sp.bacteria_id}" target="_black">{$sp.name}</a>-->
+                                        <!--</li>-->
+                                        <!--</foreach>-->
+                                    </ul>
+                                </div>
+                                <div id="tab2" class="a-hide">
+                                    <ul class="a-ul" id="genusUl">
+                                        <!--<foreach name="data.genus" item="sp">-->
+                                        <!--<li class="item">-->
+                                        <!--<a class="glyphicon glyphicon-minus"></a>-->
+                                        <!--<a href="__URL__/graph/pid/{$sp.bacteria_id}" target="_black">{$sp.name}</a>-->
+                                        <!--</li>-->
+                                        <!--</foreach>-->
+                                    </ul>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--//action-->
+                </div>
+            </div>
+
+            <!--modal box-->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"style="z-index:1046;">
+                <div class="modal-dialog"  style="z-index:1045;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Bacteria ID:<span id="myModalLabel2"></span></h4>
+                        </div>
+                        <div class="modal-body" id="tableContainer2" style="overflow: scroll;">
+                            <div id="AllLineGraph"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+            <!--// modal box-->
+
+
+
+</block>
+
+<block name="script">
+
+    <script src="__PUBLIC__/js/jquery-2.2.2.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/echarts.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/lsAllLine.js"></script>
+    <script type="text/javascript">
+
+        //实例化输入提示的JS,参数为进行查询操作时要调用的函数名
+        //var searchSuggest =  new oSearchSuggest(sendKeyWordToBack);
+
+        var limitNumber = 0, allNumber, limitNumber2 = 0, allNumber2, limitNumber3 = 0, allNumber3, baseHeight = 30, value = null, menuHeight = 0, specieNumber = 0, genusNumber = 0;
+        $(document).ready(function(){
+
+            $("#class").change(function() {
+                if ( $(this).val()=='specie' ) {
+                    appenLiToUl2(limitNumber2);
+                    $("#tab2").addClass("a-hide");
+                    $("#tab1").removeClass("a-hide");
+                } else if ( $(this).val()=='genus' ) {
+                    appenLiToUl3(limitNumber3);
+                    $("#tab1").addClass("a-hide");
+                    $("#tab2").removeClass("a-hide");
+                }
+            });
+
+            $(".checkBtn").click(function(){
+                var span = $(this).find("span").eq(0);
+                $(".checkBtn span").removeClass("glyphicon-ok");
+                $("#searchText").removeAttr("disabled");
+                $("#searchText").attr("placeholder","Please select the query method");
+                if ( span.hasClass("glyphicon-ok") ) {
+                    span.removeClass("glyphicon-ok");
+                } else {
+                    value = $(this).attr("value");
+                    span.addClass("glyphicon-ok");
+                }
+            });
+
+            $("#searchText").keyup(function(event){
+                var input = $(this);
+                var text = $.trim($(this).val());
+                var suggest = $("#gov_search_suggest");
+                //键盘选择下拉项
+                if(suggest.css('display')=='block'&& (event.keyCode == 38||event.keyCode == 40 || event.keyCode==13)){
+                    var current = suggest.find('li.hover');
+                    if(event.keyCode == 38){
+                        if(current.length>0){
+                            var prevLi = current.removeClass('hover').prev();
+                            if(prevLi.length>0){
+                                prevLi.addClass('hover');
+                                input.val(prevLi.html());
+                            }
+                        }else{
+                            var last = suggest.find('li:last');
+                            last.addClass('hover');
+                            input.val(last.html());
+                        }
+
+                    }else if(event.keyCode == 40){
+                        if(current.length>0){
+                            var nextLi = current.removeClass('hover').next();
+                            if(nextLi.length>0){
+                                nextLi.addClass('hover');
+                                input.val(nextLi.html());
+                            }
+                        }else{
+                            var first = suggest.find('li:first');
+                            first.addClass('hover');
+                            input.val(first.html());
+                        }
+                    } else if ( event.keyCode == 13 ) {
+                        suggest.hide();
+                    }
+
+                    //输入字符
+                }else{
+                    if ( text.length>=4 ) {
+                        suggest.html("");
+                        suggest.css("width", $(this).outerWidth()+"px");
+                        suggest.show();
+                        $.ajax({
+                            url: "__URL__/getTips",
+                            type: "POST",
+                            async: false,
+                            data: {
+                                "keyword": text,
+                                "value": value,
+                            },
+                            success: function(data) {
+                                data = eval(data);
+                                if ( data.length ) {
+                                    for ( var i=0; i<data.length; i++ ) {
+                                        if ( value==1 ) {
+                                            var li = $("<li>"+data[i]['name']+"</li>");
+                                        } else if ( value==2 ) {
+                                            var li = $("<li>"+data[i]['bacteria_id']+"</li>");
+                                        }
+                                        suggest.append(li);
+                                    }
+                                } else {
+                                    var li = $("<li>没有相似的数据</li>");
+                                    suggest.append(li);
+                                }
+                            },
+                            error: function(data) {
+                                var li = $("<li>访问不到数据库</li>");
+                                suggest.append(li);
+                            }
+                        });
+                    } else {
+                        suggest.hide();
+                    }
+                }
+
+            });
+
+            appenLiToUl(limitNumber);
+
+            var menu = document.getElementById("menu");
+
+            var scrollFunc = function(e) {
+                var direct=0;
+                e=e || window.event;
+                var value;
+                if(e.wheelDelta){//IE/Opera/Chrome
+                    value=e.wheelDelta;
+                }
+                if (e.detail){//Firefox
+                    value=e.detail;
+                }
+                var height;
+                height = $("#menu").height();
+                var top = $("#menu").offset().top;
+                var winH = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop | document.documentElement.scrollTop;
+                if ( height+top-scrollTop<winH/2 ) {
+                    if ( allNumber >limitNumber ) {
+                        appenLiToUl(limitNumber);
+                    }
+                }
+
+            };
+
+            var scrollFunc1 = function(e) {
+                var direct=0;
+                e=e || window.event;
+                var value;
+                if(e.wheelDelta){//IE/Opera/Chrome
+                    value=e.wheelDelta;
+                }
+                if (e.detail){//Firefox
+                    value=e.detail;
+                }
+                var height;
+                height = $("#specieUl").height();
+                var top = $("#specieUl").offset().top;
+                var winH = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop | document.documentElement.scrollTop;
+                if ( height+top-scrollTop<winH/2 ) {
+                    if ( allNumber2 >limitNumber2 ) {
+                        appenLiToUl2(limitNumber2);
+                    }
+                }
+
+            };
+
+            var scrollFunc2 = function(e) {
+                var direct=0;
+                e=e || window.event;
+                var value;
+                if(e.wheelDelta){//IE/Opera/Chrome
+                    value=e.wheelDelta;
+                }
+                if (e.detail){//Firefox
+                    value=e.detail;
+                }
+                var height;
+                height = $("#genusUl").height();
+                var top = $("#genusUl").offset().top;
+                var winH = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop | document.documentElement.scrollTop;
+                if ( height+top-scrollTop<winH/2 ) {
+                    if ( allNumber3 >limitNumber3 ) {
+                        appenLiToUl3(limitNumber3);
+                    }
+                }
+
+            };
+
+            $(document).scroll(function(){
+                if ( $(".hi-icon").eq(0).hasClass("a-active") ) {
+//                limitNumber2 = 0;
+//                limitNumber3 = 0;
+                    $("")
+                    scrollFunc(this);
+                } else if( $(".hi-icon").eq(2).hasClass("a-active") ) {
+                    if ( $("#class").val()=="specie" ) {
+//                    limitNumber = 0;
+                        scrollFunc1(this);
+                    } else if ( $("#class").val()=="genus" ) {
+                        scrollFunc2(this);
+                    }
+
+                }
+            });
+
+            $(".hi-icon").click(function(){
+                // tab styles
+                $(".hi-icon").removeClass("a-active");
+                $(this).addClass("a-active");
+                var prev = $(".a-show");
+                prev.hide();
+                var index = prev.attr("control");
+                $(".action1").eq(index).removeClass("a-show");
+                index = $(this).attr("control");
+                $(".action1").eq(index).slideDown(1000);
+                $(".action1").eq(index).addClass("a-show");
+                if ( $(".action1").eq(2).hasClass("a-show") ) {
+                    appenLiToUl2(limitNumber2);
+                    appenLiToUl3(limitNumber3);
+                }
+            });
+
+            $("#action1").eq(0).slideDown(1000);
+
+
+            $("#searchBtn").click(function() {
+                var text = $("#searchText").val();
+
+                if ( text && value) {
+                    $("#tip1").html("");
+                    $("#tip2").html("");
+                    $.ajax({
+                        url: "__URL__/getSearchBacteria",
+                        type: "POST",
+                        data: {
+                            "text": text,
+                            "value": value,
+                        },
+                        success: function(data) {
+                            data = eval(data);
+                            if ( data.length ) {
+                                $("#result").html("");
+                                var ul = $("<ul class='a-ul'></ul>");
+                                for ( var i=0; i<data.length; i++ ) {
+                                    var li = $("<li class='item'><a href='javascript:void(0)' onclick='changeIcon(this)' class='glyphicon glyphicon-minus'></a><a href='__URL__/graph/pid/"+data[i].bacteria_id+"' target='_blank'>"+data[i].name+"</a></li>");
+                                    ul.append(li);
+                                }
+                                $("#result").append(ul);
+                            } else {
+                                $("#result").html("There is no record in database!");
+                            }
+                        },
+                        error: function() {
+                            alert("error!");
+                        }
+                    });
+                } else {
+                    if ( !text ) {
+                        $("#tip1").html("Please input what you want to search");
+                    } else {
+                        $("#tip1").html("");
+                    }
+                    if ( !value ) {
+                        $("#tip2").html("Please check one type");
+                    } else {
+                        $("#tip2").html("");
+                    }
+                }
+
+            });
+
+
+            getBarCharts();
+            getPieCharts();
+
+        });
+
+        function appenLiToUl(limit) {
+            $.ajax({
+                url: "__URL__/handleCrispr",
+                type: "POST",
+                async: false,
+                data: {
+                    "limit": limit,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        allNumber = data['allLen'][0]['all'] / 100;
+                        for ( var i=0; i<data['data'].length; i++ ) {
+                            var li = $("<li class='item"+data['data'][i]['level']+"'></li>");
+                            if ( data['data'][i]['is_last']=='1' ) {
+                                li.append('<a href="__URL__/graph/pid/'+data['data'][i]['bacteria_id']+'" target="_blank">'+data['data'][i]['name']+'</a>\
+                            ');
+                            } else {
+                                li.append('<a href="javascript:void(0)" onclick="changeIcon(this)" class="glyphicon glyphicon-minus"></a>\
+                                <span>'+data['data'][i]['name']+'</span><span style="margin-left: 20px; color: #f00;">('+data['data'][i]['genomes']+' genomes)</span>\
+                            ');
+                            }
+                            $("#menu").append(li);
+                        }
+                        limitNumber ++;
+                    }
+
+
+                },
+                error: function() {
+                    alert("error!");
+                }
+            });
+
+        }
+
+        function appenLiToUl2(limit) {
+            $.ajax({
+                url: "__URL__/getSpecieData",
+                type: "POST",
+                async: false,
+                data: {
+                    "limit": limit,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        allNumber2 = data['allLen'][0]['all'] / 100;
+                        for ( var i=0; i<data['data'].length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<a href="javascript:void(0)" onclick="changeIcon(this)" class="glyphicon glyphicon-minus"></a>\
+                            <a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" onclick="getCompareGraph(\''+data['data'][i]['bacteria_id']+'\')">'+data['data'][i]['name']+'</a>\
+                        ');
+                            $("#specieUl").append(li);
+                        }
+                        limitNumber2 ++;
+                    }
+
+
+                },
+                error: function() {
+                    alert("error!");
+                }
+            });
+
+        }
+
+        function appenLiToUl3(limit) {
+            $.ajax({
+                url: "__URL__/getGenusData",
+                type: "POST",
+                async: false,
+                data: {
+                    "limit": limit,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        allNumber3 = data['allLen'][0]['all'] / 100;
+                        for ( var i=0; i<data['data'].length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<a href="javascript:void(0)" onclick="changeIcon(this, '+data['data'][i]['id']+')" class="glyphicon glyphicon-plus"></a>\
+                            <span>'+data['data'][i]['name']+'</span><span style="margin-left: 20px; color: #f00;">('+data['data'][i]['genomes']+' genomes)</span>\
+                            <ul class="a-hide"></ul>\
+                        ');
+                            $("#genusUl").append(li);
+                        }
+                        limitNumber3 ++;
+                    }
+
+
+                },
+                error: function() {
+                    alert("error!");
+                }
+            });
+
+        }
+
+        function changeIcon(_this, id) {
+            var ul = $(_this).next().next().next();
+            if ( $(_this).hasClass("glyphicon-plus") ) {
+                $(_this).removeClass("glyphicon-plus");
+                $(_this).addClass("glyphicon-minus");
+                var htm = $.trim(ul.html());
+                ul.removeClass("a-hide");
+                if ( htm==null || htm=="" ) {
+                    fillGenusWithSpecie(ul, id);
+                } else {
+                    $(_this).next().next().next().removeClass("a-hide");
+                }
+            } else {
+                $(_this).addClass("glyphicon-plus");
+                $(_this).removeClass("glyphicon-minus");
+                ul.addClass("a-hide");
+            }
+
+
+        }
+
+        function fillGenusWithSpecie(ul, id) {
+            $.ajax({
+                url: "__URL__/getSonBacteria",
+                type: "POST",
+                data: {
+                    "parent_id":id,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        for ( var i=0; i<data.length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" onclick="getCompareGraph(\''+data[i]['bacteria_id']+'\')">'+data[i]['name']+'</a>\
+                        ');
+                            ul.append(li);
+                        }
+                    }
+                },
+                error: function() {
+                    console.log("failed to get son bacteria");
+                }
+            })
+        }
+
+        function getCompareGraph(id) {
+            $.ajax({
+                url: "__URL__/getAllLineGraph",
+                type: "POST",
+                data: {
+                    "id": id,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    $("#myModalLabel2").html(id);
+                    if ( data ) {
+                        $("#AllLineGraph").html("");
+                        lsAllLine.init("AllLineGraph", data);
+                    }
+                },
+                error: function() {
+                    console.log("error!");
+                }
+            });
+        }
+
+        function getBarCharts() {
+            // 选定盒子，进行图表初始化
+            var myChart = echarts.init(document.getElementById("barGraph"));
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip : {
+					trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+					position:function(p){   //其中p为当前鼠标的位置
+						return [p[0]-120, p[1] - 50];
+					}
+                },
+                legend: {
+                    //data:['total Statistics','width crisprs','width crisprs+cas','complete genomes','width crisprs','width crisprs+cas','plasmids','width crisprs','width crisprs+cas']
+                    data: ['Statistics', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        //data : ['total genomes','with crisprs','with crisprs+cas','complete genomes','with crisprs','with crisprs+cas','plasmids','with crisprs','with crisprs+cas']
+                        data: ['total']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'Statistics',
+                        type:'bar',
+                        data:[8104489]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[62343]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[43140]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart.setOption(option);
+
+            //1
+            var myChart1 = echarts.init(document.getElementById("barGraph1"));
+            // 指定图表的配置项和数据
+            var option1 = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+					position:function(p){   //其中p为当前鼠标的位置
+						return [p[0]-120, p[1] - 50];
+					}
+                },
+                legend: {
+                    //data:['total Statistics','width crisprs','width crisprs+cas','complete genomes','width crisprs','width crisprs+cas','plasmids','width crisprs','width crisprs+cas']
+                    data: ['Statistics', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        //data : ['total genomes','with crisprs','with crisprs+cas','complete genomes','with crisprs','with crisprs+cas','plasmids','with crisprs','with crisprs+cas']
+                        data: ['complete genomes']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'Statistics',
+                        type:'bar',
+                        data:[17189]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[ 2757]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[ 2467]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart1.setOption(option1);
+
+            var myChart2 = echarts.init(document.getElementById("barGraph2"));
+            // 指定图表的配置项和数据
+            var option2 = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+					position:function(p){   //其中p为当前鼠标的位置
+						return [p[0]-120, p[1] - 50];
+					}
+                },
+                legend: {
+                    //data:['total Statistics','width crisprs','width crisprs+cas','complete genomes','width crisprs','width crisprs+cas','plasmids','width crisprs','width crisprs+cas']
+                    data: ['Statistics', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        //data : ['total genomes','with crisprs','with crisprs+cas','complete genomes','with crisprs','with crisprs+cas','plasmids','with crisprs','with crisprs+cas']
+                        data: ['plasmids']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'Statistics',
+                        type:'bar',
+                        data:[11861]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[315]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[262]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart2.setOption(option2);
+
+        }
+
+        function getPieCharts() {
+            // 选定盒子，进行图表初始化
+            var myChart1 = echarts.init(document.getElementById("pieGraph1"));
+            var option1 = {
+                title : {
+                    text: 'genus distribution',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                /*legend: {
+                 orient: 'vertical',
+                 left: 'left',
+                 data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                 },*/
+                series : [
+                    {
+                        //name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:335, name:'a'},
+                            {value:310, name:'b'},
+                            {value:234, name:'c'},
+                            {value:135, name:'d'},
+                            {value:1548, name:'others'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 将属性注入图表对象
+            myChart1.setOption(option1);
+
+            // 选定盒子，进行图表初始化
+            var myChart2 = echarts.init(document.getElementById("pieGraph2"));
+            var option2 = {
+                title : {
+                    text: '某站点用户访问来源',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                /*
+                 legend: {
+                 orient: 'vertical',
+                 left: 'left',
+                 data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                 },
+                 */
+                series : [
+                    {
+                        name: 'species distribution',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:335, name:'a'},
+                            {value:310, name:'b'},
+                            {value:234, name:'c'},
+                            {value:135, name:'d'},
+                            {value:1548, name:'others'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 将属性注入图表对象
+            myChart2.setOption(option2);
+        }
+
+    </script>
+
+</block>

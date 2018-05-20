@@ -1,0 +1,110 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+</block>
+
+
+<block name="selftarget">
+    <li><a href="__MODULE__/Index/selfTarget" class="active">Self-targeting</a></li>
+</block>
+
+<block name="body">
+<!--banner-bottom-->
+<div class="banner-bottom">
+    <div class="slef-container">
+        <!--welcome-->
+        <div class="welcome">
+            <h3 class="title">Searching for self-targeting spacers</h3>
+            <p></p>
+            <div class="welcome-info">
+                <div class="col-md-8 col-md-offset-2" id="self-first-content">
+                    <ul>
+                        <li>
+                            <p><b>1.Self-targeting spacers reported in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2910793/">Stem et al (Trends Genet)</a> </b></p>
+                        </li>
+
+                        <li>
+                            <p><b>2.Self-targeting spacers detected in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2910793/">our study</a></b></p>
+                        </li><br />
+                    </ul>
+                    <div class="welcome-img" style="background-color:#fff;">
+                        <img src="__PUBLIC__/images/self-targeting.png" class="img-responsive zoom-img" alt=""/>
+
+                    </div>
+                    <p><strong>Self Targeting</strong></p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <p></p>
+        </div>
+        <!--//welcome-->
+    </div>
+</div>
+<!--//banner-bottom-->
+<!--services-->
+<div class="selfTarget-services">
+    <div class="container">
+        <h3 class="title">self-targeting CRISPRs</h3>
+        <div class="servc-grids">
+            <table class="table table-bordered" id="table">
+                <thead>
+                    <tr>
+                        <th>organism</th>
+                        <th>spacer accession</th>
+                        <th>spacer start</th>
+                        <th>spacer end</th>
+                        <th>proto-spacer accession</th>
+                        <th>proto-spacer start</th>
+                        <th>proto-spacer end</th>
+                        <th>target category</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <foreach name="list" item="li">
+                        <tr>
+                            <td>{$li.organism}</td>
+                            <td>{$li.spacer_accession}</td>
+                            <td>{$li.spacer_start}</td>
+                            <td>{$li.spacer_end}</td>
+                            <td>{$li.proto_spacer_accession}</td>
+                            <td>{$li.proto_spacer_start}</td>
+                            <td>{$li.proto_spacer_end}</td>
+                            <td>{$li.target_category}</td>
+                        </tr>
+                    </foreach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--//services-->
+</block>
+
+<block name="script">
+	<script src="__PUBLIC__/js/style-table.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#table").DataTable({
+                "ajax": {
+                    url: "__URL__/getSelfTargetInfo",
+                    type: "GET"
+                },
+                "columns": [
+                    { "data": "organism"},
+                    { "data": "spacer_accession"},
+                    { "data": "spacer_start"},
+                    { "data": "spacer_end"},
+                    { "data": "proto_spacer_accession"},
+                    { "data": "proto_spacer_start"},
+                    { "data": "proto_spacer_end"},
+                    { "data": "target_category"},
+                ]
+            });
+        });
+    </script>
+</block>

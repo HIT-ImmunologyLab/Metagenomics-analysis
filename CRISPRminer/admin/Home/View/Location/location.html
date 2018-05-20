@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>access location records</title>
+	<link href="__PUBLIC__/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+	<link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+</head>
+<body>
+	<div class="jumbotron text-center">
+		<h1>the message for accessing our website</h1>
+		<p>record the ip, country, city, accessing times and last access time</p>
+	</div>
+
+	<div class="container">
+		<table class="table table-bordered">
+			<caption >there is <bold>{$count}</bold> records in all</caption>
+			<thead>
+				<th>ID</th>
+				<th>ip</th>
+				<th>country</th>
+				<th>city</th>
+				<th>times</th>
+				<th>last access</th>
+			</thead>
+			<tbody>
+				<foreach name="data" item="da" key="key">
+					<tr>
+						<td>{$key+1}</td>
+						<td>{$da.ip}</td>
+						<td>{$da.country}</td>
+						<td>{$da.city}</td>
+						<td>{$da.num}</td>
+						<td>{$da.last_access}</td>
+					</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<input type="hidden" id="current" value="{$current}">
+		<ul class="pagination" style="margin-bottom: 0px; margin-top: 0px; float: right;">
+			<li class="page"><a href="javascript:void(0)" onclick="jumpPage(0)">prev</a></li>
+			<!-- <li class="page active"><a href="javascript:void(0)" onclick="jumpPage({$i})">{$i}</a></li> -->
+			<li class="page">
+				<select name="" id="selection" style="width: 100px; height: 34px; position: relative; float: left; border: 1px solid #ddd;">
+					<for start="1" end="$pages">
+						<if condition="$current eq $i">
+							<option value="{$i}" selected="true">第{$i}页</option>
+						<else/>
+							<option value="{$i}">第{$i}页</option>
+						</if>
+					</for>
+				</select>
+			</li>
+			<li class="page"><a href="javascript:void(0)" onclick="jumpPage(1)">next</a></li>
+		</ul>
+	</div>
+
+	<div class="jumbotron text-center" style="margin-top: 20px; margin-bottom: 0;">
+		<p>CRISPRminer</p>
+	</div>
+
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+	<script type="text/javascript">
+		var current = parseInt($("#current").val());
+		$("#selection").change(function(){
+			var page = $(this).val();
+			window.location.href="__URL__/location/page/" + page;
+		});
+
+		function jumpPage(index) {
+			if ( index==0 ) {
+				window.location.href="__URL__/location/page/" + (current>1 ? current -1 : current);
+			} else {
+				window.location.href="__URL__/location/page/" + (current< {$pages}-1 ? current +1 : current);
+			}
+		}
+	</script>
+</body>
+</html>

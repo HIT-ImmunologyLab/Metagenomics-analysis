@@ -1,0 +1,573 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="titleBlock">
+    <h3 id="fileIdTitle"></h3>
+    <h4 id="bacteria_name"></h4>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <style type="text/css">
+        #tableContainer2{
+            width: 100%;
+            /*overflow: auto;*/
+        }
+        .table_li{
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .table_li p{
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            text-indent: 2em;
+        }
+    </style>
+</block>
+
+<block name="body">
+
+<input type="hidden" value="{$_GET['fileId']}" id="fileId"/>
+<input type="hidden" value="{$_GET['pid']}" id="pid"/>
+<input type="hidden" value="{$_GET['process']}" id="process"/>
+
+<div class="con con_1">
+	<div class="con_bt">
+		<h3><strong>Submission Results</strong></h3>
+	</div>
+    <div id="crisprArea">
+        <div class="con con_2" style="border-bottom: 1px solid #aa8282">
+          <div class="con_bt">
+            <h3>Visualization of predicted CRISPR-Cas system</h3>
+          </div>
+          <div class="page_cas">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="welcome-img" id="ringGraph" style="min-width: 400px; height: 480px; background-color: #fff; padding: 0; position: relative;">
+                        <!-- <p style="text-align: center;">Click the red region to check for the detail of the CRISPR system</p> -->
+                    </div>
+                </div>
+          </div>
+        </div>
+        
+        <!--services-->
+        <div class="a-hide con con_2" id="LineGraph" style="width: 100%; margin-bottom: 50px;">
+            <!-- <div class="con_bt">
+                <h3>Cas Protein</h3>
+            </div> -->
+            <div class="page_cas" id="LineItem">
+            </div>
+        </div>
+        <!--//services-->
+
+        <!--services-->
+        <div class="a-hide con con_2" id="phageInteraction" style="width: 100%; text-align: center;"> 
+            <div class="con_bt">
+                <h3>Interacting Phages based on spacer-protospacer matching</h3>
+            </div>
+            <div class="page_cas" id="phageItem">
+            </div>
+        </div>
+        <!--//services-->
+    </div>
+
+	<div id="no-result" class="hidden">
+		<div class="con con_2" style="border-bottom: 1px solid #aa8282">
+			<div class="con_bt">
+				<h3>CRISPR-Cas System</h3>
+			</div>
+	        <div class="page_cas">
+	        	<p style="text-align: center;">There is no CRISPR system detected.</p>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+
+<div id="selftargetArea" class="a-hide">
+    <div class="con con_2" style="border-bottom: 1px solid #aa8282">
+        <div class="con_bt">
+            <h3>Self-Targeting</h3>
+        </div>
+        <div class="page_cas">
+            <div class="servc-grids">
+                <table class="table table-bordered a-hide" id="table2" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Spacer ID | Start Position | Length</th>
+                        <th>Bacteria ID</th>
+                        <th>Identity</th>
+                        <th>Start Position</th>
+                        <th>End Position</th>
+                        <th>Evalue</th>
+                        <th>Bit Score</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="tip2" class="a-hide" style="padding: 20px; text-align: center; font-size: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="anticrisprArea" class="a-hide">
+    <div class="con con_2" style="border-bottom: 1px solid #aa8282">
+        <div class="con_bt">
+            <h3>Anti-CRISPR</h3>
+        </div>
+        <div class="page_cas">
+            <div class="servc-grids">
+                <table class="table table-bordered a-hide" id="table3" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Bacteria ID</th>
+                        <th>Anticrispr Message</th>
+                        <th>Evalue</th>
+                        <th>Match Rage</th>
+                        <th>Coverage</th>
+                        <th>Protein Sequence</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="tip3" class="a-hide" style="padding: 20px; text-align: center; font-size: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="classificationArea" class="a-hide">
+    <div class="con con_2" style="border-bottom: 1px solid #aa8282">
+        <div class="con_bt">
+            <h3>Classification</h3>
+        </div>
+        <div class="page_cas">
+            <div class="servc-grids">
+                <div id="tableContainer2">
+                    
+                </div>
+                <div id="tip3" class="a-hide" style="padding: 20px; text-align: center; font-size: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="interactionArea" class="a-hide">
+    <div class="con con_2" style="border-bottom: 1px solid #aa8282">
+        <div class="con_bt">
+            <h3>Microbe and Phage Interaction</h3>
+        </div>
+        <div class="page_cas">
+            <div class="servc-grids">
+                <table class="table table-bordered a-hide" id="table" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Phage ID</th>
+                        <th>Spacer ID</th>
+                        <th>Identuty</th>
+                        <th>Coverage</th>
+                        <th>Hit Length</th>
+                        <th>Hit Postition</th>
+                        <th>Spacer Sequence</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="tip" class="a-hide" style="padding: 20px; text-align: center; font-size: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/lsLine.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ls.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/lsTest.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script>
+
+        var pid = $("#pid").val();
+        var a, b;
+        if ( pid[pid.length-2]=='_' ) {
+            a = pid.substr(0, pid.length-2);
+            b = pid.substr(pid.length-1, 1);
+            pid = a + "." + b;
+        } else if ( pid[pid.length-3]=='_' ) {
+            a = pid.substr(0, pid.length-3);
+            b = pid.substr(pid.length-2, 2);
+            pid = a + "." + b;
+        }
+        var fileId = $("#fileId").val();
+
+        var logo = 0, laga = 0, laga2 = 0, laga3 = 0, tableFlag = 0;
+
+
+        $(document).ready(function() {
+
+            // crisprPanel Ajax
+            $.ajax({
+                url: "__URL__/handlePredictonGraph",
+                type: "POST",
+                data: {
+                    "pid": fileId,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    console.log(data);
+                    if ( data ) {
+                        logo = 1;
+                        $("#fileIdTitle").html(pid);
+                        $.ajax({
+                            url: "__URL__/getNameById",
+                            type:"POST",
+                            data: {
+                                "pid": pid
+                            },
+                            success: function(data2) {
+                                console.log(data2);
+                                data2 = eval(data2);
+                                var name = data2[0]['name'].split(" - ")[1];
+                                $("#bacteria_name").html(name);
+                            },
+                            error: function() {
+                                console.log("get name by id error!");
+                            }
+                        });
+                        $("#ringCon").html(data['title']);
+                        var objArr = ls.init("ringGraph", data);
+
+                        var crisprone = $("<a class='link' href='http://omics.informatics.indiana.edu/CRISPRone/crisprone-view.php?col=complete&name="+pid+"&id="+pid+".1&what=summary' target='_blank' style='position: absolute; left: 170px; top: 5px;'>CRISPRone</a>")
+                        $("#ringGraph").append(crisprone);
+
+                        if ( data.link.url_phaster ) {
+                            var phaster = $("<a class='link' href='"+data.link.url_phaster+"' target='_blank' style='position: absolute; left: 170px; top: 45px;'>PHASTER</a>");
+                            $("#ringGraph").append(phaster);
+                        }
+
+                        if ( data.link.url_islangviewer ) {
+                            var viewer = $("<a class='link' href='"+data.link.url_islangviewer+"' target='_blank' style='position: absolute; left: 170px; top: 25px;'>IslangViewer</a>");
+                            $("#ringGraph").append(viewer);
+                        }
+                        AddClickEvent(objArr);
+
+                    } else {
+                    	$("#crisprArea").hidden();
+                    	$("#no-result").removeClass("a-hide");
+                    }
+
+                },
+                error: function() {
+                    $("#crisprArea").hidden();
+                    $("#no-result").removeClass("a-hide");
+                }
+            });
+
+            // selftargetPanel Ajax
+            $.ajax({
+                url: "__URL__/getPredictionSelftarget",
+                type: "POST",
+                data: {
+                    "fileId": fileId,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data.data ) {
+                        $("#selftargetArea").removeClass("a-hide");
+                        $("#tip2").addClass("a-hide");
+                        $("#tip2").html("There is no data returned");
+                        $("#table2").removeClass("a-hide");
+                        $("#table2").DataTable({
+                            "ajax": {
+                                url: "__URL__/getPredictionSelftarget",
+                                type: "POST",
+                                data: {
+                                    "fileId": fileId
+                                }
+                            },
+                            "columns": [
+                                { "data": "spacer_id"},
+                                { "data": "bacteria_id"},
+                                { "data": "identity"},
+                                { "data": "startPos"},
+                                { "data": "endPos"},
+                                { "data": "evalue"},
+                                { "data": "bitscore"},
+                            ]
+                        });
+                        laga2 = 1;
+                    } else {
+                        $("#selftargetArea").addClass("a-hide");
+                        console.log("selftargetArea data error");
+                    }
+                },
+                error: function() {
+                    $("#selftargetArea").addClass("a-hide");
+                    console.log("selftargetArea error");
+                    noResult ++;
+                }
+            });
+
+            // anticrisprPanel Ajax
+            $.ajax({
+                url: "__URL__/getPredictionAnticrispr",
+                type: "POST",
+                data: {
+                    "fileId": fileId,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data.data ) {
+                        $("#anticrisprArea").removeClass("a-hide");
+                        $("#tip3").addClass("a-hide");
+                        $("#tip3").html("There is no data returned");
+                        $("#table3").removeClass("a-hide");
+                        $("#table3").DataTable({
+                            "ajax": {
+                                url: "__URL__/getPredictionAnticrispr",
+                                type: "POST",
+                                data: {
+                                    "fileId": fileId
+                                }
+                            },
+                            "columns": [
+                                { "data": "bacteria_id"},
+                                { "data": "anticrispr_msg"},
+                                { "data": "evalue"},
+                                { "data": "match_rate"},
+                                { "data": "coverage"},
+                                { "data": "protein_sequence"},
+                            ]
+                        });
+                        laga3 = 1;
+                    } else {
+                        console.log("anticrisprArea data error");
+                    }
+                },
+                error: function() {
+                    console.log("anticrisprArea error");
+                }
+            });
+
+            // interactionPanel Ajax
+            $.ajax({
+                url: "__URL__/getPredictionInteraction",
+                type: "POST",
+                data: {
+                    "fileId": fileId,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data.data ) {
+                        $("#interactionArea").removeClass("a-hide");
+                        $("#tip").addClass("a-hide");
+                        $("#tip").html("There is no data returned");
+                        $("#table").removeClass("a-hide");
+                        $("#table").DataTable({
+                            "ajax": {
+                                url: "__URL__/getPredictionInteraction",
+                                type: "POST",
+                                data: {
+                                    "fileId": fileId
+                                }
+                            },
+                            "columns": [
+                                { "data": "id"},
+                                { "data": "spacerid"},
+                                { "data": "identuty"},
+                                { "data": "coverage"},
+                                { "data": "hit_len"},
+                                { "data": "hit_pos"},
+                                { "data": "spacer_sequence"},
+                            ]
+                        });
+                        laga = 1;
+                    } else {
+                        console.log("interactionArea data error");
+                    }
+                },
+                error: function() {
+                    console.log("interactionArea error");
+                }
+            });
+
+        });
+
+        // classificationPanel Ajax
+        $.ajax({
+            url: "__URL__/getClassification",
+            type: "POST",
+            data: {
+                "pid": pid,
+            },
+            success: function(data) {
+                data = eval(data);
+                if ( data ) {
+                    $("#classificationArea").show();
+                    for ( var i=0; i<data.length; i++ ) {
+                        var li = $('<div class="table_li"></div>');
+                        data[i]['one'] = data[i]['one'].replace(data[i]['one'].split(":")[1], '<font color="#f00">' + data[i]['one'].split(":")[1] + '</font>');
+                        li.append('<p>'+data[i]['one']+'</p>');
+                        data[i]['two'] = data[i]['two'].replace(data[i]['two'].split(":")[1], '<font color="#f00">' + data[i]['two'].split(":")[1] + '</font>');
+                        li.append('<p>'+data[i]['two']+'</p>');
+                        data[i]['three'] = data[i]['three'].replace(data[i]['three'].split(":")[1], '<font color="#f00">' + data[i]['three'].split(":")[1] + '</font>');
+                        li.append('<p>'+data[i]['three']+'</p>');
+                        var table = $('<div class="col-sm-12"><table class="table table-bordered" id="table4'+i+'"  style="width: 100%;"></table></div>');
+                        li.append(table);
+                        $("#tableContainer2").append(li);
+                        var dataset = new Array();
+                        for ( var k=0; k<data[i]['table'].length; k++ ) {
+                            if ( data[i]['table'][k]['cas_name'] ) {
+                                var set = new Array();
+                                set[0] = data[i]['table'][k]['cas_location'];
+                                set[1] = data[i]['table'][k]['cas_name'];
+                                set[2] = data[i]['table'][k]['cas_profile'];
+                                set[3] = data[i]['table'][k]['sub_type'];
+                                set[4] = data[i]['table'][k]['e_value'];
+                                dataset.push(set);
+                            }
+                        }
+                        console.log(dataset);
+                        $("#table4"+i).DataTable({
+                            data: dataset,
+                            columns: [
+                                {"title": "Cas Location"},
+                                {"title": "Cas Name"},
+                                {"title": "Cas Profile"},
+                                {"title": "(sub)types"},
+                                {"title": "E-Value"}
+                            ]
+                        });
+                        $(".table_li").css({"height": "auto"});
+                        $("#tableContainer2").css({"height": "auto"});
+                    }
+                } else {
+                    console.log('data of getClassification is null');
+                }
+                laga3 = 1;
+            },
+            error: function() {
+                $("#tip3").removeClass("a-hide");
+                $("#tip3").html("There is no data returned");
+                // $("#table3").addClass("a-hide");
+            }
+        });
+
+        function AddClickEvent(arr) {
+            console.log("AddClickEvent");
+            arr.forEach(function(curObj, index, objArr) {
+                var _this = curObj;
+                $("#ringLineGraph").html("");
+                $("#selfLine").html("");
+                $("#LineGraph").removeClass("a-hide");
+                if ( !$("#ChangeTypeBtn").hasClass("a-hide") ) {
+                    $("#ChangeTypeBtn").addClass("a-hide");
+                    $("#ChangeTypePanel").addClass("a-hide");
+                }
+                $("#ringLineGraph").css("width", "auto"); 
+                // add areas for LineItem
+                $("#LineItem").append('<div class="servc-grids">\
+                                            <h3 style="text-align: center; color: #7D0043;" id="lineGraphTitle'+index+'"><font color="#f00">'+(index+1)+'</font> : '+_this.data.startPos+' - '+(parseInt(_this.data.startPos)+parseInt(_this.data.length))+'</h3>\
+                                            <div id="ringLineGraph'+index+'" style="height: 200px;"></div>\
+                                            <div id="detailMsg'+index+'" style="text-align: center;"></div>\
+                                        </div>');
+                getLineGraph(_this.data.id, index, _this.data.startPos, (parseInt(_this.data.startPos)+parseInt(_this.data.length)));
+            });
+        }
+
+        // 线性图形
+        function getLineGraph(id, index, start, end) {
+            id = parseInt(id);
+            $.ajax({
+                url: "__URL__/getPredictionLineData",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    "id": id,
+                    "fileId": fileId,
+                    "pid": pid,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+
+                        var min = start, max = end;
+                        if ( data['one']['protein'] ) {
+                            console.log('before - min: ' + min + "\tmax: " + max);
+                            for ( var i=0; i<data['one']['protein'].length; i++ ) {
+                                if ( parseInt(data['one']['protein'][i]['startPos']) < min ) {
+                                    min = parseInt(data['one']['protein'][i]['startPos']);
+                                }
+                                if ( parseInt(data['one']['protein'][i]['endPos']) > max ) {
+                                    max = parseInt(data['one']['protein'][i]['endPos']);
+                                }
+                            }
+                            console.log('after - min: ' + min + "\tmax: " + max);
+                            $("#lineGraphTitle"+index).html('<font color="#f00">'+(index+1)+'</font> : ' + min + '-' + max);
+                        }
+
+                        $("#phageInteraction").addClass("a-hide");
+                        $("#selfTarget").html("");
+                        $("#ChangeTypeBtn").attr("value", "1");
+                        if ( data['exists']['exist'] ) {
+                            $("#phageInteraction").removeClass("a-hide");
+                            $("#phageItem").append('<div class="servc-grids">\
+                                                            <h3 style="text-align: center; color: #7D0043;"><font color="#f00">'+(index+1)+'</font> : '+start+' - '+end+'</h3>\
+                                                            <div id="selfTarget'+index+'" style="height: 400px;"></div>\
+                                                            <div id="selfMsg'+index+'"></div>\
+                                                        </div>');
+                            lsArrow.init("selfTarget"+index, data['one']['spacers'], data['exists']['data']);
+                        }
+                        var lineArr = lsLine.init("ringLineGraph"+index, data['one']);
+                        if ( lineArr ) {
+                            $("#detailMsg").removeClass("hide");
+                            var protein = [], spacer = [], msg1="", msg2="", msg3="", msg4="";
+                            for ( var i=0; i<lineArr.length; i++ ) {
+                                if ( lineArr[i].type ) {
+                                    spacer.push(lineArr[i].data);
+                                } else {
+                                    protein.push(lineArr[i].data);
+                                }
+                            }
+
+                            if ( protein.length ) {
+                                msg1 = "<a class='checkLink' href='__URL__/getPredictionProteinInfo/pid/"+fileId+"/id/"+data['one']['id']+"' target='_blank'>check cas locus and (sub)type</a>";
+                                msg3 = "<a class='checkLink' href='__URL__/getPredictionRepeatSpacerInfo/pid/"+fileId+"/id/"+data['one']['id']+"' target='_blank'>check crispr locus info</a>";
+                                msg4 = "<a class='checkLink' href='__URL__/getPredictionProtein/pid/"+fileId+"/id/"+data['one']['id']+"' target='_blank'>check cas protein sequences</a>";
+                            }
+                            if ( spacer.length ) {
+                                msg2 = "<a class='checkLink' href='__URL__/getPredictionSpacer/pid/"+fileId+"/id/"+data['one']['id']+"' target='_blank'>check spacer sequences</a><br/>";
+                            }
+                            $("#detailMsg"+index).html(msg1+msg3+msg4+msg2);
+                        }
+                    } else {
+                        $("#ringLineGraph"+index).html("获取不到任何数据");
+                    }
+                },
+                error: function() {
+                    alert("数据获取失败！");
+                }
+            });
+        }
+
+         function getProcess() {
+            $.ajax({
+                url: "__MODULE__/Crispr/getPredictionProcess",
+                type: "GET",
+                success: function(data) {
+                    $("#process").html();
+                },
+                error: function() {
+                    
+                }
+            });
+        }
+    </script>
+</block>

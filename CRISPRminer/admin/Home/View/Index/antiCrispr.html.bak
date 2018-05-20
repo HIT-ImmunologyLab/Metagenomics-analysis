@@ -1,0 +1,163 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+</block>
+
+<block name="anticrispr">
+    <li><a href="__MODULE__/Index/antiCrispr" class="active">Anti-CRISPR</a></li>
+</block>
+
+<block name="body">
+
+    <div class="banner-next">
+    <div class="container">
+        <!--welcome-->
+        <div class="welcome">
+            <h3 class="title">Annotation of anti-crispr proteins and their homologs</h3>
+            <p></p>
+            <div class="welcome-info">
+                <div class="col-md-8 col-md-offset-2" id="anti-first-content">
+                    <ul style="list-style:none;">
+                            <li>
+                                <h4><b>1.Information for known anti-crispr proteins</b></h4><hr />
+                                <p></p>
+                                <br />
+                            </li>
+                            <li>
+                                <h4><b>2.Homologs of the anti-crispr proteins</b></h4><hr />
+                            </li>
+                        </ul>
+                    <!--<div class="welcome-img">
+                        <img src="__PUBLIC__/images/Bacteria_phage_interaction.jpg" class="img-responsive zoom-img" alt=""/>
+                    </div>-->
+                    <!--<p><strong>The interaction between Bacteria and Phage</strong></p>-->
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <p></p>
+        </div>
+        <!--//welcome-->
+    </div>
+</div>
+
+    <div class="banner-bottom" style="background-color: #f9f9f9;">
+        <div class="anti-container">
+            <!--welcome-->
+            <div class="welcome">
+                <h3 class="title">Known anti-crisprs information</h3>
+                <div class="anti-welcome-info" id="acInfo">
+                    <table class="table table-bordered" id="table">
+                        <thead>
+                            <tr>
+                                <th>Antiprotein ID</th>
+                                <th>Acr Family</th>
+                                <th>Original gene name</th>
+                                <th>Specific example, and source</th>
+                                <th>Size</th>
+                                <th>CRISPR-Cas system(s) inhibited</th>
+                                <th>Pubmed ids</th>
+                                <th>Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--//welcome-->
+        </div>
+    </div>
+
+    <div class="services a-hide" id="graphContainer">
+        <div class="container">
+            <h3 class="title">Homolog proteins within putative MGEs</h3>
+            <!--action-->
+            <div class="action col-md-12" style="border: 5px solid #68686A; padding: 20px; margin-top: 30px;">
+                <div id="nameBox" class="col-md-3"></div>
+                <div id="graphBox" class="col-md-9"></div>
+            </div>
+            <!--//action-->
+        </div>
+    </div>
+
+</block>
+<block name="script">
+    <script src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/lsMul.js"></script>
+    <script>
+        function getSameProtein(id, arc) {
+            console.log(arc);
+
+            $.ajax({
+                url: "__URL__/handleAntiCrispr",
+                type: "POST",
+                data: {
+                    "id": id,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    console.log(data);
+                    $("#graphContainer").removeClass("a-hide");
+                    $("#graphBox").html("");
+                    if ( data ) {
+                        lsMul.init("graphBox", data, arc);
+                        console.log("draw finished!");
+                        $("#nameBox").html("");
+                        for ( var i=0; i<data.length; i++ ) {
+                            var div = $("<div class='a-name-div' title='"+data[i]['mid']['proteinid']+":"+data[i]['mid']['genename']+"'>"+data[i]['mid']['proteinid']+":"+data[i]['mid']['genename']+":</div>");
+                            div.niceTitle();
+                            $("#nameBox").append(div);
+                        }
+                    } else {
+                        $("#graphBox").html("there is no data!");
+                    }
+                },
+                error: function() {
+                    console.log("error!");
+                }
+            });
+           console.log(45641856);
+           window.location.href = "#graphContainer";
+           console.log(1);
+        }
+
+        $("#table").DataTable({
+             "ajax": {
+                 url: "__URL__/getAntiCrisprInfo",
+                 type: "GET"
+             },
+            "columns": [
+                { "data": "antiproteinid", "title":"Antiprotein ID","defaultContent":""},
+                { "data": "acr_family", "title":"Acr Family","defaultContent":""},
+                { "data": "original_gene_name", "title":"Original gene name","defaultContent": ""},
+                { "data": "source", "title":"Specific example, and source","defaultContent":""},
+                { "data": "size", "title":"Size","defaultContent":""},
+                { "data": "inhibted", "title":"inhibted","defaultContent":""},
+                { "data": "pubmed_ids", "title":"Pubmed ids","defaultContent":""},
+                { "data": "antiproteinid", "title":"Operation","defaultContent":""},
+            ],
+            "columnDefs": [
+                {
+                    "targets": [6], // 目标列位置，下标从0开始
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<a href='"+full.url+"' style='color: #5bc0de;' target='_black'>" + full.pubmed_ids + "</a>";
+                    }
+                },{
+                    "targets": [7], // 目标列位置，下标从0开始
+                    "data": "antiproteinid",
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<a href='javascript:void(0);' class='btn btn-default' onclick='getSameProtein(\""+data+"\", \""+full.acr_family+"\")'>Homologs</a>";
+                    }
+                },
+            ]
+        });
+
+
+        $("#table").addClass("table-text");
+    </script>
+</block>

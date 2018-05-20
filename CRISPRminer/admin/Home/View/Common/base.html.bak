@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>life science</title>
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //Custom Theme files -->
+    <link href="__PUBLIC__/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+    <!--js-->
+    <script src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/js/modernizr.custom.js"></script>
+    <block name="css"></block>
+
+    <link href="__PUBLIC__/css/style.css" type="text/css" rel="stylesheet" media="all">
+	<link href="__PUBLIC__/css/addStyle.css" type="text/css" rel="stylesheet" media="all">
+</head>
+<body>
+<!--banner-->
+<div class="banner">
+    <div class="banner-info">
+        <div class="container">
+            <div class="logo">
+                <div class="ribbon">
+                    <div class="ribbon-fold"><h1> <a href="__URL__/index">LS</a></h1></div>
+                </div>
+                <h2>Discover CRISPR System Between Bacteria And Phage</h2>
+            </div>
+            <!--navigation-->
+            <div class="top-nav">
+                <nav class="navbar navbar-default" id="a-menu1">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <!--<block name="nav">-->
+                            <ul class="nav navbar-nav  cl-effect-14">
+                                <block name="home">
+                                    <li><a href="__MODULE__/Index/index">Home</a></li>
+                                </block>
+                                <block name="prediction">
+                                    <li><a href="__MODULE__/Crispr/prediction">Prediction</a></li>
+                                </block>
+                                <block name="crispr">
+                                    <li><a href="__MODULE__/Crispr/crispr">CRISPR-Cas</a></li>
+                                </block>
+                                <block name="classification">
+                                    <li><a href="__MODULE__/Index/classification">Classification</a></li>
+                                </block>
+                                <block name="selftarget">
+                                    <li><a href="__MODULE__/Index/selfTarget">Self-targeting</a></li>
+                                </block>
+                                <block name="interaction">
+                                    <li><a href="__MODULE__/Index/interaction">Interaction</a></li>
+                                </block>
+                                <block name="anticrispr">
+                                    <li><a href="__MODULE__/Index/antiCrispr">Anti-CRISPR</a></li>
+                                </block>
+                                <block name="help">
+                                    <li><a href="__MODULE__/Index/help">Help</a></li>
+                                </block>
+                            </ul>
+                        <!--</block>-->
+
+                        <div class="clearfix"> </div>
+                    </div>
+                </nav>
+            </div>
+            <!--navigation-->
+        </div>
+    </div>
+</div>
+<!--//banner-->
+
+<block name="body"></block>
+
+
+<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >手机网站模板</a></div>
+<!--footer-->
+<div class="footer">
+    <div class="container">
+        <!--<div class="col-md-3 footer-left">
+            <h4>Address</h4>
+            <ul>
+                <li>New York Restaurant</li>
+                <li>3926 Anmoore Road</li>
+                <li>New York, NY 10014</li>
+                <li>718-749-1714</li>
+            </ul>
+        </div>
+        <div class="col-md-3 footer-left">
+            <h4>Popular</h4>
+            <ul>
+                <li><a href="#">Proin placerat</a></li>
+                <li><a href="#">Ipsum et rutrum</a></li>
+                <li><a href="#">Proin semper utr</a></li>
+                <li><a href="#">ligula sit amet</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3 footer-left">
+            <h4>Details</h4>
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-md-3 footer-right">
+            <p>Copyright &copy; 2016.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+            <div class="icons">
+                <ul>
+                    <li><a href="#" class="twitter"> </a></li>
+                    <li><a href="#" class="twitter facebook"> </a></li>
+                    <li><a href="#" class="twitter chrome"> </a></li>
+                    <li><a href="#" class="twitter pinterest"> </a></li>
+                    <li><a href="#" class="twitter linkedin"> </a></li>
+                </ul>
+            </div>
+        </div>-->
+        <div  class="foot-style">
+            <img src="__PUBLIC__/images/Anti-CRISPR-comic.png" alt="" height="250"/>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!--//footer-->
+
+<block name="script"></block>
+
+</body>
+</html>

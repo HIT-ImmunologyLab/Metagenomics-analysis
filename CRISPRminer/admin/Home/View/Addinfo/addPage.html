@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Add</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style>
+	    input.form-control{
+	    	width: 50%;
+	    }
+	    textarea.form-control{
+	    	width: 50%;
+	    }
+		.btn-reset{
+			margin-left: 30%;
+		}
+		select.form-control{
+			width: 50%;
+		}
+		#microbiota{
+			width: 30%;
+			display: inline;
+		}
+		#choosetype{
+			width: 20%;
+			display: inline;
+		}
+		div.queryPage{
+			overflow-y: scroll;
+			margin-bottom: 20px;
+		}
+		.page{
+			margin:0 auto;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.mdiv{
+			height: 20px;
+			overflow: hidden;
+		}
+		.mdiv:hover{
+			height: 100%;
+		}
+		#mtd{
+			vertical-align:text-top;
+		}
+		/*.table{
+			table-layout:fixed;
+		}*/
+		td{
+			overflow: hidden; 
+			white-space: nowrap; 
+			text-overflow: ellipsis; 
+		}
+		td div{
+			width: 250px;
+		}
+	</style>
+	<script type="text/javascript">
+		var counter = 0;
+		function addElement(){
+			counter++;
+			var input = document.createElement('input');
+			var select = document.createElement('select');
+			var tt = document.createElement('div');
+			input.id = 'microbiota' + counter;
+			input.name = 'microbiota' + counter;
+			input.className = "form-control";
+			input.style.width = "30%";
+			input.style.display = "inline";
+			select.id = 'choosetype' + counter;
+			select.name = 'choosetype' + counter;
+			select.className = "form-control";
+			select.style.width = "20%";
+			select.style.marginLeft = "4px";
+			select.style.display = "inline";
+			select.options.add(new Option("上调", "上调"));
+			select.options.add(new Option("下调", "下调"));
+			select.options.add(new Option("不确定", "不确定"));
+			tt.id = 'tt' + counter;
+			tt.innerHTML = "<br/>";
+			document.getElementById('micandtype').appendChild(tt);
+			document.getElementById('micandtype').appendChild(input);
+			document.getElementById('micandtype').appendChild(select);
+			document.getElementById('counter').value = counter;
+			
+		}
+		function dropElement(){
+			var input = document.getElementById('microbiota' + counter);
+			var select = document.getElementById('choosetype' + counter);
+			var tt = document.getElementById('tt' + counter);
+			document.getElementById('micandtype').removeChild(input);
+			document.getElementById('micandtype').removeChild(select);
+			document.getElementById('micandtype').removeChild(tt);
+			counter--;
+			document.getElementById('counter').value = counter;
+		}	
+	</script>
+</head>
+<body>
+	<div class="addPage">
+		<div class="page-header">
+			<h2>添加数据</h2>
+		</div>
+		<form action="{:U('Home/Addinfo/addinfo')}" method="post" class="form-horizontal">
+		  <div class="form-group" >
+		    <label for="domain" class="col-sm-2 control-label">Domain</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="domain" name="domain" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="phylum" class="col-sm-2 control-label">Phylum</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="phylum" name="phylum" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="class" class="col-sm-2 control-label">Class</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="class" name="class" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="subclass" class="col-sm-2 control-label">Subclass</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="subclass" name="subclass" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="order" class="col-sm-2 control-label">Order</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="order" name="order" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="suborder" class="col-sm-2 control-label">Suborder</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="suborder" name="suborder" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="family" class="col-sm-2 control-label">Family</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="family" name="family" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="genus" class="col-sm-2 control-label">Genus</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="genus" name="genus" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="species" class="col-sm-2 control-label">Species</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="species" name="species" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="note" class="col-sm-2 control-label">Note</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="note" name="note" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="abstract" class="col-sm-2 control-label">Abstract</label>
+		    <div class="col-sm-10">
+		      <textarea class="form-control" id="abstract" name="abstract" placeholder="" ></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="microbiota" class="col-sm-2 control-label">microbiota&amp;type</label>
+		    <div class="col-sm-10" id="micandtype">
+		      <input type="text" class="form-control" id="microbiota" name="microbiota" placeholder="">
+		      <select class="form-control" id="choosetype" name="choosetype">
+			  	<option>上调</option>
+			  	<option>下调</option>
+			  	<option>不确定</option>
+			  </select>
+			  <input type="hidden" name="counter" id="counter" value="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="button" class="btn btn-default" value="add" onclick="addElement()">
+			  	<input type="button" class="btn btn-default" value="delete" onclick="dropElement()">
+		    </div>
+		  </div>
+		  <div class="form-group" >
+		  	<label for="searchResult" class="col-sm-2 control-label">search&nbsp;result/effect/human&nbsp;disease</label>
+		  	<div class="col-sm-10">
+			  <select class="form-control" id="searchResult" name="searchResult">
+			  	<option>NA</option>
+			  	<option>YES</option>
+			  	<option>HD</option>
+			  </select>
+			 </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="phenotype" class="col-sm-2 control-label">phenotype/result</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="phenotype" name="phenotype" placeholder="human disease, secretion metabolites, anti-other bacteria etc">
+		    </div>
+		  </div>
+		  <div class="form-group" >
+		  	<label for="diseaseHost" class="col-sm-2 control-label">disease&nbsp;host/affect</label>
+		  	<div class="col-sm-10">
+			  <select class="form-control" id="diseaseHost" name="diseaseHost">
+			  	<option>human</option>
+			  	<option>bacteria</option>
+			  	<option>virus</option>
+			  	<option>plant</option>
+			  	<option>fungi</option>
+			  </select>
+			 </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="pathway" class="col-sm-2 control-label">Pathway/Mechanism</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="pathway" name="pathway" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="protein" class="col-sm-2 control-label">Protein</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="protein" name="protein" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="compound" class="col-sm-2 control-label">compound/metabolites</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="compound" name="compound" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="paperTitle" class="col-sm-2 control-label">Paper&nbsp;title</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="paperTitle" name="paperTitle" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="pubmedID" class="col-sm-2 control-label">Pubmed&nbsp;iD</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="pubmedID" name="pubmedID"  onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="doi" class="col-sm-2 control-label">doi</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="doi" name="doi" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="method" class="col-sm-2 control-label">Method</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="method" name="method" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="otherNotes" class="col-sm-2 control-label">other&nbsp;notes</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="otherNotes" name="otherNotes" placeholder="">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 control-label">Name</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="name" name="name" placeholder="请输入您的名字">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button type="submit" class="btn btn-default" >Submit</button>
+		      <button type="reset" class="btn btn-default btn-reset" >Reset</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 数据显示部分 -->
+	<div class="queryPage">
+		<div class="page-header">
+			<h2>查询结果</h2>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<th>#</th>
+				<th>Domain</th>
+				<th>Phylum</th>
+				<th>Class</th>
+				<th>Subclass</th>
+				<th>Order</th>
+				<th>Suborder</th>
+				<th>Family</th>
+				<th>Genus</th>
+				<th>Species</th>
+				<th>Note</th>
+				<th>Abstract</th>
+				<th>microbiota&amp;type（鼠标悬停以查看全部）</th>
+				<th><div width="150px">search&nbsp;result/effect/human&nbsp;disease</div></th>
+				<th>phenotype/result</th>
+				<th>disease&nbsp;host/affect</th>
+				<th>Pathway/Mechanism</th>
+				<th>Protein</th>
+				<th>compound/metabolites</th>
+				<th>Paper&nbsp;title</th>
+				<th>Pubmed&nbsp;iD</th>
+				<th>doi</th>
+				<th>Method</th>
+				<th>other&nbsp;notes</th>
+			</thead>
+			<foreach name="info" item="vo">
+				<tr>
+				<!--这里一定要全部小写，即使数据库的某些列名含有大写字母-->
+					<td>{$vo.id}</td>
+					<td>{$vo.domain}</td>
+					<td>{$vo.phylum}</td>
+					<td>{$vo.class}</td>
+					<td>{$vo.subclass}</td>
+					<td>{$vo.order}</td>
+					<td>{$vo.suborder}</td>
+					<td>{$vo.family}</td>
+					<td>{$vo.genus}</td>
+					<td>{$vo.species}</td>
+					<td>{$vo.note}</td>
+					<td>{$vo.abstract}</td>
+					<td id="mtd">
+						<div class="mdiv">
+							<table id="microbiota">
+								<tr>
+									<td>{$vo.microbiota}</td>
+									<td>{$vo.choosetype}</td>
+								</tr>
+								<for start="0" end="$vo.mcount" name="i">
+									<tr>
+										<td>{$vo.mics.$i.microbiota}</td>
+										<td>{$vo.mics.$i.type}</td>
+									</tr>
+								</for>
+							</table>
+						</div>
+					</td>
+					<td><div>{$vo.searchresult}</div></td>
+					<td>{$vo.phenotype}</td>
+					<td>{$vo.diseasehost}</td>
+					<td>{$vo.pathway}</td>
+					<td>{$vo.protein}</td>
+					<td>{$vo.compound}</td>
+					<td>{$vo.papertitle}</td>
+					<td>{$vo.pubmedid}</td>
+					<td>{$vo.doi}</td>
+					<td>{$vo.method}</td>
+					<td>{$vo.othernotes}</td>
+				</tr>
+			</foreach>
+		</table>	
+	</div>
+	<div class="page">
+		{$page}
+		</div>
+</body>
+</html>

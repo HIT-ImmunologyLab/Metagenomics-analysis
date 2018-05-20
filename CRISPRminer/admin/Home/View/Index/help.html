@@ -1,0 +1,205 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="titleBlock">
+    <h3>HELP</h3>
+</block>
+
+
+<block name="body">
+   <div class="content">
+      <div class="con_l">
+        <div class="con_l_nav">
+          <ul>
+            <li class="on tab"><a href="#prediction"><i><img src="__PUBLIC__/images/nav_ico_help1.png"/></i><span><em>Prediction</em></span></a></li>
+            <li class="tab"><a href="#crispr-cas"><i><img src="__PUBLIC__/images/nav_ico_help2.png"/></i><span><em>CRISPR-Cas</em></span></a></li>
+            <li class="tab"><a href="#classification"><i><img src="__PUBLIC__/images/nav_ico_help3.png"/></i><span><em>Classification</em></span></a></li>
+            <li class="tab"><a href="#self-target"><i><img src="__PUBLIC__/images/nav_ico_help4.png"/></i><span><em>Self-targeting</em></span></a></li>
+            <li class="tab"><a href="#interaction"><i><img src="__PUBLIC__/images/nav_ico_help5.png"/></i><span><em>Interaction</em></span></a></li>
+            <li class="tab"><a href="#anti-cirsprs"><i><img src="__PUBLIC__/images/nav_ico_help6.png"/></i><span><em>Anti-crisprs</em></span></a></li>
+          </ul>
+        </div>
+        <div class="con_l_help"> <a href="#"><b>NEED HELP?</b><em>check help >></em></a> </div>
+      </div>
+      <div class="con_r">
+        <div id="prediction" class="panel1">
+            <div class="con_bt">
+              <h3>Prediction <span>Discovery of CRISPR knowledge in the bacterial genome</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Input</h2>
+                  <p>Users can upload a FASTA DNA sequence file or paste the sequence in the submission page.</p>
+                  <p>As an option, users can also provide a RefSeq ID for an annotated sequence in NCBI example: NC_008532.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Prediction work-flow</h2>
+                  <p><img src="__PUBLIC__/images/flow.png"></p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="crispr-cas" class="a-hide panel1">
+            <div class="con_bt">
+              <h3>CRISPR-Cas system <span>Look up pre-calculated CRISPR-Cas systems</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Introduction of CRISPR system</h2>
+                  <p><img src="__PUBLIC__/images/system.png"></p>
+                  <p><b>CRISPR:</b> Clustered regularly interspaced short palindromic repeats</p>
+                  <p><b>Cas:</b> CRISPR associated proteins</p>
+                  <p><b>CRISPR-Cas system:</b> CRISPR and associated proteins (Cas) comprise the CRISPR-Cas system</p>
+                  <p><b>CRISPR locus:</b>  locus that contains alternate repeated elements (CRISPR repeats) and variable sequences (CRISPR spacers)</p>
+                  <p><b>The Cas proteins can be divided into four distinct functional modules:</b>  adaptation (spacer acquisition), expression (crRNA processing and target binding), interference (target cleavage), and ancillary (regulatory and other CRISPR-associated functions).</p>
+                </div>
+                <div class="content-group">
+                  <h2>CRISPR system detection work-flow</h2>
+                  <p><img src="__PUBLIC__/images/flowchart for function2.png"></p>
+                </div>
+                <div class="content-group">
+                  <h2>Browser</h2>
+                  <p>Users can browse all the bacterial and archaeal organisms with CRISPR systems (containing both CRISPRs and Cas proteins) according to the bacteria evolutionary lineage.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Compare</h2>
+                  <p>All the bacterial organisms with CRISPR systems are organized at the species or genus level. When clicking on a specific species or genus name, all CRISPR systems belonging to the organisms belonging to the selected species or genus are displayed. Thus, users can compare the CRISPR systems to see the common or distinct features among the organisms belonging to the same species or genus.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Visualization of predicted CRISPR-Cas systems</h2>
+                  <p>Our system provide both global and local views of predicted CRISPR-Cas system(s). The global view provides predicted bacterial genomic islands (GIs, regions of probable horizontal origin) using <a href="https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkx343" target="_blank">IslandViewer</a> and predicted prophage regions using <a href="https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/btn043" target="_blank" >prophinder</a> and <a href="https://academic.oup.com/nar/article/44/W1/W16/2499364/PHASTER-a-better-faster-version-of-the-PHAST-phage" target="_blank">phaster</a> for users to compare with the loci of the CRISPR systems.</p>
+                  <p>The local view provides the visualization of the CRISPR array (shown as x10 for example, 10 means the copy number of the repeats) plus the Cas proteins (cas proteins in different functional modules are drawn with different colors).</p>
+                  <p>The detailed information for the Cas genes (locations, HMM profiles and type/subtype), the CRISPR array (location, repeat and spacer) are provided at the bottom of the page.</p>
+                  <p><img src="__PUBLIC__/images/Crispr.png"></p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="classification" class="a-hide panel1">
+            <div class="con_bt">
+              <h3>Classification <span>Types and subtypes of the predicted CRISPR-Cas system</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>CRISPR types/subtypes decision rules</h2>
+                  <p>This classification is established based on cas genes content in each CRISPR-cas locus. Signature genes and distinctive gene architectures allow the assignment of these loci to types and subtypes. We summarized a table of cas gene content for each subtype (or type) <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/CRISPR type decision table2 20180430.xlsx" target="_blank">cas protein table</a>.</p>
+                  <p>For details please refer to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426118/" target="_blank">Makarova et al 2015 (Nat Rev Microbiol)</a> and <a href="http://www.nature.com/nrmicro/journal/v15/n3/full/nrmicro.2016.184.html" target="_blank">Shmakov et al 2017 (Nat Rev Microbiol)</a>.</p>
+                  <p>The classification system developed by Makarova et al and Shmakov et al encompass two classes, six types. Class 1 CRISPR–Cas systems are defined by the presence of a multisubunit crRNA–effector complex. The class includes type I and type III CRISPR–Cas systems, as well as the putative new type IV. Class 2 CRISPR–Cas systems are defined by the presence of a single subunit crRNA–effector module. This class includes type II CRISPR–Cas systems, as well as two putative new types V and VI.</p>
+                  <p>
+                    <ol>
+                      <li>Type I includes I-A, I-B, I-C, I-D, I-E, I-F, and I-U subtypes</li>
+                      <li>Type II includes II-A, II-B, and II-C subtypes</li>
+                      <li>Type III includes III-A, III-B, III-C, and III-U subtypes</li>
+                      <li>Type IV includes two distinct variants, one containing a DinG family helicase, and the other not containg DinG but typically a gene encoding a small α-helical protein, which is a putative small subunit.</li>
+                      <li>Type V includes V-A, V-B, V-C, and V-U subtypes</li>
+                      <li>Type VI includes VI-A, VI-B, and VI-U subtypes</li>
+                    </ol>
+                  </p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="self-target" class="a-hide panel1">
+            <div class="con_bt">
+              <h3>Self-targeting <span>Annotation of self-targeting spacers</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Self-targeting spacers reported in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2910793/" target="_blank">Stem et al (Trends Genet)</a></h2>
+                  <p>In Stem et al study, 23 550 spacers from 330 CRISPR encoding organisms were scanned for an exact full match between the spacer and a portion of the endogenous genomic sequence that is not part of a CRISPR array (termed target, or self proto-spacer). As a result, 100 of 23 550 spacers (0.4%) are self-targeting.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Self-targeting spacers detected in our study</h2>
+                  <p>In our study, 918,168 spacers from 62,343 CRISPR encoding organisms were tested for self-targeting to host genome using blastn .</p>
+                  <p><img src="__PUBLIC__/images/self-targeting.png"></p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="interaction" class="a-hide panel1">
+            <div class="con_bt">
+              <h3>Interaction <span>Bacteria and phage infection network</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Bacteria and phage infection network inferred based on spacers</h2>
+                  <p>To detect the interactions between the bacteria and phages. all the spacers from the CRISPR loci of the bacteria genomes were blast against all the phage genomes in our database.</p>
+                  <p>The interactions could be browsed at the species or genus level of the bacteria organisms. The information for the interacting spacers and their targeting proto-spacers, as well as the Phage genome content near proto-spacers are provided. If the proto-spacer is located in a protein region, the information about the protein is also provided.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Bacteria and phage infection network extracted from NCBI</h2>
+                  <p>Each phage genome is searched for its bacteria host which is annotated in its genebank file.</p>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="anti-cirsprs" class="a-hide panel1">
+            <div class="con_bt">
+              <h3>Anti-crisprs <span>Annotation of anti-crispr proteins and their homologs</span></h3>
+            </div>
+            <div class="page_cas">
+              <div class="page_cas_2 page-content">
+                <div class="content-group">
+                  <h2>Known anti-crispr proteins</h2>
+                  <p>Nowadays, totally 21 anti-crispr proteins were detected and validated in the CRISPR-bearing bacteria, including four from type I-E, ten from type I-F, four from type II-A, and three from type II-C.</p>
+                </div>
+                <div class="content-group">
+                  <h2>Homologs of anti-crispr proteins</h2>
+                  <p>Since a lot of other anti-crisprs are estimated to be uncovered, we searched for the homologs of all known anti-crispr proteins and their surrounding gene content (five proteins upstream and downstream, respectively) such as the HTH domain for users to investigate the features of operons encoding anti-crisprs.</p>
+                  <p><img src="__PUBLIC__/images/anti-crisprs-homologs.png"></p>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</block>
+
+<block name="script">
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            changeTab(0);
+            $(".tab").click(function(){
+                $(".tab").removeClass("on");
+                $(this).addClass("on");
+                var target = $(this).find("a").attr("href");
+                changeTab(target);
+            });
+        });
+
+        function changeTab(flag) {
+            // var target = window.location.hash;
+            
+            var target = window.location.hash;
+            if ( target ) {
+                $(".panel1").addClass("a-hide");
+                if ( flag==0 ) {
+                    $(".tab").removeClass("on");
+                    if ( target=="#prediction" ) {
+                        $(".tab").eq(0).addClass("on");
+                    } else if ( target=="#crispr-cas" ) {
+                        $(".tab").eq(1).addClass("on");
+                    } else if ( target=="#classification" ) {
+                        $(".tab").eq(2).addClass("on");
+                    } else if ( target=="#self-target" ) {
+                        $(".tab").eq(3).addClass("on");
+                    } else if ( target=="#interaction" ) {
+                        $(".tab").eq(4).addClass("on");
+                    } else if ( target=="#anti-cirsprs" ) {
+                        $(".tab").eq(5).addClass("on");
+                    } 
+                    $(target).removeClass("a-hide");
+                } else {
+                    $(flag).removeClass("a-hide");
+                }
+            }
+            
+            
+        }
+    </script>
+</block>

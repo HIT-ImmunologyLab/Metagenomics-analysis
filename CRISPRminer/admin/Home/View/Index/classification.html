@@ -1,0 +1,238 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="titleBlock">
+    <h3>CLASSIFICATION</h3>
+    <h4>Types and subtypes of the predicted CRISPR-Cas system</h4>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <style type="text/css">
+        ul li {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 200px;
+        }
+        ul {
+            margin-left: 20px;
+            font-size: 13px;
+            position: relative;
+        }
+        .menuUl li {
+            margin: 10px 0;
+        }
+        .menuUl li span {
+            font-size: 14px;
+        }
+        .menuUl li i { margin-right: 10px; top: 0px; cursor: pointer; color: #161616; font-size: 18px; z-index: 2;}
+        .menuUl>ul>ul>li:hover{
+          color: #eb6100;
+        }
+        .menuUl::before, .menuUl ul::before{
+          display:inline-block;
+          content: "";
+          position: absolute;
+          z-index: 1;
+          border: 1px dotted #000;
+          border-width: 0 0 0 1px;
+          top: 15px;
+          bottom: 10px;
+          left: 5px;
+        }
+        .quto{
+          display: inline-block;
+          width: 30px;
+          height: 20px;
+          border-radius: 2px;
+          background-color: #eee;
+          color: #666;
+          text-align: center;
+          margin-left: 10px;
+        }
+        .on{
+          color: #eb6100!important;
+        }
+    </style>
+</block>
+
+<block name="body">
+<div class="content">
+  <div class="con_l">
+    <div class="con_l_list">
+      <ul class="menuUl" style="list-style-type: none;">
+        <li class="item">
+            <i class="fa fa-folder"></i>
+            <span>Class 1</span><span class="quto">11</span>
+            <ul>
+                <li class="item">
+                    <i class="fa fa-folder-open on"></i>
+                    <a href="javascript:void(0);" onclick="getType('I', this)" class="sub on">Type I</a><span class="quto">7</span>
+                    <ul>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-A', this)" class="sub">Subtype I-A</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-B', this)" class="sub">Subtype I-B</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-C', this)" class="sub">Subtype I-C</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-D', this)" class="sub">Subtype I-D</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-E', this)" class="sub">Subtype I-E</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-F', this)" class="sub">Subtype I-F</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('I-U', this)" class="sub">Subtype I-U</a></li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <i class="fa fa-folder"></i>
+                    <a href="javascript:void(0);" onclick="getType('III', this)" class="sub">Type III</a><span class="quto">3</span>
+                    <ul>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('III-A', this)" class="sub">Subtype III-A</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('III-B', this)" class="sub">Subtype III-B</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('III-C', this)" class="sub">Subtype III-C</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('III-D', this)" class="sub">Subtype III-D</a></li>
+                    </ul>
+                </li>
+                <li class="item"><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('IV', this)" class="sub">Type IV</a><span class="quto">0</span></li>
+            </ul>
+        </li>
+        <li class="item">
+            <i class="fa fa-folder"></i>
+            <span>Class 2</span><span class="quto">14</span>
+            <ul>
+                <li class="item">
+                    <i class="fa fa-folder"></i>
+                    <a href="javascript:void(0);" onclick="getType('II', this)" class="sub">Type II</a><span class="quto">3</span>
+                    <ul>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('II-A', this)" class="sub">Subtype II-A</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('II-B', this)" class="sub">Subtype II-B</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('II-C', this)" class="sub">Subtype II-C</a></li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <i class="fa fa-folder"></i>
+                    <a href="javascript:void(0);" onclick="getType('V', this)">Type V</a><span class="quto">8</span>
+                    <ul>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('V-A', this)" class="sub">Subtype V-A</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('V-B', this)" class="sub">Subtype V-B</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('V-C', this)" class="sub">Subtype V-C</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('V-U', this)" class="sub">Subtype V-U</a></li>
+                    </ul>
+                </li>
+                <li class="item">
+                    <i class="fa fa-folder"></i>
+                    <a href="javascript:void(0);" onclick="getType('VI', this)">Type VI</a><span class="quto">3</span>
+                    <ul>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('VI-A', this)" class="sub">Subtype VI-A</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('VI-B', this)" class="sub">Subtype VI-B</a></li>
+                        <li><i class="fa fa-folder"></i><a href="javascript:void(0);" onclick="getType('VI-C', this)" class="sub">Subtype VI-C</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+      </ul>
+      <ul>
+        <li class="a-tab" id="tab"><a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/anticrispr.csv" download="CRISPR-system_subtypes.csv"><i class="fa fa-download menu-icon"></i><span><em>Download</em></span></a></li>
+      </ul>
+    </div>
+    <div class="con_l_help"> <a href="__MODULE__/Index/help#classification" target="_blank"><b>NEED HELP?</b><em>check help >></em></a> </div>
+  </div>
+  <div class="con_r">
+    <div id="ctx_1">
+      <div class="con_bt">
+        <h3>CRISPR-Cas system classification</h3>
+      </div>
+      <div class="page_cas_2 page-content" style="margin-top: 30px;">
+        <div class="content-group">
+          <p>“Classification” module provides types and subtypes of the CRISPR-Cas systems based on Cas genes contents and distinctive gene architectures according to the most recent classification studies (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426118/" target="_blank">Makarova et al 2015</a> and <a href="http://www.nature.com/nrmicro/journal/v15/n3/full/nrmicro.2016.184.html" target="_blank">Shmakov et al 2017</a>) . In this module, users can quickly browse membranes of each subtype of CRISPR-Cas systems. Each item contains information, such as Refseq ID, Genebank ID and the name of the bacterial organism, and its Cas gene content. It is convenient for users to lookup the gene composition and architecture of the respective Cas operons of each bacterium.</p>
+        </div>
+        
+        <!-- <a href="http://www.microbiome-bigdata.com:10001/CRISPRminer/Public/file/CRISPR%20type%20decision%20table2%2020170614.xlsx" target="_blank" id="aDetail">CRISPR type/subtype decision rules</a> -->
+      </div>
+      <div class="con_r_min">
+        <h2 id="tableTitle">I</h2>
+        <a href="javascript:void(0);" class="download" id="downFile" style="width: 110px;"><i class="fa fa-download menu-icon"></i><span><em>Download</em></span></a>
+        <div class="clas_min" id="tableBox" style="padding-top: 20px; width:100%;">
+          <table class="sort-table" id="table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</block>
+
+<block name="script">
+<script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <!-- <script src="__PUBLIC__/js/proTree.js"></script> -->
+    <script type="text/javascript" src="__PUBLIC__/js/script.js"></script>  
+    <script>
+
+    getType("I", null);
+
+    var jsonData, typeV;
+
+      function getType(type, _this) {
+      		typeV = type;
+            if ( _this!=null ) {
+              $(".sub").removeClass("on");
+              $(".fa").removeClass("fa-folder-open");
+              $(".fa").addClass("fa-folder");
+              $(".fa").removeClass("on");
+              $(_this).addClass("on");
+              $(_this).prev("i").addClass("fa-folder-open on");
+              $(_this).prev("i").removeClass("fa-folder");
+            }
+            
+            $("#tableTitle").html(type);
+            $("#tableBox").html('<table class="table table-bordered" id="table"></table>');
+            $("#fillBlank").hide();
+
+            $("#table").DataTable({
+                "ajax": {
+                    url: "__URL__/getType",
+                    type: "POST",
+                    data: {
+                        "type": type,
+                    }
+                },
+                "columns": [
+                    { "data": "refseq_id", "title":"Refseq ID","defaultContent":""},
+                    { "data": "genebank_id", "title":"Genebank ID","defaultContent":""},
+                    { "data": "name", "title":"Name","defaultContent": ""},
+                    { "data": "cas_locus", "title":"Respective Cas","defaultContent":""},
+                ],
+                "columnDefs": [{
+                  "targets": [0],
+                  "render": function(data, type, full) {
+                    return "<a href='http://www.microbiome-bigdata.com:10001/CRISPRminer/index.php/Home/Crispr/graph/pid/"+full.refseq_id+"' style='color: #5bc0de;' target='_black'>" + full.refseq_id + "</a>";
+                  }
+                }],
+                "fnInitComplete": function (oSettings, json) {  
+	                jsonData = json;
+	            },
+            });
+
+            $("#table").addClass("table-text");
+        }
+
+        $("#downFile").click(function() {
+        	var data = "Classification,ID,Refseq ID,Genebank ID,Name,Cas locus\n";
+        	var objArr = jsonData['data'];
+        	objArr.forEach(function(obj){
+        		obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+        		data += obj['classification'] + "," 
+        				+ obj['id'] + "," 
+        				+ obj['refseq_id'] + "," 
+        				+ obj['genebank_id'] + "," 
+        				+ obj['name'] + "," 
+        				+ obj['cas_locus'] + "\n";
+        	});
+        	const blob = new Blob([data], {type: "text/csv"});
+        	this.href = URL.createObjectURL(blob);
+			this.download = "cla_"+typeV+".csv";
+			click();
+			URL.revokeObjectURL(this.href);
+        });
+       
+    </script>
+</block>

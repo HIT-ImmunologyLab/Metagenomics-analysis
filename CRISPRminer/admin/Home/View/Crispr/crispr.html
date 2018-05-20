@@ -1,0 +1,1045 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+<block name="titleBlock">
+    <h3>CRISPR-cas</h3>
+    <h4>Look up pre-calculated CRISPR-cas systems</h4>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <style type="text/css">
+        .quto{
+            display: inline-block;
+            width: 30px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 4px;
+            background-color: #eee;
+            color: #666;
+            margin-left: 10px;
+        }
+        #menu li{position: relative;}
+        #menu i:hover{cursor: pointer;}
+        #menu li::before{
+          display:inline-block;
+          content: "";
+          position: absolute;
+          z-index: 1;
+          border: 1px dotted #000;
+          border-width: 0 0 0 1px;
+          top: 15px;
+          bottom: 10px;
+          left: -10px;
+        }
+        .menu-icon{
+            display: block;
+            width: 42px;
+            height: 32px;
+            font-size: 30px;
+            color: #000;
+        }
+        #table th:last-child,
+        #table td:last-child{
+        	width: 100px;
+        }
+
+    </style>
+</block>
+    
+
+<block name="body">
+    <div class="content">
+      <div class="con_l">
+        <div class="con_l_nav">
+          <ul>
+            <li class="on a-tab" id="tab_1"><a href="javascript:void(0);"><i><img src="__PUBLIC__/images/con_l_nav_ico_1.png"/></i><span><em>Statistics</em></span></a></li>
+            <li class="a-tab" id="tab_2"><a href="javascript:void(0);"><i><img src="__PUBLIC__/images/con_l_nav_ico_2.png"/></i><span><em>Look up pre-calculated CRISPR-cas systems</em></span></a></li>
+            <li class="a-tab" id="tab_3"><a href="javascript:void(0);"><i class="menu-icon fa fa-eye"></i><span><em>Browse</em></span></a></li>
+            <li class="a-tab" id="tab_4"><a href="javascript:void(0);"><i class="menu-icon fa fa-search"></i><span><em>Search</em></span></a></li>
+            <li class="a-tab" id="tab_5"><a href="javascript:void(0);"><i class="menu-icon fa fa-exchange"></i><span><em>Compare</em></span></a></li>
+          </ul>
+        </div>
+        <div class="con_l_help"> <a href="__MODULE__/Index/help#crispr-cas" target="_blank"><b>NEED HELP?</b><em style="box-sizing: none;">check help >></em></a> </div>
+      </div>
+      <div class="con_r">
+        <div id="ctx_1" class="a-ctx">
+            <div class="con_bt">
+              <h3>Statistics</h3>
+            </div>
+            <div class="page_cas">
+                <div class="page_cas_2" style="margin-bottom: 20px;">
+                    <div class="col-md-4">
+                        <div id="barGraph" style="height:300px; width: 100%; min-width: 150px;"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="barGraph1" style="height: 300px; width: 100%; min-width: 150px;"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="barGraph2" style="height: 300px; width: 100%; min-width: 150px;"></div>
+                    </div>
+                </div>
+                <div class="page_cas_2" style="margin-bottom: 20px;">
+                     <div class="col-md-6">
+                        <div id="pieGraph1" style="height: 300px; width: 100%; min-width: 200px;"></div>
+                    </div>
+                     <div class="col-md-6">
+                        <div id="pieGraph2" style="height: 300px; width: 100%; min-width: 200px;"></div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="ctx_2" class="a-hide a-ctx">
+             <div class="con_bt">
+                  <h3>Look up pre-calculated CRISPR-cas systems</h3>
+                </div>
+                <div class="page_cas">
+                  <div class="page_cas_2 page-content">
+                    <div class="content-group">
+                      <p>In “CRISPR-Cas” module, users can browse the pre-calculated CRISPR-Cas systems through taxonomy tree, or fuzzy search of the bacterial and archaeal description or RefSeq accession numbers to visualize the detailed information. It also provides both global and local views to check and compare the predicted CRISPR-Cas systems. The global view provides the CRISPR-Cas regions coupled with the predicted bacterial genomic islands (GIs) using IslandViewer and predicted prophage regions using prophinder and phaster.</p>
+                      <p>The local view provides the visualization of the CRISPR array plus the Cas proteins (coloured based on their functions such as acquisition, ancillary, CASCADE, crRNA maturation and helper) with the detailed information for the CRISPR array (location, repeat and spacer) and the Cas genes (location, HMM profiles and type/subtype) provided at the bottom of the page when clicking on a CRISPR region in the global view.</p>
+                      <h2>1.Browser</h2>
+                      <p>Users can browse all the bacterial and archaeal organisms with CRISPR systems (containing both CRISPRs locus and Cas proteins) according to the bacteria evolutionary lineage.</p>
+                      <h2>2.Search</h2>
+                      <p>Users can search for an interested bacteria organism by the bacteria name or RefSeq ID.[example: Streptococcus thermophilus LMD-9 or NC_008532]</p>
+                      <h2>3.Compare</h2>
+                      <p>Users can compare the CRISPR systems among the organisms belonging to the same species or genus.</p>
+                    </div>
+                  </div>
+                </div>
+        </div>
+        <div id="ctx_3" class="a-hide a-ctx">
+            <div class="con_bt">
+              <h3>Bacterial and archaeal genomes with CRISPRs</h3>
+            </div>
+            <div class="page_cas">
+              <h2>Browse via taxonomy tree</h2>
+              <div class="page_cas_2">
+                <form id="form" action="__URL__/handleUpload" enctype="multipart/form-data">
+                    <ul id="menu" class="a-ul"></ul>
+                </form>
+              </div>
+            </div>
+        </div>  
+        <div id="ctx_4" class="a-hide a-ctx">
+            <div class="con_bt">
+              <h3>Bacterial genomes with CRISPRs</h3>
+            </div>
+            <div class="page_cas">
+              <h2>Search</h2>
+              <div class="page_cas_2" style="padding-top: 35px; padding-bottom: 55px;">
+                <div class="conn" style="position: relative;">
+                    <span style="color: #f00; font-size: 10px;" id="tip1"></span>
+                    <input type="text" class="form-control" id="searchText" placeholder="Please input the description which you want to search">
+
+                    <div><span style="color: #f00; font-size: 10px;" id="tip2"></span></div>
+                    <div id="tip3" style="width: 100%; height: auto; margin-top: 20px;">
+                        <p><bold>example</bold></p>
+                        <p>By Description: NC_000853 - Thermotoga maritima MSB8 chromosome, complete genome.Assembly: GCF_000008545.1</p>
+                        <!-- <p>by Refseq ID Or by Genebank: NC_000853</p> -->
+                    </div>
+                    <div class="search_suggest" id="gov_search_suggest">
+                        <ul>
+                        </ul>
+                    </div>
+                    <a href="javascrip: void(0)" class="btn btn-1 btn-1b" id="example">example</a>
+                    <a href="javascript:void(0)" class="btn btn-1 btn-1b" id="searchBtn">Search</a>
+                    <a href="javascript:void(0)" class="btn btn-1 btn-1b" id="resetBtn">reset</a>
+                </div>
+              </div>
+              <div class="page_cas_2 a-hide" style="margin-top: 20px;" id="resultPanel">
+                  <div id="result"></div>
+              </div>
+            </div>
+        </div>    
+        <div id="ctx_5" class="a-hide a-ctx">
+            <div class="con_bt">
+              <h3>Bacterial genomes with CRISPRs</h3>
+            </div>
+            <div class="page_cas">
+              <h2>Compare</h2>
+              <div class="page_cas_2">
+                <div class="a-banner-text">
+                    <p>Select the taxonomy level</p>
+                    <select id="class" class="form-control">
+                        <option value="specie">species</option>
+                        <option value="genus">genus</option>
+                    </select>
+                </div>
+              </div>
+              <div class="page_cas_2 a-hide" style="margin-top: 20px;" id="comparePanel">
+                <div class="servc-grids">
+                    <div id="tab1">
+                        <ul class="a-ul" id="specieUl">
+                        </ul>
+                    </div>
+                    <div id="tab2" class="a-hide">
+                        <ul class="a-ul" id="genusUl">
+                        </ul>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>      
+      </div>
+    </div>
+
+    <!--modal box-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:1046;">
+        <div class="modal-dialog"  style="z-index:1045;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Bacteria ID:<span id="myModalLabel2"></span></h4>
+                </div>
+                <div class="modal-body" id="tableContainer2" style="overflow: scroll;">
+                    <div id="AllLineGraph"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--// modal box-->
+
+     <!--modal box-->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel22" aria-hidden="true" style="z-index:1046;">
+        <div class="modal-dialog"  style="z-index:1045; width: 1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Detail Message Under <span id="type_name" style="color: orange"></span> <span id="detail_name" style="color:#f00;"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="table_detail">
+                        
+                    </div>
+                    <div id="table_protein_detail" class="a-hide">
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--// modal box-->
+
+</block>
+
+<block name="script">
+
+    <script src="__PUBLIC__/js/jquery-2.2.2.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/echarts.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jQuery.niceTitle.js"></script>
+    <script src="__PUBLIC__/js/lsAllLine.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        var limitNumber = 0, allNumber, limitNumber2 = 0, allNumber2, limitNumber3 = 0, allNumber3, baseHeight = 30, value = null, menuHeight = 0, specieNumber = 0, genusNumber = 0;
+
+
+        var value = 1;
+
+        $("#tab_1").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_1").removeClass("a-hide");
+            // $("#ctx_1").addClass("a-show");
+        });
+        $("#tab_2").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_2").removeClass("a-hide");
+            // $("#ctx_2").addClass("a-show");
+        });
+        $("#tab_3").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_3").removeClass("a-hide");
+            // $("#ctx_3").addClass("a-show");
+        });
+        $("#tab_4").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_4").removeClass("a-hide");
+            // $("#ctx_4").addClass("a-show");
+        });
+        $("#tab_5").click(function(){
+            $(".a-tab").removeClass("on");
+            $(this).addClass("on");
+            $(".a-ctx").addClass("a-hide");
+            $("#ctx_5").removeClass("a-hide");
+            // $("#ctx_5").addClass("a-show");
+        });
+
+        $(document).ready(function(){
+
+            $("#class").change(function() {
+                if ( $(this).val()=='specie' ) {
+                    appenLiToUl2(limitNumber2);
+                    $("#tab2").addClass("a-hide");
+                    $("#tab1").removeClass("a-hide");
+                } else if ( $(this).val()=='genus' ) {
+                    appenLiToUl3(limitNumber3);
+                    $("#tab1").addClass("a-hide");
+                    $("#tab2").removeClass("a-hide");
+                }
+            });
+
+            $("#example").click(function(){
+                $(".checkBtn").eq(0).find("span").removeClass("glyphicon-ok");
+                $(".checkBtn").eq(1).find("span").addClass("glyphicon-ok");
+                value = 2;
+                $("#searchText").removeAttr("disabled");
+                $("#searchText").val("NC_000853");
+            });
+
+            $(".checkBtn").click(function(){
+                var span = $(this).find("span").eq(0);
+                $(".checkBtn span").removeClass("glyphicon-ok");
+                $("#searchText").removeAttr("disabled");
+                $("#searchText").attr("placeholder","Please select the query method");
+                if ( span.hasClass("glyphicon-ok") ) {
+                    span.removeClass("glyphicon-ok");
+                } else {
+                    value = $(this).attr("value");
+                    span.addClass("glyphicon-ok");
+                }
+            });
+
+            $("#searchText").keyup(function(event){
+                var input = $(this);
+                var text = $.trim($(this).val());
+                var suggest = $("#gov_search_suggest");
+                //键盘选择下拉项
+                if(suggest.css('display')=='block'&& (event.keyCode == 38||event.keyCode == 40 || event.keyCode==13)){
+                    var current = suggest.find('li.hover');
+                    if(event.keyCode == 38){
+                        if(current.length>0){
+                            var prevLi = current.removeClass('hover').prev();
+                            if(prevLi.length>0){
+                                prevLi.addClass('hover');
+                                input.val(prevLi.html());
+                            }
+                        }else{
+                            var last = suggest.find('li:last');
+                            last.addClass('hover');
+                            input.val(last.html());
+                        }
+
+                    }else if(event.keyCode == 40){
+                        if(current.length>0){
+                            var nextLi = current.removeClass('hover').next();
+                            if(nextLi.length>0){
+                                nextLi.addClass('hover');
+                                input.val(nextLi.html());
+                            }
+                        }else{
+                            var first = suggest.find('li:first');
+                            first.addClass('hover');
+                            input.val(first.html());
+                        }
+                    } else if ( event.keyCode == 13 ) {
+                        suggest.hide();
+                    }
+
+                    //输入字符
+                }else{
+                    if ( text.length>=4 ) {
+                        suggest.html("");
+                        suggest.css("width", $(this).outerWidth()+"px");
+                        suggest.show();
+                        $.ajax({
+                            url: "__URL__/getTips",
+                            type: "POST",
+                            async: false,
+                            data: {
+                                "keyword": text,
+                                "value": value,
+                            },
+                            success: function(data) {
+                                data = eval(data);
+                                if ( data.length ) {
+                                    for ( var i=0; i<data.length; i++ ) {
+                                        if ( value==1 ) {
+                                            var li = $("<li onclick='fillText(this)' style='white-space: nowrap; text-overflow: ellipsis;''>"+data[i]['name']+"</li>");
+                                        } else if ( value==2 ) {
+                                            var li = $("<li onclick='fillText(this)' style='white-space: nowrap; text-overflow: ellipsis;''>"+data[i]['bacteria_id']+"</li>");
+                                        }
+                                        suggest.append(li);
+                                    }
+                                } else {
+                                    var li = $("<li>no similar data</li>");
+                                    suggest.append(li);
+                                }
+                            },
+                            error: function(data) {
+                                var li = $("<li>can't access database</li>");
+                                suggest.append(li);
+                            }
+                        });
+                    } else {
+                        suggest.hide();
+                    }
+                }
+
+            });
+
+             $("#searchBtn").click(function() {
+                var text = $("#searchText").val();
+
+                if ( text && value) {
+                    $("#tip1").html("");
+                    $("#gov_search_suggest").css({
+                        "margin-top": "0px"
+                    });
+                    $("#tip2").html("");
+                    $("#resultPanel").removeClass("a-hide");
+                    $.ajax({
+                        url: "__URL__/getSearchBacteria",
+                        type: "POST",
+                        data: {
+                            "text": text,
+                            "value": value,
+                        },
+                        success: function(data) {
+                            data = eval(data);
+                            if ( data.length ) {
+                                $("#result").html("");
+                                var ul = $("<ul class='a-ul'></ul>");
+                                for ( var i=0; i<data.length; i++ ) {
+                                    var li = $("<li class='item''><i class='fa fa-file' style='color: #eb6100'></i><a href='__URL__/graph/pid/"+data[i].bacteria_id+"' target='_blank' style='color: #eb6100'>"+data[i].name+"</a></li>");
+                                    ul.append(li);
+                                }
+                                $("#result").append(ul);
+                            } else {
+                                $("#result").html("There is no record in database!");
+                            }
+                        },
+                        error: function() {
+                            alert("error!");
+                        }
+                    });
+                } else {
+                    if ( !text ) {
+                        $("#tip1").html("Please input what you want to search");
+                        $("#gov_search_suggest").css({
+                        "margin-top": "20px"
+                        });
+                    } else {
+                        $("#tip1").html("");
+                        $("#gov_search_suggest").css({
+                        "margin-top": "0px"
+                        });
+                    }
+                    if ( !value ) {
+                        $("#tip2").html("Please check one type");
+                    } else {
+                        $("#tip2").html("");
+                    }
+                }
+
+            });
+
+            $("#resetBtn").click(function(){
+                $("#tip1").html("");
+                $("#gov_search_suggest").css({
+                    "margin-top": "0px"
+                });
+                $("#tip2").html("");
+                $("#resultPanel").addClass("a-hide");
+                $("#searchText").val("");
+            });
+
+
+            getBarCharts();
+            $.ajax({
+                url: "__URL__/getPieData",
+                type: "POST",
+                success: function(data) {
+                    if ( data ) {
+                        getPieCharts(data['genus'], data['specie']);
+                    } else {
+                        var data1 = [{"name": "Mycobacterium", "value": "11785"},{"name": "Escherichia", "value": "6425"},{"name": "Clostridioides", "value": "6076"},{"name": "Salmonella", "value": "5875"},{"name": "Pseudomonas", "value": "2449"},{"name": "Staphylococcus", "value": "1797"},{"name": "Streptococcus", "value": "1740"},{"name": "Streptomyces", "value": "1247"},{"name": "Shigella", "value": "1134"},{"name": "others", "value": "23269"}];
+                        var data2 = [{"name": "Mycobacterium tuberculosis", "value": "11322"},{"name": "Escherichia coli", "value": "6371"},{"name": "Clostridioides difficile", "value": "6076"},{"name": "Salmonella enterica", "value": "5874"},{"name": "Nitritalea halalkaliphila", "value": "4266"},{"name": "Pseudomonas aeruginosa", "value": "2093"},{"name": "Staphylococcus aureus", "value": "1571"},{"name": "Shigella sonnei", "value": "1043"},{"name": "others", "value": "23181"},];
+                        getPieCharts(data1, data2);
+                    }
+
+                },
+                error: function() {
+                    var data1 = [{"name": "Mycobacterium", "value": "11785"},{"name": "Escherichia", "value": "6425"},{"name": "Clostridioides", "value": "6076"},{"name": "Salmonella", "value": "5875"},{"name": "Pseudomonas", "value": "2449"},{"name": "Staphylococcus", "value": "1797"},{"name": "Streptococcus", "value": "1740"},{"name": "Streptomyces", "value": "1247"},{"name": "Shigella", "value": "1134"},{"name": "others", "value": "23269"}];
+                    var data2 = [{"name": "Mycobacterium tuberculosis", "value": "11322"},{"name": "Escherichia coli", "value": "6371"},{"name": "Clostridioides difficile", "value": "6076"},{"name": "Salmonella enterica", "value": "5874"},{"name": "Nitritalea halalkaliphila", "value": "4266"},{"name": "Pseudomonas aeruginosa", "value": "2093"},{"name": "Staphylococcus aureus", "value": "1571"},{"name": "Shigella sonnei", "value": "1043"},{"name": "others", "value": "23181"},];
+                    getPieCharts(data1, data2);
+                }
+            });
+
+            var menu = document.getElementById("menu");
+
+            $.ajax({
+                url: "__URL__/handleCrispr2",
+                type: "GET",
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        $("#menu").html("");
+                        for ( var i=0; i<data.length; i++ ) {
+                            var li = $("<li class='item"+data[i]['level']+"'></li>");
+                            if ( data[i]['is_last']=='1' ) {
+                                li.append('<a href="__URL__/graph/pid/'+data[i]['bacteria_id']+'" target="_blank">'+data[i]['name']+'</a>');
+                            } else {
+                            	if ( data[i]['level'] != '2' ) {
+                            		if ( data[i]['level'] == '0' ) {
+                            			li.append('<i class="fa fa-folder-open"></i>\
+                                                <span style="color: #f00; font-size: 20px;">' + data[i]['name'] + '</span><span class="quto" style="width: auto!important; padding: 0 13px 0 13px;">' + data[i]['genomes'] + '</span>');
+                            		} else {
+                            			li.append('<i class="fa fa-folder-open"></i>\
+                                                <span>' + data[i]['name'] + '</span><span class="quto" style="width: auto!important; padding: 0 13px 0 13px;">' + data[i]['genomes'] + '</span>');
+                            		}
+                                } else {
+                        			li.append('<i href="javascript:void(0)" onclick="addSonBacteria(this)" class="fa fa-folder" value="'+data[i]['id']+'"></i>\
+                                		<span>' + data[i]['name'] + '</span><span class="quto" style="width: auto!important; padding: 0 13px 0 13px;">' + data[i]['genomes'] + '</span><ul class="a-hide"></ul>');
+                                }
+                            }
+                            $("#menu").append(li);
+                        }
+                    } else {
+                        $("#menu").html("<li class='item0'>There is no data returned</li>");
+                    }
+                },
+                error: function() {
+                    $("#menu").html("<li class='item0'>There is no data returned</li>");
+                }
+
+            });
+
+            var scrollFunc1 = function(e) {
+                var direct=0;
+                e=e || window.event;
+                var value;
+                if(e.wheelDelta){//IE/Opera/Chrome
+                    value=e.wheelDelta;
+                }
+                if (e.detail){//Firefox
+                    value=e.detail;
+                }
+                var height;
+                height = $("#specieUl").height();
+                var top = $("#specieUl").offset().top;
+                var winH = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop | document.documentElement.scrollTop;
+                if ( height+top-scrollTop<winH ) {
+                    if ( allNumber2 >limitNumber2 ) {
+                        appenLiToUl2(limitNumber2);
+                    }
+                }
+            };
+
+            var scrollFunc2 = function(e) {
+                var direct=0;
+                e=e || window.event;
+                var value;
+                if(e.wheelDelta){//IE/Opera/Chrome
+                    value=e.wheelDelta;
+                }
+                if (e.detail){//Firefox
+                    value=e.detail;
+                }
+                var height;
+                height = $("#genusUl").height();
+                var top = $("#genusUl").offset().top;
+                var winH = document.documentElement.clientHeight;
+                var scrollTop = document.body.scrollTop | document.documentElement.scrollTop;
+                if ( height+top-scrollTop<winH ) {
+                    if ( allNumber3 >limitNumber3 ) {
+                        appenLiToUl3(limitNumber3);
+                    }
+                }
+            };
+
+            $(document).scroll(function(){
+                if( $("#tab_5").hasClass("on") ) {
+                    if ( $("#class").val()=="specie" ) {
+                        scrollFunc1(this);
+                    } else if ( $("#class").val()=="genus" ) {
+                        scrollFunc2(this);
+                    }
+                }
+            });
+
+            $("#tab_5").click(function(){
+                appenLiToUl2(limitNumber2);
+                appenLiToUl3(limitNumber3);
+            });
+        });
+
+        function changeIcon(_this, type, name) {
+            console.log(type);
+            console.log(name);
+            // var ul = $(_this).next().next().next();
+            var ul = $(_this).parent().find("ul");
+            if ( $(_this).hasClass("fa-folder") ) {
+                $(_this).removeClass("fa-folder");
+                $(_this).addClass("fa-folder-open");
+                var htm = $.trim(ul.html());
+                ul.removeClass("a-hide");
+                if ( htm==null || htm=="" ) {
+                    fillGenusWithSpecie(ul, type, name);
+                } else {
+                    $(_this).next().next().next().removeClass("a-hide");
+                }
+            } else {
+                $(_this).addClass("fa-folder");
+                $(_this).removeClass("fa-folder-open");
+                ul.addClass("a-hide");
+            }
+        }
+
+        function fillGenusWithSpecie(ul, type, name) {
+            $.ajax({
+                url: "__URL__/getSonBacteria",
+                type: "POST",
+                data: {
+                    "type":type,
+                    "name":name
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        for ( var i=0; i<data.length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<a href="javascript:void(0);" data-toggle="modal" data-target="#myModal" onclick="getCompareGraph(\''+data[i]['bacteria_id']+'\')" style="margin-left: 20px;color: #eb6100;"><i class="fa fa-file"></i>'+data[i]['lineage']+'</a>\
+                        ');
+                            ul.append(li);
+                        }
+                    }
+                },
+                error: function() {
+                    console.log("failed to get son bacteria");
+                }
+            });
+        }
+
+        function getCompareGraph(id) {
+            $.ajax({
+                url: "__URL__/getAllLineGraph",
+                type: "POST",
+                data: {
+                    "id": id,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    $("#myModalLabel2").html(id);
+                    if ( data ) {
+                        $("#AllLineGraph").html("");
+                        lsAllLine.init("AllLineGraph", data);
+                    }
+                },
+                error: function() {
+                    console.log("error!");
+                }
+            });
+        }
+
+        function appenLiToUl2(limit) {
+            $("#comparePanel").removeClass("a-hide");
+            $.ajax({
+                url: "__URL__/getSpecieData",
+                type: "POST",
+                async: false,
+                data: {
+                    "limit": limit,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    console.log(data);
+                    if ( data ) {
+                        allNumber2 = data['allLen'][0]['all'] / 100;
+                        for ( var i=0; i<data['data'].length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<a href="javascript:void(0)" onclick="changeIcon(this, \'specie\', \''+data['data'][i]['specie']+'\')" class="fa fa-folder"></a>\
+                            <span>'+data['data'][i]['specie']+'</span><span class="quto">'+data['data'][i]['num']+'</span>\
+                            <a class="btn btn-xs btn-info" style="margin-left: 20px;" href="javascript:void(0)" onclick="showTableWindow(\''+data['data'][i]['specie']+'\', \'specie\')">detail</a>\
+                            <ul class="a-hide"></ul>\
+                        ');
+                            $("#specieUl").append(li);
+                        }
+                        limitNumber2 ++;
+                    }
+
+
+                },
+                error: function() {
+                    alert("error!");
+                }
+            });
+
+        }
+
+        function appenLiToUl3(limit) {
+            $("#comparePanel").removeClass("a-hide");
+            $.ajax({
+                url: "__URL__/getGenusData",
+                type: "POST",
+                async: false,
+                data: {
+                    "limit": limit,
+                },
+                success: function(data) {
+                    data = eval(data);
+                    if ( data ) {
+                        allNumber3 = data['allLen'][0]['all'] / 100;
+                        for ( var i=0; i<data['data'].length; i++ ) {
+                            var li = $("<li class='item'></li>");
+                            li.append('<i href="javascript:void(0)" onclick="changeIcon(this, \'genus\', \''+data['data'][i]['genus']+'\')" class="fa fa-folder"></i>\
+                            <span>'+data['data'][i]['genus']+'</span><span class="quto">'+data['data'][i]['num']+'</span>\
+                            <a class="btn btn-xs btn-info" style="margin-left: 20px;" href="javascript:void(0)" onclick="showTableWindow(\''+data['data'][i]['genus']+'\', \'genus\')">detail</a>\
+                            <ul class="a-hide"></ul>\
+                        ');
+                            $("#genusUl").append(li);
+                        }
+                        limitNumber3 ++;
+                    }
+
+
+                },
+                error: function() {
+                    alert("error!");
+                }
+            });
+
+        }
+
+        function fillText(_this) {
+            $("#searchText").val($(_this).html());
+            $("#gov_search_suggest").hide();
+        }
+
+        function addSonBacteria(_this) {
+            // var ul = $(_this).next().next().next().next();
+            var ul = $(_this).parent().find("ul");
+            var level = $(_this).attr("value");
+            if ( $(_this).hasClass("fa-folder") ) {
+                $(_this).removeClass("fa-folder");
+                $(_this).addClass("fa-folder-open");
+                var htm = $.trim(ul.html());
+                ul.removeClass("a-hide");
+                // 是否有detail按钮的标志
+                var detailButton = false;
+                if ( htm==null || htm=="" ) {
+                    $.ajax({
+                        url: "__URL__/getSonData",
+                        type: "POST",
+                        data: {
+                            "level": level,
+                        },
+                        success: function(data) {
+                            data = eval(data);
+                            if ( data ) {
+
+                                for ( var i=0; i<data.length; i++ ) {
+                                    var li = $("<li class='item"+data[i]['level']+"'></li>");
+                                    if ( data[i]['is_last']=='1' ) {
+                                        li.append('<i class="fa fa-file" style="color: #eb6100"></i><a href="__URL__/graph/pid/'+data[i]['bacteria_id']+'" target="_blank" style="color: #eb6100">'+data[i]['name']+'</a>');
+                                    } else {
+                                        li.append('<i href="javascript:void(0)" onclick="addSonBacteria(this)" class="fa fa-folder" value="'+data[i]['id']+'"></i>\
+                                            <span>' + data[i]['name'] + '</span><span class="quto" style="width: auto!important; padding: 0 13px 0 13px;">' + data[i]['genomes'] + '</span><ul class="a-hide"></ul>');
+                                    }
+                                    ul.append(li);
+                                }
+                            } else {
+                                ul.append("<li>there is no data</li>");
+                            }
+                        }
+                    });
+                } else {
+                    $(_this).next().next().next().removeClass("a-hide");
+                }
+            } else {
+                $(_this).addClass("fa-folder");
+                $(_this).removeClass("fa-folder-open");
+                ul.addClass("a-hide");
+            }
+        }
+
+        function showTableWindow(name, type) {
+            // console.log("showTableWindow");
+            $("#myModal2").modal("show");
+            if ( type=="specie" ) {
+                $("#type_name").html("species");
+            } else {
+                $("#type_name").html(type);
+            }
+            
+            $("#detail_name").html(name);
+            // $("#type_name").html(type);
+            $("#table_detail").html('<table class="table table-bordered" id="table" style="width:100%;"></table>');
+            // <thead><tr><td>name</td><td>age</td><td>sex</td><td>height</td></tr></thead>
+
+            var t = $("#table").DataTable({
+                "ajax": {
+                    url: "__URL__/getTableDataUnderLever",
+                    type: "POST",
+                    data: {
+                    	"type": type,
+                        "name": name
+                    }
+                },
+                "columns": [
+                    {"data": "bacteria_id", "title": "Bacteria ID"},
+                    {"data": "lineage", "title": "Bacteria Description"},
+                    {"data": "classification", "title": "(sub)types annotated in PMID:  <a href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426118/' class='link' target='_blank'>26411297</a> "},
+                    // {"data": "cas_locus", "title": "Representive Case"},
+                    {"data": "protein", "title": "Cas Locus"},
+                    {"data": "sum", "title": "Summary refer to <a href='http://omics.informatics.indiana.edu/CRISPRone/index.php' class='link' target='_blank'>CRISPRone</a>"}
+                ]
+            });
+        }
+
+        function getCptTable(id) {
+            $("#table_protein_detail").html('<table class="table table-bordered" id="table" style="width:100%;"></table>');
+            
+        }
+
+        function getBarCharts() {
+            // 选定盒子，进行图表初始化
+            var myChart = echarts.init(document.getElementById("barGraph"));
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    position:function(p){   //其中p为当前鼠标的位置
+                        return [p[0]-120, p[1] - 50];
+                    }
+                },
+                legend: {
+                    //data:['total Statistics','width crisprs','width crisprs+cas','complete genomes','width crisprs','width crisprs+cas','plasmids','width crisprs','width crisprs+cas']
+                    data: ['organisms', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data: ['total']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'organisms',
+                        type:'bar',
+                        data:[8104489]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[62343]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[43140]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart.setOption(option);
+
+            //1
+            var myChart1 = echarts.init(document.getElementById("barGraph1"));
+            // 指定图表的配置项和数据
+            var option1 = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    position:function(p){   //其中p为当前鼠标的位置
+                        return [p[0]-120, p[1] - 50];
+                    }
+                },
+                legend: {
+                    data: ['organisms', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data: ['complete genomes']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'organisms',
+                        type:'bar',
+                        data:[5516]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[ 2326]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[ 2142]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart1.setOption(option1);
+
+            var myChart2 = echarts.init(document.getElementById("barGraph2"));
+            // 指定图表的配置项和数据
+            var option2 = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    position:function(p){   //其中p为当前鼠标的位置
+                        return [p[0]-120, p[1] - 50];
+                    }
+                },
+                legend: {
+                    data: ['organisms', 'with crisprs', 'with crisprs+cas'],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data: ['plasmids']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'organisms',
+                        type:'bar',
+                        data:[11861]
+                    },
+                    {
+                        name:'with crisprs',
+                        type:'bar',
+                        data:[315]
+                    },
+                    {
+                        name:'with crisprs+cas',
+                        type:'bar',
+                        data:[262]
+                    }
+                ]
+
+            };
+            // 将属性注入图表对象
+            myChart2.setOption(option2);
+
+        }
+
+        function getPieCharts(backdata1, backdata2) {
+            // 选定盒子，进行图表初始化
+            var myChart1 = echarts.init(document.getElementById("pieGraph1"));
+            var option1 = {
+                title : {
+                    text: 'genus distribution',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                series : [
+                    {
+                        name: 'genus distribution',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data: backdata1,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 将属性注入图表对象
+            myChart1.setOption(option1);
+
+            // 选定盒子，进行图表初始化
+            var myChart2 = echarts.init(document.getElementById("pieGraph2"));
+            var option2 = {
+                title : {
+                    text: 'species distribution',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                series : [
+                    {
+                        name: 'species distribution',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data: backdata2,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            // 将属性注入图表对象
+            myChart2.setOption(option2);
+        }
+
+    </script>
+
+</block>

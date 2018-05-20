@@ -1,0 +1,169 @@
+<extend name="./admin/Home/View/Common/base.html"/>
+
+
+<block name="css">
+    <link rel="stylesheet" href="__PUBLIC__/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <style type="text/css">
+        .menu-icon{
+            display: block;
+            width: 42px;
+            height: 32px;
+            font-size: 30px;
+            color: #000;
+        }
+    </style>
+</block>
+
+<block name="titleBlock">
+    <h3>SELF-TARGETING</h3>
+    <h4>Annotation of self-targeting spacers</h4>
+</block>
+
+<block name="body">
+<div class="content">
+  <div class="con_l">
+    <div class="con_l_nav">
+      <ul>
+        <li class="on a-tab" id="tab_1"><a href="javascript:void(0);"><i class="fa fa-bell menu-icon"></i><span><em>Introduction</em></span></a></li>
+        <li class="a-tab" id="tab_2"><a href="javascript:void(0);"><i class="fa fa-retweet menu-icon"></i><span><em>Self-Targeting</em></span></a></li>
+      </ul>
+    </div>
+    <div class="con_l_help"> <a href="__MODULE__/Index/help#self-target" target="_blank"><b>NEED HELP?</b><em style="box-sizing: none;">check help >></em></a> </div>
+  </div>
+  <div class="con_r">
+    <div id="ctx_1" class="a-ctx">
+        <div class="con_bt">
+          <h3>Self-Targeting genomes</h3>
+        </div>
+         <div class="page_cas">
+            <div class="page_cas_2 page-content">
+                <div class="content-group">
+	                <p>“Self-targeting” module provides annotation of self-targeting spacers. ‘‘Self-targeting’’ is a phenomenon observed in the intracellular food-borne pathogen Listeria monocytogenes, which has been utilized as a genomic marker for screening CRISPR-Cas inhibitor genes.</p>
+	        		<ol>
+	        			<li><p>116 self-targeting spacers detected out of 23,550 spacers from 330 CRISPR containing organisms reported in <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2910793/" target="_blank">Stem et al (Trends Genet)</a></p></li>
+	        			<li><p>6,260 self-targeting events detected from 4,136 CRISPR containing organisms using the method as shown in the figure.</p></li>
+	        		</ol>
+                </div>
+            </div>
+        </div>
+        <div class="page_cas_2" style="margin-top: 20px;">
+            <img src="__PUBLIC__/images/self-targeting.png" class="img-responsive zoom-img" alt=""/>
+        </div>
+    </div>
+    <div id="ctx_2" class="a-ctx a-hide ">
+        <div class="con_bt">
+            <h3>Self-Targeting</h3>
+        </div>
+        <div class="page_cas">
+            <a href="javascript:void(0);" class="download" id="downFile"  style="width: 110px;"><i class="fa fa-download"></i><span><em>Download</em></span></a>
+            <div class="clas_min">
+                <table class="table table-bordered" id="table2" style="width: 100%;">
+                    <thead>
+                    <tr>
+                        <th>Refseq ID</th>
+                        <th>organism</th>
+                        <th>spacer accession</th>
+                        <th>spacer start</th>
+                        <th>spacer end</th>
+                        <th>proto-spacer start</th>
+                        <th>proto-spacer end</th>
+                        <th>source</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+</block>
+
+<block name="script">
+	<script src="__PUBLIC__/js/style-table.js"></script>
+    <script src="__PUBLIC__/js/bootstrap.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.dataTables.js"></script>
+    <script src="__PUBLIC__/js/dataTables.bootstrap.js"></script>
+    <script>
+        var jsonData;
+        $("#downFile").hide();
+        $(document).ready(function(){
+
+
+            $("#tab_1").click(function(){
+                $(".a-tab").removeClass("on");
+                $(this).addClass("on");
+                $(".a-ctx").addClass("a-hide");
+                $("#ctx_1").removeClass("a-hide");
+            });
+            $("#tab_2").click(function(){
+                $(".a-tab").removeClass("on");
+                $(this).addClass("on");
+                $(".a-ctx").addClass("a-hide");
+                $("#ctx_2").removeClass("a-hide");
+            });
+
+            $("#allNum").change(function() {
+                var limit = $(this).val();
+                $("#ourTable").html('<table class="table table-bordered" id="table"></table>');
+                getOurStudy(limit);
+            });
+                        
+            $("#table2").DataTable({
+                "ajax": {
+                    url: "__URL__/getBothRefseq",
+                    type: "GET",
+                },
+                "columns": [
+                    { "data": "refseq_id"},
+                    { "data": "organism"},
+                    { "data": "spacer_accession"},
+                    { "data": "spacer_start"},
+                    { "data": "spacer_end"},
+                    { "data": "proto_spacer_start"},
+                    { "data": "proto_spacer_end"},
+                    { "data": "source"},
+                ],
+                "columnDefs": [
+                    {
+                        "targets": [0], 
+                        "render": function(data, type, full) {
+                            return "<a href='http://www.microbiome-bigdata.com:10001/CRISPRminer/index.php/Home/Crispr/graph/pid/"+full.refseq_id+"' style='color: #5bc0de;' target='_black'>" + full.refseq_id + "</a>";
+                        }
+                    }
+                ],
+                 "fnInitComplete": function (oSettings, json) {  
+                    jsonData = json;
+                    $("#downFile").show();
+                },
+                "order": [[ 7, "desc" ]]
+            });
+
+        });
+
+        $("#downFile").click(function() {
+            // console.log(jsonData);
+            var data = "Refseq ID,Organism,Spacer Accession,Spacer Start,Spacer End,Proto-spacer Start,Proto-spacer End,Source\n";
+            var objArr = jsonData['data'];
+            objArr.forEach(function(obj){
+                // obj['cas_locus'] = obj['cas_locus'].replace(/,/g, " ");
+                data += obj['refseq_id'] + "," 
+                        + obj['organism'] + "," 
+                        + obj['spacer_accession'] + "," 
+                        + obj['spacer_start'] + "," 
+                        + obj['spacer_end'] + "," 
+                        + obj['proto_spacer_start'] + "," 
+                        + obj['proto_spacer_end'] + "," 
+                        + obj['source'] + "\n";
+            });
+            const blob = new Blob([data], {type: "text/csv"});
+            this.href = URL.createObjectURL(blob);
+            this.download = "self-target.csv";
+            click();
+            URL.revokeObjectURL(this.href);
+        });
+    </script>
+</block>

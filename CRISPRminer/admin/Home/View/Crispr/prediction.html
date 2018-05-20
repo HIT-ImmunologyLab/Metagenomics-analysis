@@ -1,0 +1,652 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title>CRISPRminer</title>
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- //Custom Theme files -->
+    <link href="__PUBLIC__/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+  
+    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link href='http://cdn.webfont.youziku.com/webfonts/nomal/102397/46972/5a0d6ef5f629d80d6c63ae9c.css' rel='stylesheet' type='text/css' />
+    <link href="__PUBLIC__/css/style.css" type="text/css" rel="stylesheet" media="all">
+    <link href="__PUBLIC__/css/addStyle.css" type="text/css" rel="stylesheet" media="all">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/css.css">
+    
+
+    <!--js-->
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__PUBLIC__/js/modernizr.custom.js"></script>
+</head>
+
+<body>
+<!--header-->
+<div class="header">
+  <div class="m_box">
+    <h1><img src="__PUBLIC__/images/logo.png"/></h1>
+    <ul>
+      <li><a href="__MODULE__/Index/index">Prediction</a></li>
+      <li><a href="__MODULE__/Crispr/crispr">CRISPR-cas</a></li>
+      <li><a href="__MODULE__/Index/classification">Classification</a></li>
+      <li><a href="__MODULE__/Index/selfTarget">Self-targeting</a></li>
+      <li><a href="__MODULE__/Index/interaction">Interaction</a></li>
+      <li><a href="__MODULE__/Index/antiCrispr">Anti-CRISPR</a></li>
+      <li><a href="__MODULE__/Index/help">Help<img src="__PUBLIC__/images/nav_ico_3.png"/></a></li>
+    </ul>
+  </div>
+</div>
+<!--banner-->
+<div class="banner_index" style="background-image:url(__PUBLIC__/images/banner_1.jpg); background-color: #042443;">
+  <div class="m_box">
+    <h2 class="csse69a2b78718ffd">Discovery of CRISPR knowledge in the bacterial and archaeal genomes</h2>
+    <!-- <ul class="li">
+      <li><b>INPUT</b>
+        <p>Users can upload a FASTA DNA sequence file or paste the sequence in the submission page. As an option, users can also provide a RefSeq ID for an annotated sequence in NCBI example: NC_008532.</p>
+      </li>
+      <li><b>OUTPUT</b>
+        <p>The server will return the predicted CRISPR-Cas system(s) in the query bacterial genome, putative phages infecting the bacteria, the type/subtype of the CRISPR-Cas system, self-targeting events and anti-crispr homologs within this genome.</p>
+      </li>
+    </ul> -->
+    <div class="tab">
+      <div class="bt">
+        <ul>
+        <li class="on a-tab" id="tab_1"><b>UPLOAD</b><strong style="margin-left: 10px;">Upload nucleotide sequence file (<a class="link" href="https://en.wikipedia.org/wiki/FASTA_format" target="_blank">FASTA format</a>)</strong></li>
+          <li class="a-tab" id="tab_2"><b>Accession</b><strong style="margin-left: 10px;"><a href="https://www.ncbi.nlm.nih.gov/books/NBK21091/table/ch18.T.refseq_accession_numbers_and_mole/" class="link" target="_blank">RefSeq accession number</a> (eg: NC_008532)</strong></li>
+          <li class="a-tab" id="tab_3"><b>Sequence</b><strong style="margin-left: 10px;">Paste Sequence</strong></li>
+          <li class="a-tab" id="tab_4"><b>Fuzzy Search</b><strong style="margin-left: 10px;">Search by description</strong></li>
+        </ul>
+      </div>
+      <div class="tab_con search-input">
+        <form class="min a-ctx" style="position: relative;" id="ctx_1"
+                action="__MODULE__/Crispr/handleUpload" method="POST"
+                enctype="multipart/form-data">
+          <div class="search-ico"></div>
+          <div class="file-ico"></div>
+          <input class="input" id="showInput" type="text" placeholder="Click to Choose File" name="" style="width: 660px;">
+          <input type="file" style="position: absolute; opacity: 0; left: 102px; top: 0; width: 660px; height: 54px;" id="ls" name="ls" />
+          <input type="submit" class="search-btn" id="submit" style="margin-right: 10px;" value="Upload" />
+          <a href="__MODULE__/Crispr/handlePredictionExample" class="example" target="_blank">Example</a>
+          <!-- <a href="__PUBLIC__/file/Example_sequence.fasta" download="example_sequence.fasta" class="example" target="_blank">Example</a> -->
+
+        </form>
+        <div class="min a-hide a-ctx" id="ctx_2">
+          <div class="search-ico"></div>
+          <input class="input" type="text" style="padding: 0 10px; width: 720px;" id="eaText" placeholder="NC_008532" />
+          <a href="javascript:;" class="search-btn" id="eaBtn">Search</a>
+          <a href="javascript:;" class="search-btn" id="exampleBtn2" style="background-color: #f0ad4e;">Example</a>
+        </div>
+        <form class="min a-hide a-ctx" id="ctx_3"
+                  action="__MODULE__/Crispr/handlePredictionCrispr" method="POST" style="position: relative;">
+          <div class="search-ico"></div>
+          <!-- <input class="input" type="text" placeholder="Paste Sequence Here" name=""> -->
+          <textarea draggable="false" required name="ls" id="fnaData" style="position: absolute; overflow-y: scroll; width: 800px; top: 10px; left: 60px; height: 120px; border: 1px solid #1EA3E7;"></textarea>
+          <div style="display: inline-block; width: 50px; float: right; margin-right: 10px; margin-bottom: 8px;">
+            <a href="javascript:void(0);" class="search-btn" id="loadExampleDna">Example</a>
+            <!-- <a href="javascript:;" class="search-btn">Search</a> -->
+            <input type="submit" class="search-btn" value="SUBMIT" id="submitSequence" />
+            <a href="javascript:void(0);" class="search-btn" id="cleanDna">Clean</a>
+          </div>
+        </form>
+        <div class="min a-hide a-ctx" id="ctx_4" style="position: relative">
+           <div class="search-ico"></div>
+           <input class="input" id="searchText" type="text" placeholder="Please input the bacteria name" name="" style="width: 600px;">
+            <a href="javascript:void(0)" class="search-btn" id="resetBtn1">Reset</a>
+            <a href="javascript:void(0)" class="search-btn" id="searchBtn1">Search</a>
+           <a href="javascript: void(0)" class="search-btn" id="exampleBtn1">Example</a>
+            <div id="resultPanel" class="a-hide" style="width: 900px; margin-left: 50px; font-size: 14px; height: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="a-hide" id="gov_search_suggest" style="position: relative; width: 600px; margin-left: 240px; font-size: 14px; list-style-type: none; background-color: #fff; height: auto; overflow: hidden;">
+      <ul>
+      </ul>
+  </div>
+
+</div>
+<!--banner_bottom_br-->
+<div class="banner_bottom_br"></div>
+<!--content-->
+<div class="con con_1">
+  <div class="con_bt">
+    <h3>Welcome to CRISPRminer</h3>
+  </div>
+  <div class="min"> 
+    <div class="page-content">
+      <div class="content-group" style="font-size: 18px;">
+        <p>The CRISPR-Cas systems not only play key roles in prokaryotic acquired immunity, but also can be adapted to powerful genome editing tools. Here, we developed CRISPRminer, a knowledge database and web-server to guide CRISPR-Cas associated studies, including CRISPR locus and Cas protein prediction, CRISPR-Cas systems classification, self-targeting detection, bacteria-phage infection networks and anti-CRISPRs annotation.</p>
+      </div>
+    </div>
+
+    <h3>Service Provided</h3>
+    <div style="margin-top: 10px; border-top: 2px solid #fff;">
+      <div class="welcome-img" style="background-color: transparent; border: none;">
+        <img src="__PUBLIC__/images/CRISPR-Cas Systems classification.jpg"
+             class="img-responsive" alt="CRISPR-Cas Systems classification" />
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="content-group" style="font-size: 18px;">
+        <ol>
+          <li><p>“<strong>CRISPR-Cas</strong>” module: users can browse the pre-calculated CRISPR-Cas systems through taxonomy tree, or fuzzy search of the bacterial name or Refseq ID to visualize the detailed information. 395 Cas families were collected from a recent study  <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426118/" target="_blank">Makarova et al 2015 (Nat Rev Microbiol)</a>.</p></li>
+          <li><p>“<strong>Classification</strong>” module provides types and subtypes of the CRISPR/Cas systems based on Cas genes contents and distinctive gene architectures according to the most recent classification studies, refer to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5426118/" target="_blank">Makarova et al 2015 (Nat Rev Microbiol)</a> and <a href="http://www.nature.com/nrmicro/journal/v15/n3/full/nrmicro.2016.184.html" target="_blank">Shmakov et al 2017 (Nat Rev Microbiol)</a>.</p></li>
+          <li><p>“<strong>Self-targeting</strong>” module provides a tool for users to search for self-targeting spacers. ‘‘Self-targeting’’ is a phenomenon observed in the intracellular food-borne pathogen Listeria monocytogenes, which has been utilized as a genomic marker for screening CRISPR-Cas inhibitor genes (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5235966/" target="_blank">Rauch, B. J. et al 2017</a>).</p></li>
+          <li><p>“<strong>Interaction</strong>” module provides insight into bacteria-phage interactions, and collects clues for understanding the general principle of infection and resistance between phages and bacteria.</p></li>
+          <li><p>“<strong>Anti-CRISPR</strong>” module provides the information of 22 families of anti-CRISPRs currently identified in the CRISPR-bearing organisms.</p></li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="con con_2" style="border-bottom: 1px solid #dce6f1">
+  <div class="con_bt">
+    <!-- <h3>News and Research</h3> -->
+    <h3>Update & News</h3>
+  </div>
+  <div class="min"> 
+    <div style="height: 400px; width: 100%;">
+      <div class="col-md-8 col-md-push-2 col-md-sm-12">
+        <!-- <div class="welcome-img" style="height: auto; padding: 5px; background-color: transparent; border: none;"> -->
+          <!-- <img src="__PUBLIC__/images/publish_article.jpg" class="img-responsive" alt="publish article" style="width: 100%;"/> -->
+          <div id="myCarousel" class="carousel slide">
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" 
+                    class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+                <li data-target="#myCarousel" data-slide-to="5"></li>
+            </ol>   
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="__PUBLIC__/images/publish_paper_1.jpg" alt="First slide">
+                </div>
+                <div class="item">
+                    <img src="__PUBLIC__/images/publish_paper_2.png" alt="Second slide">
+                </div>
+                <div class="item">
+                    <img src="__PUBLIC__/images/publish_paper_3.png" alt="Third slide">
+                </div>
+                <div class="item">
+                    <img src="__PUBLIC__/images/publish_paper_4.png" alt="Fourth slide">
+                </div>
+                <div class="item">
+                    <img src="__PUBLIC__/images/publish_paper_5.png" alt="Fifth slide">
+                </div>
+                <div class="item">
+                    <img src="__PUBLIC__/images/publish_paper_6.png" alt="Sixth slide">
+                </div>
+            </div>
+            <!-- 轮播（Carousel）导航 -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <div style="margin-top: 60px;">
+      <h3>Recent works from our group:</h3>
+      <div class="page-content" style="margin-top: 10px; border-top: 2px solid #fff">
+        <div class="content-group">
+          <p>Structural basis of CRISPR-SpyCas9 inhibition by an anti-CRISPR protein. <strong>Nature.</strong> DOI：10.1038/nature22377.</p>
+          <p>Structural basis of stringent PAM recognition by CRISPR-C2c1 in complex with sgRNA. <strong>Cell Research.</strong> doi:10.1038/cr.2017.46.</p>
+          <p>Crystal structure of CRISPR-Cpf1 in complex with CRISPR RNA (crRNA). <strong>Nature.</strong> 532, 522-526.</p>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+</div>
+
+<div class="con con_2" style="border-bottom: 1px solid #dce6f1">
+  <div class="con_bt">
+    <h3>CRISPRminer version 1 is out!</h3>
+  </div>
+  <div class="min"> 
+  	<div class="welcome-img" style="height: auto; padding: 5px; background-color: transparent; border: none;">
+  		<img src="__PUBLIC__/images/CRISPRminer statis update.png" style="width: 80%;">
+  	</div>
+  	
+    <!-- <div class="page-content">
+        <div class="content-group">
+          <p>Currently, we have integrated five categories of information that are experimentally or computationally identified which are important in CRISPR biology, including:</p>
+          <ol>
+            <li>
+              <p>CRISPR loci: 91,685</p>
+              <ul style="list-style-type: none; margin-left: 20px;">
+                <li><p>Bacteria organisms: 62,343</p></li>
+                <li><p>Species: 3588</p></li>
+                <li><p>Genus: 1279</p></li>
+              </ul>
+            </li>
+            <li>
+              <p>Classification:</p>
+              <ul style="list-style-type: none; margin-left: 20px;">
+                <li><p>Class: 2</p></li>
+                <li><p>Type: 6</p></li>
+                <li><p>Subtype: 21</p></li>
+              </ul>
+            </li>
+            <li>
+              <p>Self-targeting events:</p>
+              <ul style="list-style-type: none; margin-left: 20px;">
+                <li><p>Our study: 6,260 events in 4136 bacteria organisms</p></li>
+                <li><p>Stem et al: 116 events in 330 organisms</p></li>
+              </ul>
+            </li>
+            <li>
+              <p>Phage-bacteria interactions:</p>
+              <ul style="list-style-type: none; margin-left: 20px;">
+                <li><p>Detected based on CRISPRs: 55,279</p></li>
+                <li><p>Extracted from NCBI:1972</p></li>
+              </ul>
+            </li>
+            <li>
+              <p>Anti-CRISPRs:21</p>
+              <ul style="list-style-type: none; margin-left: 20px;">
+                <li><p>Homologues: (915)</p></li>
+                <li><p>Organisms: (540)</p></li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div> -->
+  </div>
+</div>
+
+
+
+<div class="con con_2">
+  <div class="con_bt">
+    <h3>Resource Link</h3>
+  </div>
+  <div class="min"> 
+    <div style="margin-bottom: 10px;">
+      <a href="http://crispr.i2bc.paris-saclay.fr/crispr/" class="download" target="_blank" style="display: inline-block; width: 90px;">CRISPRdb</a>
+      <a href="http://omics.informatics.indiana.edu/CRISPRone/" class="download" target="_blank"  style="display: inline-block; width: 100px;">CRISPRone</a>
+      <a href="http://cefg.uestc.edu.cn/anti-CRISPRdb/ " class="download" target="_blank"  style="display: inline-block; width: 130px;">anti-CRISPRdb</a>
+    </div>
+    <!-- <a href="__MODULE__/Index/location"><img src="__PUBLIC__/images/index_con_pic.jpg"/></a> -->
+    <div style="float: left; width: 330px; height: 200px;">
+      <!-- <script type="text/javascript" src="//ra.revolvermaps.com/0/0/0.js?i=0ckfmvtd27b&amp;d=3&amp;p=0&amp;b=0&amp;w=293&amp;g=2&amp;f=arial&amp;fs=12&amp;r=0&amp;c0=362b05&amp;c1=375363&amp;c2=000000&amp;ic0=0&amp;ic1=0" async="async"></script> -->
+      <script type="text/javascript" src="//ra.revolvermaps.com/0/0/7.js?i=0mpsxex5b78&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;sx=0" async="async"></script>
+      <p style="margin-top: 10px;"><a class="link" href="__MODULE__/Location/location" target="_blank">Visits since Oct 31, 2017</a></p>
+    </div>
+    
+    <div class="page-content" style="width: 830px; float: right;">
+      <div class="content-group">
+        <p><strong>Please email: </strong> <span>fanzhang@hit.edu.cn</span>  when you have any question or problem about using CRISPRminer</p>
+        <p><strong>Please cite: </strong> CRISPRminer: A knowledge base for exploring CRISPR-systems in bacteria and phage interactions</p>
+        <p><strong>Developers: </strong> <span>Fan Zhang</span>; <span>Yongkui Lai</span>; <span>Shijia Zhao</span>; <span>Haibin Zhou</span>; </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--modal box-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true"
+   style="width: 80px;border-radius: 5px;margin:0 auto;">
+  <div class="modal-dialog">
+    <div class="modal-content" width="70">
+      <img src="__PUBLIC__/images/wait.gif" width="80" height="80" />
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--modal box-->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true"
+   style="width: 80px;
+    border-radius: 5px;margin:0 auto;">
+  <div class="modal-dialog">
+    <div class="modal-content" width="70">
+      <img src="__PUBLIC__/images/wait.gif" width="80" height="80" />
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal -->
+</div>
+<!--// modal box-->
+
+<!--footer-->
+<div class="footer">
+  <div class="m_box">
+    <ul>
+      <li class="first"><a href="index">Prediction</a></li>
+      <li><a href="__MODULE__/Index/crispr">CRISPR-cas</a></li>
+      <li><a href="__MODULE__/Index/classification">Classification</a></li>
+      <li><a href="__MODULE__/Index/selfTarget">Self-targeting</a></li>
+      <li><a href="__MODULE__/Index/interaction">Interaction</a></li>
+      <li><a href="__MODULE__/Index/antiCrispr">Anti-CRISPR</a></li>
+      <li><a href="__MODULE__/Index/help">Help</a></li>
+    </ul>
+    <div class="footer_b">
+      <h3>
+         <em>(C) Copyright HIT-NIC 2017.</em>
+        <em>All rights reserved HIT Center for Life Sciences, School of Life Science and Technology, Harbin Institute of Technology, Harbin 150080, China</em>
+        <em>Last modified April 30, 2018 08:50:01 GMT</em>
+        <img src="__PUBLIC__/images/logo.png"/>
+      </h3>
+      <!-- <span>SUPPORT BY 灵感科技</span> </div> -->
+  </div>
+</div>
+
+<script type="text/javascript" src="__PUBLIC__/js/lsLine.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ls.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/lsTest.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/bootstrap.js"></script>
+<script type="text/javascript">
+
+  $(function(){
+    // 初始化轮播
+    $("#myCarousel").carousel('cycle');
+  });
+
+   $("#tab_1").click(function(){
+        $(".a-tab").removeClass("on");
+        $(this).addClass("on");
+        $(".a-ctx").addClass("a-hide");
+        $("#ctx_1").removeClass("a-hide");
+    });
+    $("#tab_2").click(function(){
+        $(".a-tab").removeClass("on");
+        $(this).addClass("on");
+        $(".a-ctx").addClass("a-hide");
+        $("#ctx_2").removeClass("a-hide");
+    });
+    $("#tab_3").click(function(){
+        $(".a-tab").removeClass("on");
+        $(this).addClass("on");
+        $(".a-ctx").addClass("a-hide");
+        $("#ctx_3").removeClass("a-hide");
+    });
+    $("#tab_4").click(function(){
+        $(".a-tab").removeClass("on");
+        $(this).addClass("on");
+        $(".a-ctx").addClass("a-hide");
+        $("#ctx_4").removeClass("a-hide");
+    });
+
+
+
+
+
+    $("#exampleBtn1").click(function(){
+      $("#searchText").val("Streptococcus thermophilus");
+    });
+
+    $("#exampleBtn2").click(function(){
+      $("#eaText").val("NC_008532");
+    });
+
+
+    $("#searchText").keyup(function(event){
+      var input = $(this);
+      var text = $.trim($(this).val());
+      var suggest = $("#gov_search_suggest");
+      //键盘选择下拉项
+      if(suggest.css('display')=='block'&& (event.keyCode == 38||event.keyCode == 40 || event.keyCode==13)){
+          var current = suggest.find('li.hover');
+          if(event.keyCode == 38){
+              if(current.length>0){
+                  var prevLi = current.removeClass('hover').prev();
+                  if(prevLi.length>0){
+                      prevLi.addClass('hover');
+                      input.val(prevLi.html());
+                  }
+              }else{
+                  var last = suggest.find('li:last');
+                  last.addClass('hover');
+                  input.val(last.html());
+              }
+
+          }else if(event.keyCode == 40){
+              if(current.length>0){
+                  var nextLi = current.removeClass('hover').next();
+                  if(nextLi.length>0){
+                      nextLi.addClass('hover');
+                      input.val(nextLi.html());
+                  }
+              }else{
+                  var first = suggest.find('li:first');
+                  first.addClass('hover');
+                  input.val(first.html());
+              }
+          } else if ( event.keyCode == 13 ) {
+              suggest.hide();
+          }
+
+          //输入字符
+      }else{
+          if ( text.length>=4 ) {
+              suggest.html("");
+              suggest.css("width", $(this).outerWidth()+"px");
+              suggest.show();
+              $.ajax({
+                  url: "__MODULE__/Crispr/getTips",
+                  type: "POST",
+                  async: false,
+                  data: {
+                      "keyword": text,
+                      "value": 1,
+                  },
+                  success: function(data) {
+                      data = eval(data);
+                      if ( data.length ) {
+                          for ( var i=0; i<data.length; i++ ) {
+                              var li = $("<li onclick='fillText(this)' style='white-space: nowrap; text-overflow: ellipsis;''>"+data[i]['name']+"</li>");
+                              suggest.append(li);
+                          }
+                      } else {
+                          var li = $("<li>no similar data</li>");
+                          suggest.append(li);
+                      }
+                  },
+                  error: function(data) {
+                      var li = $("<li>can't access data</li>");
+                      suggest.append(li);
+                  }
+              });
+          } else {
+              suggest.hide();
+          }
+      }
+
+  });
+
+
+  var searchDataArray;
+
+
+
+   $("#searchBtn1").click(function() {
+
+      var text = $("#searchText").val();
+
+      console.log(text);
+
+      if ( text ) {
+          // $("#gov_search_suggest").addClass("a-hide");
+          $("#gov_search_suggest").hide();
+          $.ajax({
+              url: "__MODULE__/Crispr/getSearchBacteria",
+              type: "POST",
+              data: {
+                  "text": text,
+                  "value": 1,
+              },
+              success: function(data) {
+                  data = eval(data);
+                  $("#resultPanel").removeClass("a-hide");
+                  // $("#resultPanel").show();
+
+                  $("#resultPanel").html("");
+                  if ( data.length ) {
+                      searchDataArray = data;
+                      var ul = $("<ul class='a-ul' id='showResult'></ul>");
+                      var showNum = 5<data.length ? 5 : data.length;
+                      for ( var i=0; i<showNum; i++ ) {
+                          var li = $("<li class='item' style='padding:0; height: 30px; line-height: 30px;'><i class='fa fa-file' style='color: #eb6100'></i><a href='__MODULE__/Crispr/graph/pid/"+data[i].bacteria_id+"' target='_blank' style='color: #eb6100'>"+data[i].name+"</a></li>");
+                          ul.append(li);
+                      }
+                      $("#resultPanel").append(ul);
+                      if ( data.length > 5 ) {
+                        var linkPanel = $('<ul class="pagination" style="margin-bottom: 0px; margin-top: 0px;"></ul>');
+                        var linkNum = Math.ceil(data.length / 5);
+                        linkPanel.append('<li class="page active"><a href="javascript:void(0)" onclick="jumpPage(1)">1</a></li>');
+                        for ( var i=1; i<linkNum; i++ ) {
+                          linkPanel.append('<li class="page"><a href="javascript:void(0)" onclick="jumpPage('+(i+1)+')">'+(i+1)+'</a></li>');
+                        }
+                        $("#resultPanel").append(linkPanel);
+                      }
+                  } else {
+                      $("#resultPanel").html("There is no record in database!");
+                  }
+          			$("#ctx_4").css({"height": "auto"});
+              },
+              error: function() {
+                  alert("error!");
+              }
+          });
+          $("#ctx_4").css({"height": "auto"});
+      }
+
+  });
+
+   function jumpPage(id) {
+      console.log('clicked!!!');
+      $(".page").removeClass("active");
+      $(".page").eq(id-1).addClass("active");
+      $("#showResult").html("");
+      var end = (searchDataArray.length < id*5) ? searchDataArray.length : id*5;
+      for ( var i=(id-1)*5; i<end; i++ ) {
+        var li = $("<li class='item' style='padding:0; height: 30px; line-height: 30px;'><i class='fa fa-file' style='color: #eb6100'></i><a href='__MODULE__/Crispr/graph/pid/"+searchDataArray[i].bacteria_id+"' target='_blank' style='color: #eb6100'>"+searchDataArray[i].name+"</a></li>");
+        $("#showResult").append(li);
+      }
+   }
+
+  $("#resetBtn1").click(function(){
+      $("#resultPanel").addClass("a-hide");
+      // $("#gov_search_suggest").addClass("a-hide");
+      $("#gov_search_suggest").hide();
+      $("#searchText").val("");
+  });
+
+	function fillText(_this) {
+        $("#searchText").val($(_this).html());
+        $("#gov_search_suggest").hide();
+        // $("#gov_search_suggest").addClass("a-hide");
+    }
+
+
+  $("#loadExampleDna").click(function() {
+      $.ajax({
+        url: "__MODULE__/Crispr/handlePredictionExample2",
+        type: "GET",
+        success: function(data) {
+          $("#fnaData").val(data);
+        },
+        error: function() {
+          console.log("error");
+        }
+      });
+    });
+
+    $("#cleanDna").click(function(){
+      var _this = $('#fnaData');
+      _this.val("");
+    });
+
+        var htm;
+
+
+        $("#submit").click(function(e) {
+            var text = $.trim($("#ls").val());
+            if ( text==null || text=="" ) {
+                $("#showInput").html("You have to choose a file");
+                e.preventDefault();
+            } else {
+                $("#myModal").modal('show');
+
+            }
+        });
+
+        $("#submitSequence").click(function(e){
+            var text = $.trim($("#fnaData").val());
+            if ( text==null || text=="" ) {
+                $("#fnaData").val("You have to paste sequence first");
+                e.preventDefault();
+            } else {
+                $("#myModal1").modal('show');
+            }
+        });
+
+    $(".hi-icon").click(function(){
+      if ( $(this).attr("control")!=1 ) {
+        $("#outerDiv").addClass("a-hide");
+      }
+    });
+
+    $("#example").click(function() {
+      $("#eaText").val("NC_008532");
+    });
+
+        $("#eaBtn").click(function() {
+
+            var _this = $(this);
+
+            htm = $.trim($("#eaText").val());
+            if ( htm=="" ) {
+                $(this).next(".tips").removeClass("a-hide");
+        $("#outerDiv").addClass("a-hide");
+                $("#ringPanel").addClass("a-hide");
+                $("#LineGraph").addClass("a-hide");
+                $(this).next(".tips").html("Please input the bacteria id you want to search");
+                return false;
+            } else {
+                window.open("__MODULE__/Crispr/handleEntryAccession/pid/" + htm);
+            }
+
+        });
+
+    $("#ls").change(function() {
+      var file = $(this).val();
+      $(this).prev("input").val(file);
+    });
+
+    function getProcess() {
+    	$.ajax({
+        	url: "__MODULE__/Crispr/getPredictionProcess",
+        	type: "GET",
+        	success: function(data) {
+
+        	},
+        	error: function() {
+        		
+        	}
+        });
+    }
+</script>
+</body>
+</html>
